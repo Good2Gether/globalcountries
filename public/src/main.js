@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <script src="js/jquery-3.6.0.min.js"></script>
-
-    <script src="../dist/jspsych.js"></script>
-    <script src="../dist/plugin-html-keyboard-response.js"></script>
-    <script src="../dist/plugin-html-button-response.js"></script>
-    <script src="../dist/plugin-webgazer-init-camera.js"></script>
-    <script src="../dist/plugin-webgazer-calibrate.js"></script>
-    <script src="../dist/plugin-webgazer-validate.js"></script>
-    <script src="js/webgazer/webgazer.js"></script>
-    <script src="../dist/plugin-survey-text.js"></script>
-    <script src="../dist/plugin-fullscreen.js"></script>
-    <script src="../dist/extension-webgazer.js"></script>
-    <link rel="stylesheet" href="../dist/jspsych.css" />
-    
-    <link href="css/eye-tracking.css" rel="stylesheet" type="text/css"></link>
-    <link href="css/binary-choice.css" rel="stylesheet" type="text/css">  </link>
-
-    <script src="js/stimuli_data.js"></script>
-    <!-- <script src="js/binary-choice-table.js"></script> -->
-    <script src="js/binary-choice-table-four.js"></script>
-    <style>
-      .jspsych-content {
-        max-width: 100%;
-      }
-    </style>
-  </head>
-  <body></body>
-  <script>
-    const nImageInst = 2;
+const nImageInst = 2;
     /** load all the images, and remember to preload before starting the egitxperiment */
     var instruct_img = [];
     for (var i = 0; i < nImageInst; i++) {
@@ -41,7 +10,9 @@
     var jsPsych = initJsPsych({
       extensions: [
         {type: jsPsychExtensionWebgazer}
-      ]
+      ], 
+      on_finish: () => on_finish_callback()
+
     });
 
     stimuli_data = jsPsych.randomization.shuffle(stimuli_data);
@@ -245,6 +216,32 @@
       randomize_order: true
     };
 
+    var on_finish_callback = function () {
+        // jsPsych.data.displayData();
+         jsPsych.data.addProperties({
+           browser_name: bowser.name,
+           browser_type: bowser.version,
+           subject: subject_id,
+           interaction: jsPsych.data.getInteractionData().json(),
+           //quiz: quiz_correct_count,
+           windowWidth: screen.width,
+           windowHight: screen.height
+         });
+         var data = JSON.stringify(jsPsych.data.get().values());
+         $.ajax({
+             type: "POST",
+             url: "/data",
+             data: data,
+             contentType: "application/json"
+           })
+           .done(function () {
+             // alert("your data has been saved!")
+           })
+           .fail(function () {
+             //alert("problem occured while writing data to box.");
+        })
+    }
+
     var done = {
       type: jsPsychHtmlButtonResponse,
       choices: ['CSV', 'JSON'],
@@ -259,21 +256,47 @@
       }
     };
 
-    var timeline = [];
-    timeline.push(start_exp_survey_trial);
-    timeline.push(fullscreenEnter)
-    timeline.push(camera_instructions);
-    timeline.push(init_camera);
-    timeline.push(calibration_instructions);
-    timeline.push(calibration);
-    timeline.push(validation_instructions);
-    timeline.push(validation);
-    timeline.push(charity_prac_choice);
-    // timeline.push(task_instructions);
-    // timeline.push(trial_proc);
-    timeline.push(done);
+    var on_finish_callback = function () {
+        // jsPsych.data.displayData();
+        jsPsych.data.addProperties({
+            browser_name: bowser.name,
+            browser_type: bowser.version,
+            subject: subject_id,
+            interaction: jsPsych.data.getInteractionData().json(),
+            //quiz: quiz_correct_count,
+            windowWidth: screen.width,
+            windowHight: screen.height
+        });
+        var data = JSON.stringify(jsPsych.data.get().values());
+        $.ajax({
+             type: "POST",
+             url: "/data",
+             data: data,
+             contentType: "application/json"
+           })
+           .done(function () {
+             // alert("your data has been saved!")
+           })
+           .fail(function () {
+             //alert("problem occured while writing data to box.");
+        })
+    }
 
-    jsPsych.run(timeline);
-
-  </script>
-</html>
+    function startExp(){
+        var timeline = [];
+        timeline.push(start_exp_survey_trial);
+        timeline.push(fullscreenEnter)
+        timeline.push(camera_instructions);
+        timeline.push(init_camera);
+        timeline.push(calibration_instructions);
+        timeline.push(calibration);
+        timeline.push(validation_instructions);
+        timeline.push(validation);
+        timeline.push(charity_prac_choice);
+        // timeline.push(task_instructions);
+        // timeline.push(trial_proc);
+        timeline.push(done);
+    
+        jsPsych.run(timeline);
+    }
+    
