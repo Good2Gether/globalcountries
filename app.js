@@ -57,7 +57,7 @@ app.post("/subject-status", function (request, response) {
 
 // });
 
-app.listen(app.get('port'), function () {
+app.listen(app.get('port'), "0.0.0.0", function () {
     console.log("listening to port :",(process.env.PORT || 3000));
     console.log("listening to port :",(process.env.HOST));
 });
