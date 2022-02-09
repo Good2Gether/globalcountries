@@ -22,9 +22,8 @@
     "ejs": "^3.1.6",
     "express": "^4.17.2",
     "node-fetch": "^2.6.1"
-  },
-  "scripts": {
-    "build": "bower install && grunt build",
-    "start": "nf start"
+  },"scripts": {
+    "postinstall": "npm run build",
+    "start": "node server.js"
   }
 }
