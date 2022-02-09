@@ -15,6 +15,9 @@ const nImageInst = 2;
 
     });
 
+
+    var subject_id = jsPsych.randomization.randomID(7);
+
     stimuli_data = jsPsych.randomization.shuffle(stimuli_data);
     console.log(stimuli_data);
 
@@ -109,13 +112,13 @@ const nImageInst = 2;
     };
 
     var validation_instructions = {
-      type: jsPsychHtmlButtonResponse,
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p>Let's see how accurate the eye tracking is. </p>
         <p>Keep your head still, and move your eyes to focus on each dot as it appears.</p>
         <p>You do not need to click on the dots. Just move your eyes to look at the dots.</p>
-      `,
-      choices: ['Click to begin'],
+        press the <b>SPACE BAR</b> to continue.`,
+      choices: [' '],
       post_trial_gap: 1000
     };
 
@@ -216,31 +219,31 @@ const nImageInst = 2;
       randomize_order: true
     };
 
-    var on_finish_callback = function () {
-        // jsPsych.data.displayData();
-         jsPsych.data.addProperties({
-           browser_name: bowser.name,
-           browser_type: bowser.version,
-           subject: subject_id,
-           interaction: jsPsych.data.getInteractionData().json(),
-           //quiz: quiz_correct_count,
-           windowWidth: screen.width,
-           windowHight: screen.height
-         });
-         var data = JSON.stringify(jsPsych.data.get().values());
-         $.ajax({
-             type: "POST",
-             url: "/data",
-             data: data,
-             contentType: "application/json"
-           })
-           .done(function () {
-             // alert("your data has been saved!")
-           })
-           .fail(function () {
-             //alert("problem occured while writing data to box.");
-        })
-    }
+    // var on_finish_callback = function () {
+    //     // jsPsych.data.displayData();
+    //      jsPsych.data.addProperties({
+    //        browser_name: bowser.name,
+    //        browser_type: bowser.version,
+    //        subject: subject_id,
+    //        interaction: jsPsych.data.getInteractionData().json(),
+    //        //quiz: quiz_correct_count,
+    //        windowWidth: screen.width,
+    //        windowHight: screen.height
+    //      });
+    //      var data = JSON.stringify(jsPsych.data.get().values());
+    //      $.ajax({
+    //          type: "POST",
+    //          url: "/data",
+    //          data: data,
+    //          contentType: "application/json"
+    //        })
+    //        .done(function () {
+    //          // alert("your data has been saved!")
+    //        })
+    //        .fail(function () {
+    //          //alert("problem occured while writing data to box.");
+    //     })
+    // }
 
     var done = {
       type: jsPsychHtmlButtonResponse,
@@ -255,6 +258,11 @@ const nImageInst = 2;
         }
       }
     };
+
+    var success_guard = {
+        type: 'call-function',
+        func: () => {successExp = true}
+      }
 
     var on_finish_callback = function () {
         // jsPsych.data.displayData();

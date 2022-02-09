@@ -40,6 +40,17 @@ app.post("/data", function (request, response) {
     saveDropbox(data, filename, foldername).catch(err => console.log(err))
 }
 );
+
+
+app.post("/subject-status", function (request, response) {
+    subject_id = request.body.subject_id;
+    status = request.body.status;
+    subjects[subject_id] = status;
+    saveDropboxSingleFile(JSON.stringify(subjects), `subject_status_${starttime}.json`)
+    .then(() => console.log(`subjuct status recorded: ${subject_id},${status}`))
+    .catch(err => console.log(err));
+});
+
 // -- START THE SERVER
 var server = app.listen(3000, function(){
     console.log("listening to port %d", server.address().port);
