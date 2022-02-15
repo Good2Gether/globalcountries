@@ -318,7 +318,7 @@ const nImageInst = 2;
     };
 
     var success_guard = {
-        type: 'call-function',
+        type: jsPsychCallFunction,
         func: () => {successExp = true}
       }
 
@@ -364,8 +364,8 @@ const nImageInst = 2;
         timeline.push(real_choice);
 
         // timeline.push(trial_proc);
-        // timeline.push(done);
-        timeline.push(success_guard);
+        timeline.push(done);
+        // timeline.push(success_guard);
     
         jsPsych.run(timeline);
     }

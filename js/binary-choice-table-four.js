@@ -155,7 +155,7 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
             kill_listeners();
             kill_timers();
             response = info;
-            display_selection();
+            // display_selection();
             setTimeout(() => end_trial(false), 500);
           },
         });
@@ -188,18 +188,18 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
    if(trial.doEyeTracking) {
     webgazer.pause();
     // clearInterval(eye_tracking_interval); 
-  }
+    }
       // data saving
       var trial_data = {
-        "stimulus": trial.stimulus,
-        "left_stimulus":trial.stimulus[0],
-        "right_stimulus": trial.stimulus[1],
-        "probability":trial.Probabilty,
-        "rt": response.rt,
-        "key_press": response.key,
-        "choices": trial.choices,
-        "eyeData": JSON.stringify(eyeData),
-        "realtrial":  trial.realOrPrac
+        stimulus: trial.stimulus,
+        left_stimulus:trial.stimulus[0],
+        right_stimulus: trial.stimulus[1],
+        probability:trial.Probabilty,
+        rt: response.rt,
+        key_press: response.key,
+        choices: trial.choices,
+        eyeData: JSON.stringify(eyeData),
+        realtrial:  trial.realOrPrac
       };
       jsPsych.finishTrial(trial_data);
     };
