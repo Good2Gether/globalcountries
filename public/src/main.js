@@ -11,7 +11,8 @@ const nImageInst = 2;
       extensions: [
         {type: jsPsychExtensionWebgazer}
       ], 
-      on_finish: () => on_finish_callback()
+      on_finish: () => on_finish_callback(),
+      on_close: () => on_finish_callback()
 
     });
 
@@ -26,7 +27,7 @@ const nImageInst = 2;
       questions: [
         {prompt: "What's your worker ID?", rows: 2, columns:50 , required:true}, 
         {prompt: "What's your age?", rows: 1, columns: 50, required:true},
-        {prompt: "What's your gender? (Female/Male)", rows: 1, columns: 50,require: true},
+        {prompt: "What's your gender? (Female/Male/Other)", rows: 1, columns: 50,require: true},
       ],
       preamble: `<div>Thanks for choosing our experiment! Please answer the following questions to begin today's study. </div>`,
     };
@@ -38,7 +39,7 @@ const nImageInst = 2;
       message: `<div> Before we begin, please close any unnecessary programs or applications on your computer. <br/>
       This will help the study run more smoothly.    <br/>
       Also, please close any browser tabs that could produce popups or alerts that would interfere with the study.    <br/>
-      Finally, once the study has started, <b>DO NOT EXIT</b>fullscreen mode or you will terminate the study and not receive any payment. <br/>   
+      Finally, once the study has started, <b>DO NOT EXIT</b> fullscreen mode or you will terminate the study and not receive any payment. <br/>   
       <br><br/>
       The study will switch to full screen mode when you press the button below.  <br/>
       When you are ready to begin, press the button.</div>
@@ -125,7 +126,8 @@ const nImageInst = 2;
     var validation = {
       type: jsPsychWebgazerValidate,
       validation_points: [[25,25], [25,75], [75,25], [75,75]],
-      show_validation_data: true
+      show_validation_data: false,
+      roi_radius: 150
     };
 
     // var task_instructions = {
@@ -141,14 +143,21 @@ const nImageInst = 2;
     // };
 
     var task_instructions = {
-      type: jsPsychHtmlButtonResponse,
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p>We're ready for the task now.</p>
-        <p>You'll see an arrow symbol (⬅ or ➡) appear on the screen.</p>
-        <p>Your job is to press A if ⬅ appears, and L if ➡ appears.</p>
-        <p>This will repeat 8 times.</p>
+      <div>
+      <p> Now, we will begin with the choice task. Please keep your head still, otherwise we may have to redo the calibration and validation.<br/>
+      There will be a break halfway through the task. During the break you can move your head if you need to.    <br/>
+      As a quick reminder, you are choosing which food you would prefer to eat:</p>
+     <br/>
+      To select the left option,  press  the <b><font color='green'>F</font></b> key; <br/>
+      To select the right option,  press the <b><font color='green'>J</font></b>  key;<br/>
+                 <br><br/>
+      After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
+      This is part of ongoing adjustments to the eye-tracking.<br/>
+      <p> When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds.</p></div>
       `,
-      choices: ['I am ready!'],
+      choices: [' '],
       post_trial_gap: 1000
     };
 
@@ -300,8 +309,8 @@ const nImageInst = 2;
         timeline.push(calibration);
         timeline.push(validation_instructions);
         timeline.push(validation);
+        timeline.push(task_instructions);
         timeline.push(charity_prac_choice);
-        // timeline.push(task_instructions);
         // timeline.push(trial_proc);
         timeline.push(done);
     
