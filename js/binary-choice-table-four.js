@@ -126,16 +126,7 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
       display_element.innerHTML = new_html;
     };
 
-    var display_selection = function () {
-      var selected;
-      if (String.fromCharCode(response.key) == trial.choices[0]) {
-        selected = '#multiattribute-choices-stimulus-left';
-      } else {
-        selected = '#multiattribute-choices-stimulus-right';
-      }
-      $(selected).css('border', `6px solid ${selected_color}`);
-    };
-
+    
     var display_timeout = function () {
       $('binary-timeoutinfo').text('Time out!');
     };

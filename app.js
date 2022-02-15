@@ -26,31 +26,33 @@ app.set("veiw engine", "html");
 //     response.render("index.html")
 // });
 
-app.post("/data", function (request, response) {
-    //convert json to csv
-    request.setTimeout(0);
-    // DATA_CSV = json2csv(request.body);
-    data = request.body;
-    id = data[0].subject;
-    // id = row[1].split(",")[Id_index];
-    id = id.replace(/'/g, "");
-    var currentdate = new Date();
-    filename = Number(currentdate) + ".json";
-    foldername = id;
-    data = JSON.stringify(data);
-    saveDropbox(data, filename, foldername).catch(err => console.log(err))
-}
-);
+// app.post("/data", function (request, response) {
+//     //convert json to csv
+//     request.setTimeout(0);
+//     // DATA_CSV = json2csv(request.body);
+//     data = request.body;
+//     id = data[0].subject;
+//     // id = row[1].split(",")[Id_index];
+//     id = id.replace(/'/g, "");
+//     var currentdate = new Date();
+//     filename = Number(currentdate) + ".json";
+//     foldername = id;
+//     data = JSON.stringify(data);
+//     console.log("foldername: ", foldername);
+//     console.log("file: ", filename);
+//     saveDropbox(data, filename, foldername).catch(err => console.log(err))
+// }
+// );
 
 
-app.post("/subject-status", function (request, response) {
-    subject_id = request.body.subject_id;
-    status = request.body.status;
-    subjects[subject_id] = status;
-    saveDropboxSingleFile(JSON.stringify(subjects), `subject_status_${starttime}.json`)
-    .then(() => console.log(`subjuct status recorded: ${subject_id},${status}`))
-    .catch(err => console.log(err));
-});
+// app.post("/subject-status", function (request, response) {
+//     subject_id = request.body.subject_id;
+//     status = request.body.status;
+//     subjects[subject_id] = status;
+//     saveDropboxSingleFile(JSON.stringify(subjects), `subject_status_${starttime}.json`)
+//     .then(() => console.log(`subjuct status recorded: ${subject_id},${status}`))
+//     .catch(err => console.log(err));
+// });
 
 // -- START THE SERVER
 // var server = app.listen(3000, function(){
@@ -71,11 +73,16 @@ app.post("/data", function (request, response) {
     // DATA_CSV = json2csv(request.body);
     data = request.body;
     id = data[0].subject;
+    console.log("id: ", id);
+
     // id = row[1].split(",")[Id_index];
     id = id.replace(/'/g, "");
     var currentdate = new Date();
     filename = Number(currentdate) + ".json";
     foldername = id;
+    console.log("foldername: ", foldername);
+    console.log("file: ", filename);
+    
     data = JSON.stringify(data);
     saveDropbox(data, filename, foldername).catch(err => console.log(err))
 }

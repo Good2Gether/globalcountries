@@ -6,13 +6,25 @@ const nImageInst = 2;
     }
 
     var fixation_duration = 500;
+    var successExp = false;
     
     var jsPsych = initJsPsych({
       extensions: [
         {type: jsPsychExtensionWebgazer}
       ], 
       on_finish: () => on_finish_callback(),
-      on_close: () => on_finish_callback()
+      on_close: () => on_finish_callback(),
+      on_trial_finish: function () {if(successExp) {
+        closeFullscreen()
+        document.body.style.cursor = 'pointer'
+        jsPsych.endExperiment(`<div>
+        Thank you for your participation! You can close the browser to end the experiment now. </br>
+                    The webcam will turn off when you close the browser. </br>
+                      Your survey code is: ${makeSurveyCode('success')}. </br>
+                     We will send you $7 as your participant fee soon! </br> 
+        </div>`);
+        }
+    }
 
     });
 
@@ -87,7 +99,7 @@ const nImageInst = 2;
             There are only <b>THREE</b> chances to get this right.  <br/>
             Otherwise, the study cannot proceed and you will only receive 50 cents for participating.  </font><br/>
             <br><br/> -->
-             <font size=5px; >When you are ready, press the <b>SPACE BAR</b> to bring up the video feed and make these adjustments. </font></div
+             <font   >When you are ready, press the <b>SPACE BAR</b> to continue. </font></div
       `,
       choices: [' '],
       
@@ -127,7 +139,8 @@ const nImageInst = 2;
       type: jsPsychWebgazerValidate,
       validation_points: [[25,25], [25,75], [75,25], [75,75]],
       show_validation_data: false,
-      roi_radius: 150
+      roi_radius: 150,
+      on_finish: (data) => console.log("sadfasdfa2", data.percent_in_roi)
     };
 
     // var task_instructions = {
@@ -148,13 +161,13 @@ const nImageInst = 2;
       <div>
       <p> Now, we will begin with the choice task. Please keep your head still, otherwise we may have to redo the calibration and validation.<br/>
       There will be a break halfway through the task. During the break you can move your head if you need to.    <br/>
-      As a quick reminder, you are choosing which food you would prefer to eat:</p>
+      You are choosing which option you would choose:</p>
      <br/>
-      To select the left option,  press  the <b><font color='green'>F</font></b> key; <br/>
-      To select the right option,  press the <b><font color='green'>J</font></b>  key;<br/>
+      To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
+      To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
                  <br><br/>
       After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
-      This is part of ongoing adjustments to the eye-tracking.<br/>
+      <! -- This is part of ongoing adjustments to the eye-tracking.<br/> -->
       <p> When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds.</p></div>
       `,
       choices: [' '],
@@ -188,6 +201,67 @@ const nImageInst = 2;
       loop_function: () => charity_prac_choice_count < 3,
     };
 
+
+    var EnterRealChoice = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<div> Now you can move on to the real choices. When you are ready, press the <b>SPACE BAR</b> to begin.</div>`,
+        choices: [' '],
+        post_trial_gap: 500,
+    }
+    
+
+    var fixation1 = {
+        type: jsPsychWebgazerValidate,
+        validation_points: [[25,25], [25,75], [75,25], [75,75]],
+        show_validation_data: false,
+        roi_radius: 150,
+        // on_finish: (data) => binary_choice_state_logger(data.accuracy)
+        on_finish: (data) => console.log("accccc: ",data.percent_in_roi)
+      };
+
+    var if_node1 = {
+        timeline: [fixation1],
+        conditional_function: function(){
+            if(Math.round(real_choice_counts%8) == 0){
+                return true;
+            } else {
+                return false;
+            }
+        }
+      }
+      
+      
+      var if_node2 = {
+        timeline: [fixation],
+        conditional_function: function(){
+            if(Math.round(real_choice_counts%8) != 0){
+                return true;
+            } else {
+                return false;
+            }
+        }
+      }
+      stimuli_data = jsPsych.randomization.shuffle(stimuli_data);
+    var real_choice_counts = 0;
+    var real_choice = {
+        timeline: [
+            if_node1,
+            if_node2,
+            {
+                type: jsPsychBinaryChoiceTableFour,
+                stimulus: () => stimuli_data[real_choice_counts],
+                choices: ["F", "J"],
+                realOrPrac: true,
+                on_finish: () => real_choice_counts++,
+                extensions: [
+            {type: jsPsychExtensionWebgazer, params: {targets: ['#div-table']}}  
+            ]
+            }
+        ],
+        loop_function: () => real_choice_counts < 10,
+      };
+  
+      
 
     var trial = {
       type: jsPsychHtmlKeyboardResponse,
@@ -228,31 +302,6 @@ const nImageInst = 2;
       randomize_order: true
     };
 
-    // var on_finish_callback = function () {
-    //     // jsPsych.data.displayData();
-    //      jsPsych.data.addProperties({
-    //        browser_name: bowser.name,
-    //        browser_type: bowser.version,
-    //        subject: subject_id,
-    //        interaction: jsPsych.data.getInteractionData().json(),
-    //        //quiz: quiz_correct_count,
-    //        windowWidth: screen.width,
-    //        windowHight: screen.height
-    //      });
-    //      var data = JSON.stringify(jsPsych.data.get().values());
-    //      $.ajax({
-    //          type: "POST",
-    //          url: "/data",
-    //          data: data,
-    //          contentType: "application/json"
-    //        })
-    //        .done(function () {
-    //          // alert("your data has been saved!")
-    //        })
-    //        .fail(function () {
-    //          //alert("problem occured while writing data to box.");
-    //     })
-    // }
 
     var done = {
       type: jsPsychHtmlButtonResponse,
@@ -311,8 +360,12 @@ const nImageInst = 2;
         timeline.push(validation);
         timeline.push(task_instructions);
         timeline.push(charity_prac_choice);
+        timeline.push(EnterRealChoice);
+        timeline.push(real_choice);
+
         // timeline.push(trial_proc);
-        timeline.push(done);
+        // timeline.push(done);
+        timeline.push(success_guard);
     
         jsPsych.run(timeline);
     }

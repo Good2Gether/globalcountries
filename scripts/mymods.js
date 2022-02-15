@@ -3,14 +3,13 @@ require("dotenv").config();
 var Dropbox = require("dropbox").Dropbox;
 const fetch = require("node-fetch");
 
-console.log(process.env);
 
 const dbx = new Dropbox({
     accessToken: process.env.DROPBOXACCESSTOKEN,
     fetch
 });
 
-saveDropbox = function(content, foldername) {
+saveDropbox = function (content, filename, foldername) {
     return dbx.filesGetMetadata({
         path: "/" + foldername,
     }).catch(err => {
