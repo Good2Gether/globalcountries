@@ -194,7 +194,7 @@ const nImageInst = 2;
           realOrPrac: false,
           on_finish: () => charity_prac_choice_count++,
           extensions: [
-        {type: jsPsychExtensionWebgazer, params: {targets: ['#div-table']}}  
+        {type: jsPsychExtensionWebgazer, params: {targets: ['#div-table', '#up-left', '#bottom-right']}}  
       ]
         }
       ],
@@ -254,7 +254,7 @@ const nImageInst = 2;
                 realOrPrac: true,
                 on_finish: () => real_choice_counts++,
                 extensions: [
-            {type: jsPsychExtensionWebgazer, params: {targets: ['#div-table']}}  
+            {type: jsPsychExtensionWebgazer, params: {targets: ['#div-table', '#up-left', '#bottom-right']}}  
             ]
             }
         ],
