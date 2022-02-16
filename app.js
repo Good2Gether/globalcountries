@@ -8,6 +8,9 @@ var saveDropbox = mymods.saveDropbox;
 // --INSTANTIATE THE APP
 var app = express();
 
+const subjects = {};
+const starttime = Date.now();
+
 // --STATCI MIDDLEWARE
 app.use(express.static(__dirname + '/public'));
 app.use("/js", express.static(__dirname + '/js'));
@@ -89,8 +92,11 @@ app.post("/data", function (request, response) {
 );
 
 app.post("/subject-status", function (request, response) {
+    console.log("sub_stat:", request.body);
     subject_id = request.body.subject_id;
+    console.log("sub_stat:", subject_id);
     status = request.body.status;
+    console.log("sub_stat_id: ");
     subjects[subject_id] = status;
     saveDropboxSingleFile(JSON.stringify(subjects), `subject_status_${starttime}.json`)
     .then(() => console.log(`subjuct status recorded: ${subject_id},${status}`))

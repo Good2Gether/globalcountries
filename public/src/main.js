@@ -7,7 +7,21 @@ const nImageInst = 2;
 
     var fixation_duration = 500;
     var successExp = false;
-    
+
+    function closeFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        /* Firefox */
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        /* Chrome, Safari and Opera */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        /* IE/Edge */
+        document.msExitFullscreen();
+      }
+    }
     var jsPsych = initJsPsych({
       extensions: [
         {type: jsPsychExtensionWebgazer}
@@ -15,8 +29,8 @@ const nImageInst = 2;
       on_finish: () => on_finish_callback(),
       on_close: () => on_finish_callback(),
       on_trial_finish: function () {if(successExp) {
-        closeFullscreen()
-        document.body.style.cursor = 'pointer'
+        closeFullscreen();
+        document.body.style.cursor = 'pointer';
         jsPsych.endExperiment(`<div>
         Thank you for your participation! You can close the browser to end the experiment now. </br>
                     The webcam will turn off when you close the browser. </br>
@@ -33,6 +47,28 @@ const nImageInst = 2;
 
     stimuli_data = jsPsych.randomization.shuffle(stimuli_data);
     console.log(stimuli_data);
+
+
+
+    function makeSurveyCode(status) {
+      uploadSubjectStatus(status);
+      var prefix = {'success': 'cg', 'failed': 'sb'}[status]
+      return `${prefix}${subject_id}`;
+    }
+    
+    function uploadSubjectStatus(status) {
+      $.ajax({
+        type: "POST",
+        url: "/subject-status",
+        data: JSON.stringify({subject_id, status}),
+        contentType: "application/json"
+      });
+    }
+    
+
+// **********************
+// ****** Trials ********
+// **********************
 
     var start_exp_survey_trial = {
       type: jsPsychSurveyText,
@@ -143,17 +179,7 @@ const nImageInst = 2;
       on_finish: (data) => console.log("sadfasdfa2", data.percent_in_roi)
     };
 
-    // var task_instructions = {
-    //   type: jsPsychHtmlButtonResponse,
-    //   stimulus: `
-    //     <p>We're ready for the task now.</p>
-    //     <p>You'll see an arrow symbol (⬅ or ➡) appear on the screen.</p>
-    //     <p>Your job is to press A if ⬅ appears, and L if ➡ appears.</p>
-    //     <p>This will repeat 8 times.</p>
-    //   `,
-    //   choices: ['I am ready!'],
-    //   post_trial_gap: 1000
-    // };
+
 
     var task_instructions = {
       type: jsPsychHtmlKeyboardResponse,
@@ -167,7 +193,7 @@ const nImageInst = 2;
       To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
                  <br><br/>
       After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
-      <! -- This is part of ongoing adjustments to the eye-tracking.<br/> -->
+      <!-- This is part of ongoing adjustments to the eye-tracking.<br/> -->
       <p> When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds.</p></div>
       `,
       choices: [' '],
@@ -367,8 +393,8 @@ const nImageInst = 2;
         timeline.push(real_choice);
 
         // timeline.push(trial_proc);
-        timeline.push(done);
-        // timeline.push(success_guard);
+        // timeline.push(done);
+        timeline.push(success_guard);
     
         jsPsych.run(timeline);
     }
