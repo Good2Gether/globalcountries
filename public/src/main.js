@@ -320,7 +320,7 @@ const nImageInst = 2;
     var success_guard = {
         type: jsPsychCallFunction,
         func: () => {successExp = true}
-      }
+    };
 
     var on_finish_callback = function () {
         // jsPsych.data.displayData();

@@ -185,10 +185,10 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
 
    //   webgazer.pause();
    ///   clearInterval(eye_tracking_interval);
-   if(trial.doEyeTracking) {
-    webgazer.pause();
-    // clearInterval(eye_tracking_interval); 
-    }
+  //  if(trial.doEyeTracking) {
+  //   webgazer.pause();
+  //   // clearInterval(eye_tracking_interval); 
+  //   }
       // data saving
       var trial_data = {
         stimulus: trial.stimulus,
@@ -206,44 +206,44 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
 
     var eyeData = {history:[]};
     display_stimuli();
-    if(trial.doEyeTracking) {
-      console.log("dooooooo eye");
-      jsPsych.extensions.webgazer.resume();
-      // jsPsych.extensions.webgazer.showVideo();
-      jsPsych.extensions.webgazer.hideVideo();
-      jsPsych.extensions.webgazer.showPredictions();
-      // jsPsych.extensions.webgazer.hidePredictions();
-    // webgazer.showFaceOverlay(false);
-    // webgazer.showFaceFeedbackBox(false);
-    var starttime = performance.now();
-    // var eye_tracking_interval = setInterval(
-    //   function() {
-    //     var pos =  jsPsych.extensions.webgazer.getCurrentPrediction();
-    //     console.log(pos.eyeFeatures);
+    // if(trial.doEyeTracking) {
+    //   console.log("dooooooo eye");
+    //   // jsPsych.extensions.webgazer.resume();
+    //   // jsPsych.extensions.webgazer.showVideo();
+    //   // jsPsych.extensions.webgazer.hideVideo();
+    //   // jsPsych.extensions.webgazer.showPredictions();
+    //   // jsPsych.extensions.webgazer.hidePredictions();
+    // // webgazer.showFaceOverlay(false);
+    // // webgazer.showFaceFeedbackBox(false);
+    // var starttime = performance.now();
+    // // var eye_tracking_interval = setInterval(
+    // //   function() {
+    // //     var pos =  jsPsych.extensions.webgazer.getCurrentPrediction();
+    // //     console.log(pos.eyeFeatures);
 
-    //     if (pos) {
+    // //     if (pos) {
 
-    //       var relativePosX = pos.x/screen.width ;
-    //       var relativePosY = pos.y/screen.height;
-    //       var relativePosX2= pos.x/innerWidth ;
-    //       var relativePosY2 = pos.y/innerHeight;
-    //       eyeData.history.push({
-    //        // 'x': pos.x,
-    //       //  'y': pos.y,
-    //         'relative-x': relativePosX,
-    //         'relative-y': relativePosY,
-    //         'relative-x2': relativePosX2,
-    //         'relative-y2': relativePosY2,
-    //         'elapse-time': performance.now() - starttime
-    //       });
-    //     }
-    //   },20);
-    var cancelGazeUpdateHandler = jsPsych.extensions.webgazer.onGazeUpdate(function(prediction){
-      console.log(`Currently looking at ${prediction.x}, ${prediction.y}`);
-    });
+    // //       var relativePosX = pos.x/screen.width ;
+    // //       var relativePosY = pos.y/screen.height;
+    // //       var relativePosX2= pos.x/innerWidth ;
+    // //       var relativePosY2 = pos.y/innerHeight;
+    // //       eyeData.history.push({
+    // //        // 'x': pos.x,
+    // //       //  'y': pos.y,
+    // //         'relative-x': relativePosX,
+    // //         'relative-y': relativePosY,
+    // //         'relative-x2': relativePosX2,
+    // //         'relative-y2': relativePosY2,
+    // //         'elapse-time': performance.now() - starttime
+    // //       });
+    // //     }
+    // //   },20);
+    // var cancelGazeUpdateHandler = jsPsych.extensions.webgazer.onGazeUpdate(function(prediction){
+    //   console.log(`Currently looking at ${prediction.x}, ${prediction.y}`);
+    // });
     
-    cancelGazeUpdateHandler();
-    }
+    // cancelGazeUpdateHandler();
+    // }
 
     
       // // data saving
