@@ -108,14 +108,14 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
         </tr>
         <tr style="vertical-align: center;">
             <td style="text-align: left;">You receive</td>
-            <td style="text-align: center; id="up-left">${trial.stimulus['s1'].toFixed(1)} </td>
+            <td style="text-align: center;" id="up-left">${trial.stimulus['s1'].toFixed(1)} </td>
             <td style="text-align: center;">${trial.stimulus['s2'].toFixed(1)}</td>
             <td></td>
         </tr>
         <tr style="vertical-align: center;">
             <td style="text-align: left;">The other player receives</td>
             <td style="text-align: center;"> ${trial.stimulus['o1'].toFixed(1)}</td>     
-            <td style="text-align: center;" "bottom-right"> ${trial.stimulus['o2'].toFixed(1)} </td>
+            <td style="text-align: center;" id="bottom-right"> ${trial.stimulus['o2'].toFixed(1)} </td>
             <td></td>
         </tr>
       
