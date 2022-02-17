@@ -104,36 +104,40 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
         // var new_html = '';
         var table_stimulus =  ` <div id="div-table" style="margin: auto;">
         <table class="b" style= "table-layout: fixed;
-          border-collapse: collapse;
-          border-style: hidden;
-          ">
-          <colgroup>
-              <col span="1" style="width: 20%;">
+              border-collapse: collapse;
+              border-style: hidden;
+              ">
+              <colgroup>
+                  <col span="1" style="width: 20%;">
+                 
+                  <col span="1" style="width: 30%;">
+                  <col span="1" style="width: 30%; border-left: 1px black solid;">
+                  <col span="1" style="width: 20%;">
+              </colgroup>
+              <tr>
+          
+              <th></th>
+              <th style="vertical-align: top; height: 25px;">Option A</th>
+              <th style="vertical-align: top;">Option B</th>
+              </tr>
+              <tr style="vertical-align: top; height: 400px;">
+                  <td style="text-align: left; padding-top: 150px;">You receive</td>
+                  <td style="text-align: right; padding-right: 250px; padding-top: 150px;" id="up-left">${trial.stimulus['s1'].toFixed(1)} </td>
+                  <td style="text-align: left; padding-top: 150px;  padding-left: 250px;">${trial.stimulus['s2'].toFixed(1)}</td>
+                  <td></td>
+              </tr>
+              <tr style="vertical-align: bottom; height: 400px">
+                  <td style="text-align: left; padding-bottom: 150px;">The other player receives</td>
+                  <td style="text-align: right; padding-right: 250px; padding-bottom: 150px;"> ${trial.stimulus['o1'].toFixed(1)}</td>     
+                  <td style="text-align: left; padding-bottom: 150px;  padding-left: 250px;"> ${trial.stimulus['o2'].toFixed(1)} </td>
+                  <td></td>
+              </tr>
+              <th></th>
+              <th style="vertical-align: top; height: 25px;">Option A</th>
+              <th style="vertical-align: top;">Option B</th>
+              </tr>
             
-              <col span="1" style="width: 30%;">
-              <col span="1" style="width: 30%; border-left: 2px white solid;">
-              <col span="1" style="width: 20%;">
-          </colgroup>
-          <tr>
-      
-          <th></th>
-          <th style="vertical-align: top; height: 50px;">Option A</th>
-          <th style="vertical-align: top;">Option B</th>
-          </tr>
-          <tr style="vertical-align: center;">
-              <td style="text-align: left;">You receive</td>
-              <td style="text-align: center;" id="up-left">${trial.stimulus['s1'].toFixed(1)} </td>
-              <td style="text-align: center;">${trial.stimulus['s2'].toFixed(1)}</td>
-              <td></td>
-          </tr>
-          <tr style="vertical-align: center;">
-              <td style="text-align: left;">The other player receives</td>
-              <td style="text-align: center;"> ${trial.stimulus['o1'].toFixed(1)}</td>     
-              <td style="text-align: center;" id="bottom-right"> ${trial.stimulus['o2'].toFixed(1)} </td>
-              <td></td>
-          </tr>
-        
-          </table>
+              </table>
   
         </div>
       `;
@@ -154,15 +158,7 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
       // turn on webgazer's loop
       console.log("in trial before", this);
       console.log("in trial web", this.jsPsych.extensions.webgazer.isInitialized());
-      // this.jsPsych.extensions.webgazer.isInitialized();
-      // this.jsPsych.extensions.webgazer.showPredictions();
-      // this.jsPsych.extensions.webgazer.resume();
-      
-      // this.jsPsych.extensions.webgazer.showPredictions();
-
-      // this.jsPsych.extensions.webgazer.stopSampleInterval();
-      // this.jsPsych.extensions.webgazer.resume();
-
+     
       // function to end trial when it is time
       const end_trial = () => {
           // kill any remaining setTimeout handlers

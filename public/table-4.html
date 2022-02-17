@@ -18,20 +18,24 @@
               <tr>
           
               <th></th>
-              <th style="vertical-align: top; height: 50px;">Option A</th>
+              <th style="vertical-align: top; height: 25px;">Option A</th>
               <th style="vertical-align: top;">Option B</th>
               </tr>
-              <tr style="vertical-align: center;">
-                  <td style="text-align: left;">You receive</td>
-                  <td style="text-align: center;" id="up-left">${trial.stimulus['s1'].toFixed(1)} </td>
-                  <td style="text-align: center;">${trial.stimulus['s2'].toFixed(1)}</td>
+              <tr style="vertical-align: top; height: 400px;">
+                  <td style="text-align: left; padding-top: 150px;">You receive</td>
+                  <td style="text-align: right; padding-right: 250px; padding-top: 150px;" id="up-left">${trial.stimulus['s1'].toFixed(1)} </td>
+                  <td style="text-align: left; padding-top: 150px;  padding-left: 250px;">${trial.stimulus['s2'].toFixed(1)}</td>
                   <td></td>
               </tr>
-              <tr style="vertical-align: center;">
-                  <td style="text-align: left;">The other player receives</td>
-                  <td style="text-align: center;"> ${trial.stimulus['o1'].toFixed(1)}</td>     
-                  <td style="text-align: center;" id="bottom-right"> ${trial.stimulus['o2'].toFixed(1)} </td>
+              <tr style="vertical-align: bottom; height: 400px">
+                  <td style="text-align: left; padding-bottom: 150px;">The other player receives</td>
+                  <td style="text-align: right; padding-right: 250px; padding-bottom: 150px;"> ${trial.stimulus['o1'].toFixed(1)}</td>     
+                  <td style="text-align: left; padding-bottom: 150px;  padding-left: 250px;"> ${trial.stimulus['o2'].toFixed(1)} </td>
                   <td></td>
+              </tr>
+              <th></th>
+              <th style="vertical-align: top; height: 25px;">Option A</th>
+              <th style="vertical-align: top;">Option B</th>
               </tr>
             
               </table>
