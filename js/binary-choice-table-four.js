@@ -34,7 +34,32 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
         pretty_name: 'eye-tracking',
         default: true,
         description: 'Whether it is a real choice, real- true'
-      }
+      }, 
+            /**
+       * How long to show the stimulus.
+       */
+      stimulus_duration: {
+          type: jspsych.ParameterType.INT,
+          pretty_name: "Stimulus duration",
+          default: null,
+      },
+      /**
+       * How long to show trial before it ends.
+       */
+      trial_duration: {
+          type: jspsych.ParameterType.INT,
+          pretty_name: "Trial duration",
+          default: null,
+      },
+      /**
+       * If true, trial will end when subject makes a response.
+       */
+      response_ends_trial: {
+          type: jspsych.ParameterType.BOOL,
+          pretty_name: "Response ends trial",
+          default: true,
+      },
+      
       },
   };
 
@@ -52,206 +77,157 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
     }
     trial(display_element, trial) {
 
+
+
       // set default values for the parameters
-    trial.choices = trial.choices || [];
-    //trial.timing_stim = trial.timing_stim || -1;
-    trial.timing_response = trial.timing_response || -1;
-    var selected_color = 'rgb(5, 157, 190)';
-    var setTimeoutHandlers = [];
-    var keyboardListener;
-   
-    var response = {
-      rt: -1,
-      key: -1
-    };
-
-    // display stimuli
-    var display_stage = function () {
-      
-      // console.log('!!! display_stage');
-      console.log(trial.stimulus['o1']);
-      
+      trial.choices = trial.choices || [];
+      //trial.timing_stim = trial.timing_stim || -1;
+      trial.timing_response = trial.timing_response || -1;
+      var keyboardListener;
     
-      kill_timers();
-      kill_listeners();
-
-      display_element.innerHTML = '';
-      var new_html = '';
-
-
-      // new_html += '<div class="container-multi-choice">';
-      // new_html += '<div class="container-multi-choice-column" id= "multiattribute-choices-stimulus-left">';
-      // new_html += `<div id="multiattribute-choices-stimulus-left " ><img height="320px" width="450px" src="${trial.stimulus[0]}"/></div>`;
-      // new_html += '</div>';
-      // new_html += '<div class="container-multi-choice-column" id= "multiattribute-choices-stimulus-right">';
-      // new_html += `<div id="multiattribute-choices-stimulus-right " ><img height="320px" width="450px" src="${trial.stimulus[1]}"/></div>`;
-      // new_html += '</div>';
-      // new_html += '<div id="binary-timeoutinfo"></div>';
-      // new_html += '</div>';
-      new_html += ` <div id="div-table" style="margin: auto;">
-      <table class="b" style= "table-layout: fixed;
-        border-collapse: collapse;
-        border-style: hidden;
-        ">
-        <colgroup>
-            <col span="1" style="width: 20%;">
-           
-            <col span="1" style="width: 30%;">
-            <col span="1" style="width: 30%; border-left: 2px white solid;">
-            <col span="1" style="width: 20%;">
-        </colgroup>
-        <tr>
-    
-        <th></th>
-        <th style="vertical-align: top; height: 50px;">Option A</th>
-        <th style="vertical-align: top;">Option B</th>
-        </tr>
-        <tr style="vertical-align: center;">
-            <td style="text-align: left;">You receive</td>
-            <td style="text-align: center;" id="up-left">${trial.stimulus['s1'].toFixed(1)} </td>
-            <td style="text-align: center;">${trial.stimulus['s2'].toFixed(1)}</td>
-            <td></td>
-        </tr>
-        <tr style="vertical-align: center;">
-            <td style="text-align: left;">The other player receives</td>
-            <td style="text-align: center;"> ${trial.stimulus['o1'].toFixed(1)}</td>     
-            <td style="text-align: center;" id="bottom-right"> ${trial.stimulus['o2'].toFixed(1)} </td>
-            <td></td>
-        </tr>
-      
-        </table>
- 
-      </div>
-    `;
-      display_element.innerHTML = new_html;
-    };
-
-    
-    var display_timeout = function () {
-      $('binary-timeoutinfo').text('Time out!');
-    };
-
-    var kill_timers = function () {
-      for (var i = 0; i < setTimeoutHandlers.length; i++) {
-        clearTimeout(setTimeoutHandlers[i]);
-      }
-    };
-
-
-    var kill_listeners = function () {
-      if (typeof keyboardListener !== 'undefined') {
-        jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
-      }
-    };
-
-    var start_response_listener = function () {
-      if (trial.choices != "NO_KEYS") {
-        keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
-          valid_responses: trial.choices,
-          rt_method: 'performance',
-          persist: false,
-          allow_held_key: false,
-          callback_function: function (info) {
-            kill_listeners();
-            kill_timers();
-            response = info;
-            // display_selection();
-            setTimeout(() => end_trial(false), 500);
-          },
-        });
-      }
-    };
-    
-    var display_stimuli = function () {
-      kill_timers();
-      kill_listeners();
-      display_stage();
-      start_response_listener();
-  
-      if (trial.timing_response > 0) {
-        var response_timer = setTimeout(function () {
-          kill_listeners();
-          display_timeout();
-          setTimeout(() => end_trial(true), 500);
-        }, trial.timing_response);
-         setTimeoutHandlers.push(response_timer);
-      }
-    };
-
-    
-  
-
-    var end_trial = function (timeout) {
-
-   //   webgazer.pause();
-   ///   clearInterval(eye_tracking_interval);
-  //  if(trial.doEyeTracking) {
-  //   webgazer.pause();
-  //   // clearInterval(eye_tracking_interval); 
-  //   }
-      // data saving
-      var trial_data = {
-        stimulus: trial.stimulus,
-        left_stimulus:trial.stimulus[0],
-        right_stimulus: trial.stimulus[1],
-        probability:trial.Probabilty,
-        rt: response.rt,
-        key_press: response.key,
-        choices: trial.choices,
-        eyeData: JSON.stringify(eyeData),
-        realtrial:  trial.realOrPrac
+      var response = {
+        rt: -1,
+        key: -1
       };
-      jsPsych.finishTrial(trial_data);
-    };
+      console.log("in_trial: ", this);
+      // this.jsPsych.extensions.webgazer.showPredictions();
+      // this.jsPsych.extensions.webgazer.resume();
+      
+      // display stimuli
 
-    var eyeData = {history:[]};
-    display_stimuli();
-    // if(trial.doEyeTracking) {
-    //   console.log("dooooooo eye");
-    //   // jsPsych.extensions.webgazer.resume();
-    //   // jsPsych.extensions.webgazer.showVideo();
-    //   // jsPsych.extensions.webgazer.hideVideo();
-    //   // jsPsych.extensions.webgazer.showPredictions();
-    //   // jsPsych.extensions.webgazer.hidePredictions();
-    // // webgazer.showFaceOverlay(false);
-    // // webgazer.showFaceFeedbackBox(false);
-    // var starttime = performance.now();
-    // // var eye_tracking_interval = setInterval(
-    // //   function() {
-    // //     var pos =  jsPsych.extensions.webgazer.getCurrentPrediction();
-    // //     console.log(pos.eyeFeatures);
+      
+        // console.log('!!! display_stage');
+        console.log(trial.stimulus['o1']);
+        console.log("this: ",this);
 
-    // //     if (pos) {
+        display_element.innerHTML = '';
+        // var new_html = '';
+        var table_stimulus =  ` <div id="div-table" style="margin: auto;">
+        <table class="b" style= "table-layout: fixed;
+          border-collapse: collapse;
+          border-style: hidden;
+          ">
+          <colgroup>
+              <col span="1" style="width: 20%;">
+            
+              <col span="1" style="width: 30%;">
+              <col span="1" style="width: 30%; border-left: 2px white solid;">
+              <col span="1" style="width: 20%;">
+          </colgroup>
+          <tr>
+      
+          <th></th>
+          <th style="vertical-align: top; height: 50px;">Option A</th>
+          <th style="vertical-align: top;">Option B</th>
+          </tr>
+          <tr style="vertical-align: center;">
+              <td style="text-align: left;">You receive</td>
+              <td style="text-align: center;" id="up-left">${trial.stimulus['s1'].toFixed(1)} </td>
+              <td style="text-align: center;">${trial.stimulus['s2'].toFixed(1)}</td>
+              <td></td>
+          </tr>
+          <tr style="vertical-align: center;">
+              <td style="text-align: left;">The other player receives</td>
+              <td style="text-align: center;"> ${trial.stimulus['o1'].toFixed(1)}</td>     
+              <td style="text-align: center;" id="bottom-right"> ${trial.stimulus['o2'].toFixed(1)} </td>
+              <td></td>
+          </tr>
+        
+          </table>
+  
+        </div>
+      `;
+        var new_html = '<div id="jspsych-html-keyboard-response-stimulus">' + table_stimulus + "</div>";
+          
+      // add prompt
+      // if (trial.prompt !== null) {
+      //     new_html += trial.prompt;
+      // }
+      // // draw
+      display_element.innerHTML = new_html;
+      // store response
+      var response = {
+          rt: null,
+          key: null,
+      };
 
-    // //       var relativePosX = pos.x/screen.width ;
-    // //       var relativePosY = pos.y/screen.height;
-    // //       var relativePosX2= pos.x/innerWidth ;
-    // //       var relativePosY2 = pos.y/innerHeight;
-    // //       eyeData.history.push({
-    // //        // 'x': pos.x,
-    // //       //  'y': pos.y,
-    // //         'relative-x': relativePosX,
-    // //         'relative-y': relativePosY,
-    // //         'relative-x2': relativePosX2,
-    // //         'relative-y2': relativePosY2,
-    // //         'elapse-time': performance.now() - starttime
-    // //       });
-    // //     }
-    // //   },20);
-    // var cancelGazeUpdateHandler = jsPsych.extensions.webgazer.onGazeUpdate(function(prediction){
-    //   console.log(`Currently looking at ${prediction.x}, ${prediction.y}`);
-    // });
-    
-    // cancelGazeUpdateHandler();
-    // }
+      // turn on webgazer's loop
+      console.log("in trial before", this);
+      console.log("in trial web", this.jsPsych.extensions.webgazer.isInitialized());
+      // this.jsPsych.extensions.webgazer.isInitialized();
+      // this.jsPsych.extensions.webgazer.showPredictions();
+      // this.jsPsych.extensions.webgazer.resume();
+      
+      // this.jsPsych.extensions.webgazer.showPredictions();
 
-    
-      // // data saving
-      // var trial_data = {
-      //   parameter_name: "parameter value",
-      // };
-      // // end trial
-      // this.jsPsych.finishTrial(trial_data);
+      // this.jsPsych.extensions.webgazer.stopSampleInterval();
+      // this.jsPsych.extensions.webgazer.resume();
+
+      // function to end trial when it is time
+      const end_trial = () => {
+          // kill any remaining setTimeout handlers
+          this.jsPsych.pluginAPI.clearAllTimeouts();
+          // kill keyboard listeners
+          if (typeof keyboardListener !== "undefined") {
+              this.jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
+          }
+          // gather the data to store for the trial
+          // var trial_data = {
+          //     rt: response.rt,
+          //     stimulus: trial.stimulus,
+          //     response: response.key,
+          // };
+          var trial_data = {
+            stimulus: trial.stimulus,
+            rt: response.rt,
+            key_press: response.key,
+            choices: trial.choices,
+            realtrial:  trial.realOrPrac
+          };
+          console.log("in end binary: ", this);
+  
+          // clear the display
+          display_element.innerHTML = "";
+          // move on to the next trial
+          this.jsPsych.finishTrial(trial_data);
+      };
+      // function to handle responses by the subject
+      var after_response = (info) => {
+          // after a valid response, the stimulus will have the CSS class 'responded'
+          // which can be used to provide visual feedback that a response was recorded
+          display_element.querySelector("#jspsych-html-keyboard-response-stimulus").className +=
+              " responded";
+          // only record the first response
+          if (response.key == null) {
+              response = info;
+          }
+          if (trial.response_ends_trial) {
+              end_trial();
+          }
+      };
+      // start the response listener
+      if (trial.choices != "NO_KEYS") {
+          var keyboardListener = this.jsPsych.pluginAPI.getKeyboardResponse({
+              callback_function: after_response,
+              valid_responses: trial.choices,
+              rt_method: "performance",
+              persist: false,
+              allow_held_key: false,
+          });
+      }
+      // hide stimulus if stimulus_duration is set
+      if (trial.stimulus_duration !== null) {
+          this.jsPsych.pluginAPI.setTimeout(() => {
+              display_element.querySelector("#jspsych-html-keyboard-response-stimulus").style.visibility = "hidden";
+          }, trial.stimulus_duration);
+      }
+      // end trial if trial_duration is set
+      if (trial.trial_duration !== null) {
+          this.jsPsych.pluginAPI.setTimeout(end_trial, trial.trial_duration);
+      }
+
+  
+
     }
   }
   BinaryChoiceTableFourPlugin.info = info;

@@ -98,6 +98,7 @@ var jsPsychWebgazerValidate = (function (jspsych) {
               // clear the display
               display_element.innerHTML = "";
               // move on to the next trial
+              console.log("in validation: ", this);
               this.jsPsych.finishTrial(trial_data);
           };
           const validation_display = (pt) => {

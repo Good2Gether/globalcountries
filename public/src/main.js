@@ -35,7 +35,7 @@ const nImageInst = 2;
         Thank you for your participation! You can close the browser to end the experiment now. </br>
                     The webcam will turn off when you close the browser. </br>
                       Your survey code is: ${makeSurveyCode('success')}. </br>
-                     We will send you $7 as your participant fee soon! </br> 
+                     
         </div>`);
         }
     }
@@ -120,7 +120,7 @@ const nImageInst = 2;
       stimulus: `
       <div><font size=120%; font color = 'green';> Calibration & Validation</font><br/>
                                                                           <br><br/>
-             <font size = 5px font color = "yellow">There are several <b>IMPORTANT</b> tips that are useful for passing the calibration task:<br/></font>
+             <font size = 3px font color = "black">There are several <b>IMPORTANT</b> tips that are useful for passing the calibration task:<br/></font>
              <img height="200px" width="1000px" src="${instruct_img[1]}"><br/>
              <br><br/>
              <div style="text-align-last:left">
@@ -171,11 +171,17 @@ const nImageInst = 2;
       post_trial_gap: 1000
     };
 
+    var validation_points_array = [[25,25], [25,75], [75,25], 
+      [75,75], [25,50], [50,50],
+      [75,50], [50,25], [50,75]];
+        var validation_points_trial = jsPsych.randomization.shuffle(validation_points_array);
+
     var validation = {
       type: jsPsychWebgazerValidate,
-      validation_points: [[25,25], [25,75], [75,25], [75,75]],
+      validation_points: validation_points_trial.slice(0, 4),
       show_validation_data: false,
       roi_radius: 150,
+      validation_duration: 1000,
       on_finish: (data) => console.log("sadfasdfa2", data.percent_in_roi)
     };
 
@@ -225,6 +231,9 @@ const nImageInst = 2;
         }
       ],
       loop_function: () => charity_prac_choice_count < 3,
+      on_start: () => {this.jsPsych.extensions.webgazer.showPredictions();
+        this.jsPsych.extensions.webgazer.resume();
+      }
     };
 
 
@@ -241,8 +250,8 @@ const nImageInst = 2;
         validation_points: [[25,25], [25,75], [75,25], [75,75]],
         show_validation_data: false,
         roi_radius: 150,
-        // on_finish: (data) => binary_choice_state_logger(data.accuracy)
-        on_finish: (data) => console.log("accccc: ",data.percent_in_roi)
+        on_finish: (data) => console.log("acc: ",data.percent_in_roi),
+        on_start: (fixation1) => fixation1.validation_points = jsPsych.randomization.shuffle(validation_points_array).slice(0,3)
       };
 
     var if_node1 = {
