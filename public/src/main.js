@@ -30,7 +30,7 @@ const nImageInst = 2;
       on_close: () => on_finish_callback(),
       on_trial_finish: function () {if(successExp) {
         closeFullscreen();
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = 'auto';
         jsPsych.endExperiment(`<div>
         Thank you for your participation! You can close the browser to end the experiment now. </br>
                     The webcam will turn off when you close the browser. </br>
@@ -105,6 +105,7 @@ const nImageInst = 2;
         <p>In order to participate you must allow the experiment to use your camera.</p>
         <p>You will be prompted to do this on the next screen.</p>
         <p>If you do not want to permit the experiment to use your camera, please close the page.</p>
+        <p>Loading the next page may take a few seconds, thank you for your patience</p>
         press the <b>SPACE BAR</b> to begin.
       `,
       choices: [' '],
@@ -112,7 +113,10 @@ const nImageInst = 2;
     };
     
     var init_camera = {
-      type: jsPsychWebgazerInitCamera
+      type: jsPsychWebgazerInitCamera,
+      on_finish: function () {
+        document.body.style.cursor = 'none'
+      }
     };
 
     var calibration_instructions = {
@@ -144,7 +148,8 @@ const nImageInst = 2;
 
     var calibration = {
       type: jsPsychWebgazerCalibrate,
-      calibration_points: [[50,50], [25,25], [25,75], [75,25], [75,75]],
+      calibration_points: [[90,10], [10,90] ,[10,10], [50,50], [25,25], [25,75], [75,25], [75,75], [90,90]],
+      // calibration_points: [[50,50], [25,25], [25,75], [75,25], [75,75]],
       //calibration_points: [[10,10],[10,30],[10,50],[10,70],[10,90],[30,10],[30,30],[30,50],[30,70],[30,90],[50,10],[50,30],[50,50],[50,70],[50,90],[70,10],[70,30],[70,50],[70,70],[70,90],[90,10],[90,30],[90,50],[90,70],[90,90]],
       // calibration_points: [
       //   [10,10],[10,50],[10,90],
@@ -154,9 +159,9 @@ const nImageInst = 2;
       //   [60,10],[60,30],[60,40],[60,45],[60,50],[60,55],[60,60],[60,70],[60,90],
       //   [70,10],[70,50],[70,90],
       //   [90,10],[90,50],[90,90]],
-      repetitions_per_point: 2,
+      repetitions_per_point: 1 ,
       calibration_mode: 'view',
-      time_per_point: 3000, 
+      time_per_point: 2000, 
       randomize_calibration_order: true,
     };
 
@@ -231,9 +236,9 @@ const nImageInst = 2;
         }
       ],
       loop_function: () => charity_prac_choice_count < 3,
-      on_start: () => {this.jsPsych.extensions.webgazer.showPredictions();
-        this.jsPsych.extensions.webgazer.resume();
-      }
+      // on_start: () => {this.jsPsych.extensions.webgazer.showPredictions();
+      //   this.jsPsych.extensions.webgazer.resume();
+      // }
     };
 
 
@@ -244,6 +249,34 @@ const nImageInst = 2;
         post_trial_gap: 500,
     }
     
+    var cali_vali_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+      <div>We need to redo the calibration and validation before you return to the study.  </br>
+      As before, make sure you stare at each dot until it disappears and make sure you don’t move your head.</br>
+       <br></br>
+       Press the <b>SPACE BAR</b> when you are ready to begin.</div>`,
+      choices: [' '],
+      post_trial_gap: 1000
+    };
+
+    var fixation_cali = {
+        type: jsPsychWebgazerCalibrate,
+        calibration_points: [[90,10], [10,90] ,[10,10], [50,50], [25,25], [25,75], [75,25], [75,75], [90,90]],
+        //calibration_points: [[10,10],[10,30],[10,50],[10,70],[10,90],[30,10],[30,30],[30,50],[30,70],[30,90],[50,10],[50,30],[50,50],[50,70],[50,90],[70,10],[70,30],[70,50],[70,70],[70,90],[90,10],[90,30],[90,50],[90,70],[90,90]],
+        // calibration_points: [
+        //   [10,10],[10,50],[10,90],
+        //   [30,10],[30,50],[30,90],
+        //   [40,10],[40,30],[40,40],[40,45],[40,50],[40,55],[40,60],[40,70],[40,90],
+        //   [50,10],[50,30],[50,40],[50,45],[50,50],[50,55],[50,60],[50,70],[50,90],
+        //   [60,10],[60,30],[60,40],[60,45],[60,50],[60,55],[60,60],[60,70],[60,90],
+        //   [70,10],[70,50],[70,90],
+        //   [90,10],[90,50],[90,90]],
+        repetitions_per_point: 1,
+        calibration_mode: 'view',
+        time_per_point: 2000, 
+        randomize_calibration_order: true,
+      };
 
     var fixation1 = {
         type: jsPsychWebgazerValidate,
@@ -255,9 +288,9 @@ const nImageInst = 2;
       };
 
     var if_node1 = {
-        timeline: [fixation1],
+        timeline: [cali_vali_instructions ,fixation_cali, fixation1],
         conditional_function: function(){
-            if(Math.round(real_choice_counts%8) == 0){
+            if(real_choice_counts == 5 || real_choice_counts == 10){
                 return true;
             } else {
                 return false;
@@ -269,7 +302,7 @@ const nImageInst = 2;
       var if_node2 = {
         timeline: [fixation],
         conditional_function: function(){
-            if(Math.round(real_choice_counts%8) != 0){
+            if(real_choice_counts != 5 && real_choice_counts != 10){
                 return true;
             } else {
                 return false;
@@ -296,7 +329,7 @@ const nImageInst = 2;
             ]
             }
         ],
-        loop_function: () => real_choice_counts < 10,
+        loop_function: () => real_choice_counts < 24,
       };
   
       
@@ -321,23 +354,6 @@ const nImageInst = 2;
       extensions: [
         {type: jsPsychExtensionWebgazer, params: {targets: ['#arrow-target']}}  
       ]
-    };
-
-    var params = [
-      { left: 0, top: 0, direction: 'left' },
-      { left: 100, top: 0, direction: 'left' },
-      { left: 0, top: 100, direction: 'left' },
-      { left: 100, top: 100, direction: 'left' },
-      { left: 0, top: 0, direction: 'right' },
-      { left: 100, top: 0, direction: 'right' },
-      { left: 0, top: 100, direction: 'right' },
-      { left: 100, top: 100, direction: 'right' },
-    ];
-
-    var trial_proc = {
-      timeline: [fixation, trial],
-      timeline_variables: params,
-      randomize_order: true
     };
 
 
@@ -369,7 +385,7 @@ const nImageInst = 2;
             interaction: jsPsych.data.getInteractionData().json(),
             //quiz: quiz_correct_count,
             windowWidth: screen.width,
-            windowHight: screen.height
+            windowHeight: screen.height
         });
         var data = JSON.stringify(jsPsych.data.get().values());
         $.ajax({
