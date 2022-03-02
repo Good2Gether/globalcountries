@@ -25,6 +25,8 @@
     
     <!-- <script src="js/binary-choice-table.js"></script> -->
     <script src="js/binary-choice-table-four.js"></script>
+    <script src="js/svo-survey-multi-choice.js"></script>
+    <script src="js/svo-survey-likert.js"></script>
     <script src="../src/main.js"></script>
     <style>
       .jspsych-content {
@@ -32,9 +34,54 @@
       }
     </style>
   </head>
-  <body></body>
+  <body>
+    <div
+    style="background-color: white;color:black; padding-bottom: 50px; padding-left: 50px;padding-right: 50px; padding-top: 50px; font-size: larger; font-family:Arial, Helvetica, sans-serif">
+    <h2>Consent Comes here: <br> <br>  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br></h2>
+    
+    <p style="text-align: center;"></p>
+    <div style="text-align:right;">
+        <input type="checkbox" class="checkmark">
+        I <b>AGREE</b> with the above consent.
+        <br><br><br>
+        <button class="goExp" style="font-size: larger;">
+            Continue
+        </button>
+    </div>
+</div>
+  </body>
   <script>
-    startExp();
+    // startExp();
+    const goExp = document.querySelector(".goExp");
 
+    function showAlert() {
+        alert("Please check the checkbox to continue.");
+    }
+
+
+    $('body').on('click', '.goExp', function () {
+      if ($('.checkmark').is(":checked"))
+      {
+        ensureWebcam(() => startExp());
+      // startExp();
+      }else{
+        showAlert();
+      }
+        
+    });
+
+    function ensureWebcam(callback) {
+        $('body').html('<p class="center", style="font-family:Arial, Helvetica, sans-serif">Checking webcam ...</p>');
+        window.navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            stream.getTracks().forEach(track => track.stop());
+            callback();
+        })
+        .catch(function() {
+            alert('Cannot open webcam.\nIs it blocked? This app requires webcam.');
+            location.reload();
+        });
+    }
+    
   </script>
 </html>

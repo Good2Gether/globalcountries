@@ -4,9 +4,10 @@ const nImageInst = 2;
     for (var i = 0; i < nImageInst; i++) {
       instruct_img.push('../img/instruct' + i + '.png');
     }
-
+    instruct_img.push('../img/svo_example.png');
     var fixation_duration = 500;
     var successExp = false;
+    
 
     function closeFullscreen() {
       if (document.exitFullscreen) {
@@ -44,6 +45,9 @@ const nImageInst = 2;
 
 
     var subject_id = jsPsych.randomization.randomID(7);
+    var participant_stimuli_list = ['you_top', "top_down"];
+    var participant_payoff_order = (jsPsych.randomization.shuffle(participant_stimuli_list)[1] == 'you_top') ;
+
 
     stimuli_data = jsPsych.randomization.shuffle(stimuli_data);
     console.log(stimuli_data);
@@ -97,6 +101,229 @@ const nImageInst = 2;
       //   document.body.style.cursor = 'none'
       // }
     };
+
+    var SVO_instruction = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: ` <div style="width: 80%; margin: auto;">
+      <p> In this task, imagine that you have been randomly paired with another person,
+      whom we will refer to as <b>the other</b>. This other person is someone you do not
+      know and will remain mutually anonymous. All of your choices would be
+      completely confidential. </p> 
+      <p> You will be making a series of decisions about allocating resources between you
+      and this other person. For each of the following questions, please indicate the
+      distribution you prefer most by <b> selecting the button below the payoff
+      allocations</b>. You can only make one selection for each question. Your decisions
+      will yield money for both yourself and the other person. In the example below, a
+      person has chosen to distribute the payoff so that he/she receives 50 dollars, while
+      the anonymous other person receives 40 dollars. </p>
+      
+      <img height="150px" src="${instruct_img[2]}"><br/>
+
+      <p> There	are	no	right	or	wrong	answers,	this	is	all	about	personal	preferences.	After	you	
+      have	made	your	decision,	<b> select	the	resulting	distribution	of	money	by	clicking	on	
+      button	below	your	choice. </b>	As	you	can	see,	your	choices	will	influence	both	the	amount	
+      of	money 	you	receive	as	well	as	the	amount	of	money	the	other	receives.
+      </p>
+      <br>
+      press the <b>SPACE BAR</b> to begin.
+      </div>`,
+      choices: [' '],
+      post_trial_gap: 1000
+    };
+
+    var SVO_prompt = "You receive: <br> | <br> Other receives:";
+    
+    // var SVO_trial = {
+    //   type: jsPsychSVOMultiChoice,
+    //   questions:[
+    //     {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_1', 
+    //       options: [`\n85\n | \n85`, `\n85\n | \n76`, `\n85\n | \n68`,`\n85\n | \n59`, `\n85\n | \n50`, `\n85\n | \n41`, `\n85\n | \n33`, `\n85\n | \n24`, `\n85\n | \n15`], 
+    //       required: true,
+    //       horizontal: true
+    //     }, 
+    //     {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_2', 
+    //       options: [`\n85\n | \n15`, `\n87\n | \n19`,`\n89\n | \n24`, `\n91\n | \n28`, `\n93\n | \n33`, `\n94\n | \n37`, `\n96\n | \n41`, `\n98\n | \n46`, `\n100\n | \n50`], 
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_3', 
+    //       options: [`\n50\n | \n100`, `\n54\n | \n98`,`\n59\n | \n96`, `\n63\n | \n94`, `\n68\n | \n93`, `\n72\n | \n91`, `\n76\n | \n89`, `\n81\n | \n87`, `\n85\n | \n85`], 
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_4', 
+    //       options: [`\n50\n | \n100`, `\n54\n | \n89`,`\n59\n | \n79`, `\n63\n | \n68`, `\n68\n | \n58`, `\n72\n | \n47`, `\n76\n | \n36`, `\n81\n | \n26`, `\n85\n | \n15`], 
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_5', 
+    //       options: [`\n100\n | \n50`, `\n94\n | \n56`,`\n88\n | \n63`, `\n81\n | \n69`, `\n75\n | \n75`, `\n69\n | \n81`, `\n63\n | \n88`, `\n56\n | \n94`, `\n50\n | \n100`], 
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_6', 
+    //       options: [`\n100\n | \n50`, `\n98\n | \n54`,`\n96\n | \n59`, `\n94\n | \n63`, `\n93\n | \n68`, `\n91\n | \n72`, `\n89\n | \n76`, `\n87\n | \n81`, `\n85\n | \n85`], 
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_7', 
+    //       options: [`\n100\n | \n50`, `\n96\n | \n56`,`\n93\n | \n63`, `\n89\n | \n69`, `\n85\n | \n75`, `\n81\n | \n81`, `\n78\n | \n88`, `\n74\n | \n94`, `\n70\n | \n100`],  
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_8', 
+    //       options: [`\n90\n | \n100`, `\n91\n | \n99`,`\n93\n | \n98`, `\n94\n | \n96`, `\n95\n | \n95`, `\n96\n | \n94`, `\n98\n | \n93`, `\n99\n | \n91`, `\n100\n | \n90`],  
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_9', 
+    //       options: [`\n100\n | \n70`, `\n94\n | \n74`,`\n88\n | \n78`, `\n81\n | \n81`, `\n75\n | \n85`, `\n69\n | \n89`, `\n63\n | \n93`, `\n56\n | \n96`, `\n50\n | \n100`],  
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt,
+    //       name: 'SVO_10', 
+    //       options: [`\n100\n | \n70`, `\n99\n | \n74`,`\n98\n | \n78`, `\n96\n | \n81`, `\n95\n | \n85`, `\n94\n | \n89`, `\n93\n | \n93`, `\n91\n | \n96`, `\n90\n | \n100`],  
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_11', 
+    //       options: [`\n70\n | \n100`, `\n74\n | \n96`,`\n78\n | \n93`, `\n81\n | \n89`, `\n85\n | \n85`, `\n89\n | \n81`, `\n93\n | \n78`, `\n96\n | \n74`, `\n100\n | \n70`],  
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_12', 
+    //       options: [`\n50\n | \n100`, `\n56\n | \n99`,`\n63\n | \n98`, `\n69\n | \n96`, `\n75\n | \n95`, `\n81\n | \n94`, `\n88\n | \n93`, `\n94\n | \n91`, `\n100\n | \n90`],   
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt, 
+    //       name: 'SVO_13', 
+    //       options: [`\n50\n | \n100`, `\n56\n | \n94`,`\n63\n | \n88`, `\n69\n | \n81`, `\n75\n | \n75`, `\n81\n | \n69`, `\n88\n | \n63`, `\n94\n | \n56`, `\n100\n | \n50`],   
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt,
+    //       name: 'SVO_14', 
+    //       options: [`\n100\n | \n90`, `\n96\n | \n91`,`\n93\n | \n93`, `\n89\n | \n94`, `\n85\n | \n95`, `\n81\n | \n96`, `\n78\n | \n98`, `\n74\n | \n99`, `\n70\n | \n100`],  
+    //       required: true,
+    //       horizontal: true
+    //     }, {
+    //       prompt: SVO_prompt,
+    //       name: 'SVO_15', 
+    //       options: [`\n90\n | \n100`, `\n91\n | \n94`,`\n93\n | \n88`, `\n94\n | \n81`, `\n95\n | \n75`, `\n96\n | \n69`, `\n98\n | \n63`, `\n99\n | \n56`, `\n100\n | \n50`],    
+    //       required: true,
+    //       horizontal: true
+    //     }, 
+    //   ]
+    // };
+
+
+    var SVO_trial_likert = {
+      type: jsPsychSVOSurveyLikert,
+      questions:[
+        {
+          prompt: SVO_prompt, 
+          name: 'SVO_1', 
+          labels: [`\n85\n | \n85`, `\n85\n | \n76`, `\n85\n | \n68`,`\n85\n | \n59`, `\n85\n | \n50`, `\n85\n | \n41`, `\n85\n | \n33`, `\n85\n | \n24`, `\n85\n | \n15`], 
+          required: true
+        }, 
+        {
+          prompt: SVO_prompt, 
+          name: 'SVO_2', 
+          labels: [`\n85\n | \n15`, `\n87\n | \n19`,`\n89\n | \n24`, `\n91\n | \n28`, `\n93\n | \n33`, `\n94\n | \n37`, `\n96\n | \n41`, `\n98\n | \n46`, `\n100\n | \n50`], 
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_3', 
+          labels: [`\n50\n | \n100`, `\n54\n | \n98`,`\n59\n | \n96`, `\n63\n | \n94`, `\n68\n | \n93`, `\n72\n | \n91`, `\n76\n | \n89`, `\n81\n | \n87`, `\n85\n | \n85`], 
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_4', 
+          labels: [`\n50\n | \n100`, `\n54\n | \n89`,`\n59\n | \n79`, `\n63\n | \n68`, `\n68\n | \n58`, `\n72\n | \n47`, `\n76\n | \n36`, `\n81\n | \n26`, `\n85\n | \n15`], 
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_5', 
+          labels: [`\n100\n | \n50`, `\n94\n | \n56`,`\n88\n | \n63`, `\n81\n | \n69`, `\n75\n | \n75`, `\n69\n | \n81`, `\n63\n | \n88`, `\n56\n | \n94`, `\n50\n | \n100`], 
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_6', 
+          labels: [`\n100\n | \n50`, `\n98\n | \n54`,`\n96\n | \n59`, `\n94\n | \n63`, `\n93\n | \n68`, `\n91\n | \n72`, `\n89\n | \n76`, `\n87\n | \n81`, `\n85\n | \n85`], 
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_7', 
+          labels: [`\n100\n | \n50`, `\n96\n | \n56`,`\n93\n | \n63`, `\n89\n | \n69`, `\n85\n | \n75`, `\n81\n | \n81`, `\n78\n | \n88`, `\n74\n | \n94`, `\n70\n | \n100`],  
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_8', 
+          labels: [`\n90\n | \n100`, `\n91\n | \n99`,`\n93\n | \n98`, `\n94\n | \n96`, `\n95\n | \n95`, `\n96\n | \n94`, `\n98\n | \n93`, `\n99\n | \n91`, `\n100\n | \n90`],  
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_9', 
+          labels: [`\n100\n | \n70`, `\n94\n | \n74`,`\n88\n | \n78`, `\n81\n | \n81`, `\n75\n | \n85`, `\n69\n | \n89`, `\n63\n | \n93`, `\n56\n | \n96`, `\n50\n | \n100`],  
+          required: true
+        }, {
+          prompt: SVO_prompt,
+          name: 'SVO_10', 
+          labels: [`\n100\n | \n70`, `\n99\n | \n74`,`\n98\n | \n78`, `\n96\n | \n81`, `\n95\n | \n85`, `\n94\n | \n89`, `\n93\n | \n93`, `\n91\n | \n96`, `\n90\n | \n100`],  
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_11', 
+          labels: [`\n70\n | \n100`, `\n74\n | \n96`,`\n78\n | \n93`, `\n81\n | \n89`, `\n85\n | \n85`, `\n89\n | \n81`, `\n93\n | \n78`, `\n96\n | \n74`, `\n100\n | \n70`],  
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_12', 
+          labels: [`\n50\n | \n100`, `\n56\n | \n99`,`\n63\n | \n98`, `\n69\n | \n96`, `\n75\n | \n95`, `\n81\n | \n94`, `\n88\n | \n93`, `\n94\n | \n91`, `\n100\n | \n90`],   
+          required: true
+        }, {
+          prompt: SVO_prompt, 
+          name: 'SVO_13', 
+          labels: [`\n50\n | \n100`, `\n56\n | \n94`,`\n63\n | \n88`, `\n69\n | \n81`, `\n75\n | \n75`, `\n81\n | \n69`, `\n88\n | \n63`, `\n94\n | \n56`, `\n100\n | \n50`],   
+          required: true
+        }, {
+          prompt: SVO_prompt,
+          name: 'SVO_14', 
+          labels: [`\n100\n | \n90`, `\n96\n | \n91`,`\n93\n | \n93`, `\n89\n | \n94`, `\n85\n | \n95`, `\n81\n | \n96`, `\n78\n | \n98`, `\n74\n | \n99`, `\n70\n | \n100`],  
+          required: true
+        }, {
+          prompt: SVO_prompt,
+          name: 'SVO_15', 
+          labels: [`\n90\n | \n100`, `\n91\n | \n94`,`\n93\n | \n88`, `\n94\n | \n81`, `\n95\n | \n75`, `\n96\n | \n69`, `\n98\n | \n63`, `\n99\n | \n56`, `\n100\n | \n50`],    
+          required: true
+        }, 
+      ]
+    };
+
+    
+    var likert_scale = [
+      "Strongly Disagree", 
+      "Disagree", 
+      "Neutral", 
+      "Agree", 
+      "Strongly Agree"
+    ];
+
 
     var camera_instructions = {
       type: jsPsychHtmlKeyboardResponse,
@@ -191,13 +418,23 @@ const nImageInst = 2;
     };
 
 
+  //   <div>
+  //   <p> Now, we will begin with the choice task. Please keep your head still, otherwise we may have to redo the calibration and validation.<br/>
+  //   There will be a break halfway through the task. During the break you can move your head if you need to.    <br/>
+  //   You are choosing which option you would choose:</p>
+  //  <br/>
+  //   To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
+  //   To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
+  //              <br><br/>
+  //   After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
+  //   <!-- This is part of ongoing adjustments to the eye-tracking.<br/> -->
+  //   <p> When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds.</p></div>
 
     var task_instructions = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
       <div>
-      <p> Now, we will begin with the choice task. Please keep your head still, otherwise we may have to redo the calibration and validation.<br/>
-      There will be a break halfway through the task. During the break you can move your head if you need to.    <br/>
+      <p> Now, we will begin with the choice task. Please keep your head still.    <br/>
       You are choosing which option you would choose:</p>
      <br/>
       To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
@@ -229,6 +466,7 @@ const nImageInst = 2;
           stimulus: () => stimuli_data[charity_prac_choice_count],
           choices: ["F", "J"],
           realOrPrac: false,
+          payoffYouTop: participant_payoff_order, 
           on_finish: () => charity_prac_choice_count++,
           extensions: [
         {type: jsPsychExtensionWebgazer, params: {targets: ['#up-left', '#bottom-right']}}  
@@ -320,6 +558,7 @@ const nImageInst = 2;
                 stimulus: () => stimuli_data[real_choice_counts],
                 choices: ["F", "J"],
                 realOrPrac: true,
+                payoffYouTop: participant_payoff_order,
                 on_finish: () => real_choice_counts++,
                 extensions: [
                   {
@@ -382,6 +621,7 @@ const nImageInst = 2;
             browser_name: bowser.name,
             browser_type: bowser.version,
             subject: subject_id,
+            payoff_order: participant_payoff_order,
             interaction: jsPsych.data.getInteractionData().json(),
             //quiz: quiz_correct_count,
             windowWidth: screen.width,
@@ -405,10 +645,13 @@ const nImageInst = 2;
     function startExp(){
         var timeline = [];
         timeline.push(start_exp_survey_trial);
-        timeline.push(fullscreenEnter)
+        timeline.push(fullscreenEnter);
+        timeline.push(SVO_instruction);
+        // timeline.push(SVO_trial);
+        timeline.push(SVO_trial_likert);
+        timeline.push(calibration_instructions);
         timeline.push(camera_instructions);
         timeline.push(init_camera);
-        timeline.push(calibration_instructions);
         timeline.push(calibration);
         timeline.push(validation_instructions);
         timeline.push(validation);
