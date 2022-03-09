@@ -42,8 +42,20 @@ const nImageInst = 2;
     }
 
     });
+    var condition_control = {
+      instruction: "There are no right or wrong answers. Choose the option that matches your preferences.",
+      condition: "control"
+    }
+    var condition_alturist = {
+      instruction: "Please choose the options that maximize the other participant's yield.",
+      condition: "alturist"
+    }
+    var condition_proself = {
+      instruction: "Please choose the options that maximizes your yield.",
+      condition: "self"
+    }
 
-
+    var condition_id = jsPsych.randomization.shuffle([condition_control, condition_alturist, condition_control])[1];
     var subject_id = jsPsych.randomization.randomID(7);
     var participant_stimuli_list = ['you_top', "top_down"];
     var participant_payoff_order = (jsPsych.randomization.shuffle(participant_stimuli_list)[1] == 'you_top') ;
@@ -81,9 +93,10 @@ const nImageInst = 2;
         {prompt: "What's your age?", rows: 1, columns: 50, required:true},
         {prompt: "What's your gender? (Female/Male/Other)", rows: 1, columns: 50,require: true},
       ],
-      preamble: `<div>Thanks for choosing our experiment! Please answer the following questions to begin today's study. </div>`,
+      preamble: `<div>Thank you for participating in this study! Please answer the following questions to begin the study. </div>`,
     };
 
+    
 
     /** full screen */
     var fullscreenEnter = {
@@ -133,103 +146,7 @@ const nImageInst = 2;
 
     var SVO_prompt = "You receive: <br> | <br> Other receives:";
     
-    // var SVO_trial = {
-    //   type: jsPsychSVOMultiChoice,
-    //   questions:[
-    //     {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_1', 
-    //       options: [`\n85\n | \n85`, `\n85\n | \n76`, `\n85\n | \n68`,`\n85\n | \n59`, `\n85\n | \n50`, `\n85\n | \n41`, `\n85\n | \n33`, `\n85\n | \n24`, `\n85\n | \n15`], 
-    //       required: true,
-    //       horizontal: true
-    //     }, 
-    //     {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_2', 
-    //       options: [`\n85\n | \n15`, `\n87\n | \n19`,`\n89\n | \n24`, `\n91\n | \n28`, `\n93\n | \n33`, `\n94\n | \n37`, `\n96\n | \n41`, `\n98\n | \n46`, `\n100\n | \n50`], 
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_3', 
-    //       options: [`\n50\n | \n100`, `\n54\n | \n98`,`\n59\n | \n96`, `\n63\n | \n94`, `\n68\n | \n93`, `\n72\n | \n91`, `\n76\n | \n89`, `\n81\n | \n87`, `\n85\n | \n85`], 
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_4', 
-    //       options: [`\n50\n | \n100`, `\n54\n | \n89`,`\n59\n | \n79`, `\n63\n | \n68`, `\n68\n | \n58`, `\n72\n | \n47`, `\n76\n | \n36`, `\n81\n | \n26`, `\n85\n | \n15`], 
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_5', 
-    //       options: [`\n100\n | \n50`, `\n94\n | \n56`,`\n88\n | \n63`, `\n81\n | \n69`, `\n75\n | \n75`, `\n69\n | \n81`, `\n63\n | \n88`, `\n56\n | \n94`, `\n50\n | \n100`], 
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_6', 
-    //       options: [`\n100\n | \n50`, `\n98\n | \n54`,`\n96\n | \n59`, `\n94\n | \n63`, `\n93\n | \n68`, `\n91\n | \n72`, `\n89\n | \n76`, `\n87\n | \n81`, `\n85\n | \n85`], 
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_7', 
-    //       options: [`\n100\n | \n50`, `\n96\n | \n56`,`\n93\n | \n63`, `\n89\n | \n69`, `\n85\n | \n75`, `\n81\n | \n81`, `\n78\n | \n88`, `\n74\n | \n94`, `\n70\n | \n100`],  
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_8', 
-    //       options: [`\n90\n | \n100`, `\n91\n | \n99`,`\n93\n | \n98`, `\n94\n | \n96`, `\n95\n | \n95`, `\n96\n | \n94`, `\n98\n | \n93`, `\n99\n | \n91`, `\n100\n | \n90`],  
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_9', 
-    //       options: [`\n100\n | \n70`, `\n94\n | \n74`,`\n88\n | \n78`, `\n81\n | \n81`, `\n75\n | \n85`, `\n69\n | \n89`, `\n63\n | \n93`, `\n56\n | \n96`, `\n50\n | \n100`],  
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt,
-    //       name: 'SVO_10', 
-    //       options: [`\n100\n | \n70`, `\n99\n | \n74`,`\n98\n | \n78`, `\n96\n | \n81`, `\n95\n | \n85`, `\n94\n | \n89`, `\n93\n | \n93`, `\n91\n | \n96`, `\n90\n | \n100`],  
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_11', 
-    //       options: [`\n70\n | \n100`, `\n74\n | \n96`,`\n78\n | \n93`, `\n81\n | \n89`, `\n85\n | \n85`, `\n89\n | \n81`, `\n93\n | \n78`, `\n96\n | \n74`, `\n100\n | \n70`],  
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_12', 
-    //       options: [`\n50\n | \n100`, `\n56\n | \n99`,`\n63\n | \n98`, `\n69\n | \n96`, `\n75\n | \n95`, `\n81\n | \n94`, `\n88\n | \n93`, `\n94\n | \n91`, `\n100\n | \n90`],   
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt, 
-    //       name: 'SVO_13', 
-    //       options: [`\n50\n | \n100`, `\n56\n | \n94`,`\n63\n | \n88`, `\n69\n | \n81`, `\n75\n | \n75`, `\n81\n | \n69`, `\n88\n | \n63`, `\n94\n | \n56`, `\n100\n | \n50`],   
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt,
-    //       name: 'SVO_14', 
-    //       options: [`\n100\n | \n90`, `\n96\n | \n91`,`\n93\n | \n93`, `\n89\n | \n94`, `\n85\n | \n95`, `\n81\n | \n96`, `\n78\n | \n98`, `\n74\n | \n99`, `\n70\n | \n100`],  
-    //       required: true,
-    //       horizontal: true
-    //     }, {
-    //       prompt: SVO_prompt,
-    //       name: 'SVO_15', 
-    //       options: [`\n90\n | \n100`, `\n91\n | \n94`,`\n93\n | \n88`, `\n94\n | \n81`, `\n95\n | \n75`, `\n96\n | \n69`, `\n98\n | \n63`, `\n99\n | \n56`, `\n100\n | \n50`],    
-    //       required: true,
-    //       horizontal: true
-    //     }, 
-    //   ]
-    // };
+   
 
 
     var SVO_trial_likert = {
@@ -332,12 +249,47 @@ const nImageInst = 2;
         <p>In order to participate you must allow the experiment to use your camera.</p>
         <p>You will be prompted to do this on the next screen.</p>
         <p>If you do not want to permit the experiment to use your camera, please close the page.</p>
-        <p>Loading the next page may take a few seconds, thank you for your patience</p>
+        <p>Loading the next page may take a few seconds, thank you for your patience.</p>
         press the <b>SPACE BAR</b> to begin.
       `,
       choices: [' '],
       post_trial_gap: 1000
     };
+
+
+    var choice_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+      <p> In the following trials, we will show you two options. In each option,
+      you will see your payoff as well as another participant's payoff value.
+      You have to choose between the left option and right option by pressing on the following keys: </p>
+      <br>
+      To select the left option, press the F key
+      <br>
+      To select the right option, press the J key
+      <p>
+      <b>
+      ${condition_id['instruction']}
+      </b>
+      </p>
+      <p>
+      We record your eye movement in the following part of the experiment.
+      In order to have accurate data quality, please sit a way that you can comfortably reach
+      and press the F, J and SPACE BAR on the keyboard. </p>
+      <p>
+      We will run calibration and verification for eye tracking.
+      We will run a few rounds of calibration and verification throughout the trials to increase eye tracking data quality. 
+      
+      <br>
+      
+      Press SPACE BAR to continue
+      
+      `,
+      choices: [' '],
+      post_trial_gap: 1000
+    };
+
+
     
     var init_camera = {
       type: jsPsychWebgazerInitCamera,
@@ -360,7 +312,18 @@ const nImageInst = 2;
             (2). Try to keep lights in front of you rather than behind you so that the webcam can clearly see your face. Avoid sitting with a window behind you. <br/>
             (3). After you have made these adjustments, check again that your face fits nicely within the box on the video feed and that the box is green. <br/></div>
              <br><br/>
-             <!-- <font size=5px; font color = 'red';> <b>NOTE</b>:  <br/>
+             
+             <div>
+                There are two parts to this process. The first part is calibration and the second part is validation.<br/>
+                <br><br/>
+                During calibration, you will see a series of dots like this <span id="calibration_dot_instruction"></span> appear on the screen, each for 2 seconds.<br/>
+                Your task is simply to stare directly at each dot until it disappears.<br/>
+                Then, quickly move your eyes to the next dot and repeat.<br/>
+                <br><br/>
+                Validation is basically the same as calibration. You simply need to stare at each dot until it and disappears.<br/>
+          
+                <!-- <font size=5px; font color = 'red';> <b>NOTE</b>:  <br/>
+
             If you are back on this page, it means the calibration and validation did not work as well as we would like.  <br/>
             Please read the tips above again, make any adjustments, and try again.  <br/>
             There are only <b>THREE</b> chances to get this right.  <br/>
@@ -434,8 +397,8 @@ const nImageInst = 2;
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
       <div>
-      <p> Now, we will begin with the choice task. Please keep your head still.    <br/>
-      You are choosing which option you would choose:</p>
+      <p> Now, we will begin with the choice task. Please keep your head still. <br/>
+      As a quick reminder, you are choosing which option you would choose based on previous instruction</p>
      <br/>
       To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
       To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
@@ -621,6 +584,7 @@ const nImageInst = 2;
             browser_name: bowser.name,
             browser_type: bowser.version,
             subject: subject_id,
+            condition: condition_id['condition'],
             payoff_order: participant_payoff_order,
             interaction: jsPsych.data.getInteractionData().json(),
             //quiz: quiz_correct_count,
@@ -649,6 +613,7 @@ const nImageInst = 2;
         timeline.push(SVO_instruction);
         // timeline.push(SVO_trial);
         timeline.push(SVO_trial_likert);
+        timeline.push(choice_instructions);
         timeline.push(calibration_instructions);
         timeline.push(camera_instructions);
         timeline.push(init_camera);

@@ -156,7 +156,7 @@ var jsPsychSVOSurveyLikert = (function (jspsych) {
           }
           // add submit button
           html +=
-              '<input type="submit" id="jspsych-survey-likert-next" class="jspsych-survey-likert jspsych-btn" value="' +
+              '<input type="submit" id="jspsych-survey-likert-next" style="margin-bottom: 50px;" class="jspsych-survey-likert jspsych-btn" value="' +
                   trial.button_label +
                   '"></input>';
           html += "</form>";
