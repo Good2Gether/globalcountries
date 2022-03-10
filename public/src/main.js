@@ -7,7 +7,7 @@ const nImageInst = 2;
     instruct_img.push('../img/svo_example.png');
     var fixation_duration = 500;
     var successExp = false;
-    
+    var resize_screen = false;
 
     function closeFullscreen() {
       if (document.exitFullscreen) {
@@ -47,11 +47,11 @@ const nImageInst = 2;
       condition: "control"
     }
     var condition_alturist = {
-      instruction: "Please choose the options that maximize the other participant's yield.",
+      instruction: "Please choose the options that maximize the other participant's payoff.",
       condition: "alturist"
     }
     var condition_proself = {
-      instruction: "Please choose the options that maximizes your yield.",
+      instruction: "Please choose the options that maximizes your payoff.",
       condition: "self"
     }
 
@@ -110,9 +110,23 @@ const nImageInst = 2;
       When you are ready to begin, press the button.</div>
     `,
       fullscreen_mode: true,
-      // on_finish: function () {
+      on_finish: function () {
       //   document.body.style.cursor = 'none'
-      // }
+      window.onresize = resize
+      function resize() {
+        if(successExp && !resize_screen){
+          resize_screen = false;
+          console.log("end experiment resize");
+        } else{
+          resize_screen = true;
+          console.log("Resized!");
+          alert("You exited the full screen mode! the experiment will be re-started!");
+          // location.reload(true);
+          window.location.href = window.location;
+          
+        }
+      }
+    }
     };
 
     var SVO_instruction = {
@@ -264,9 +278,9 @@ const nImageInst = 2;
       you will see your payoff as well as another participant's payoff value.
       You have to choose between the left option and right option by pressing on the following keys: </p>
       <br>
-      To select the left option, press the F key
+      To select the left option, press the <b><font color='green'>F</font></b> key
       <br>
-      To select the right option, press the J key
+      To select the right option, press the <b><font color='green'>J</font></b> key
       <p>
       <b>
       ${condition_id['instruction']}
@@ -281,8 +295,8 @@ const nImageInst = 2;
       We will run a few rounds of calibration and verification throughout the trials to increase eye tracking data quality. 
       
       <br>
-      
-      Press SPACE BAR to continue
+
+      Press <b>SPACE BAR</b> to continue
       
       `,
       choices: [' '],
