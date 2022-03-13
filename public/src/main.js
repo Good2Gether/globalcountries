@@ -120,9 +120,10 @@ const nImageInst = 2;
         } else{
           resize_screen = true;
           console.log("Resized!");
-          alert("You exited the full screen mode! the experiment will be re-started!");
+          alert("You exited the full screen mode! The experiment cannot continue!");
           // location.reload(true);
-          window.location.href = window.location;
+          // window.location.href = window.location;
+          window.location.href = "views/failed.html";
           
         }
       }
@@ -138,7 +139,7 @@ const nImageInst = 2;
       completely confidential. </p> 
       <p> You will be making a series of decisions about allocating resources between you
       and this other person. For each of the following questions, please indicate the
-      distribution you prefer most by <b> selecting the button below the payoff
+      distribution you prefer most by <b> selecting the button above the payoff
       allocations</b>. You can only make one selection for each question. Your decisions
       will yield money for both yourself and the other person. In the example below, a
       person has chosen to distribute the payoff so that he/she receives 50 dollars, while
@@ -148,7 +149,7 @@ const nImageInst = 2;
 
       <p> There	are	no	right	or	wrong	answers,	this	is	all	about	personal	preferences.	After	you	
       have	made	your	decision,	<b> select	the	resulting	distribution	of	money	by	clicking	on	
-      button	below	your	choice. </b>	As	you	can	see,	your	choices	will	influence	both	the	amount	
+      button	above	your	choice. </b>	As	you	can	see,	your	choices	will	influence	both	the	amount	
       of	money 	you	receive	as	well	as	the	amount	of	money	the	other	receives.
       </p>
       <br>
