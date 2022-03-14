@@ -4,7 +4,7 @@ const nImageInst = 2;
     for (var i = 0; i < nImageInst; i++) {
       instruct_img.push('../img/instruct' + i + '.png');
     }
-    instruct_img.push('../img/svo_example.png');
+    instruct_img.push('../img/svo_example.jpg');
     var fixation_duration = 500;
     var successExp = false;
     var resize_screen = false;
@@ -142,8 +142,8 @@ const nImageInst = 2;
       distribution you prefer most by <b> selecting the button above the payoff
       allocations</b>. You can only make one selection for each question. Your decisions
       will yield money for both yourself and the other person. In the example below, a
-      person has chosen to distribute the payoff so that he/she receives 50 dollars, while
-      the anonymous other person receives 40 dollars. </p>
+      person has chosen to distribute the payoff so that he/she receives 40 dollars, while
+      the anonymous other person receives 50 dollars. </p>
       
       <img height="150px" src="${instruct_img[2]}"><br/>
 
@@ -153,7 +153,7 @@ const nImageInst = 2;
       of	money 	you	receive	as	well	as	the	amount	of	money	the	other	receives.
       </p>
       <br>
-      press the <b>SPACE BAR</b> to begin.
+      Press the <b>SPACE BAR</b> to begin.
       </div>`,
       choices: [' '],
       post_trial_gap: 1000
@@ -172,7 +172,7 @@ const nImageInst = 2;
           name: 'SVO_1', 
           labels: [`\n85\n | \n85`, `\n85\n | \n76`, `\n85\n | \n68`,`\n85\n | \n59`, `\n85\n | \n50`, `\n85\n | \n41`, `\n85\n | \n33`, `\n85\n | \n24`, `\n85\n | \n15`], 
           required: true
-        }, 
+        },
         {
           prompt: SVO_prompt, 
           name: 'SVO_2', 
@@ -265,7 +265,7 @@ const nImageInst = 2;
         <p>You will be prompted to do this on the next screen.</p>
         <p>If you do not want to permit the experiment to use your camera, please close the page.</p>
         <p>Loading the next page may take a few seconds, thank you for your patience.</p>
-        press the <b>SPACE BAR</b> to begin.
+        Press the <b>SPACE BAR</b> to begin.
       `,
       choices: [' '],
       post_trial_gap: 1000
@@ -376,7 +376,7 @@ const nImageInst = 2;
         <p>Let's see how accurate the eye tracking is. </p>
         <p>Keep your head still, and move your eyes to focus on each dot as it appears.</p>
         <p>You do not need to click on the dots. Just move your eyes to look at the dots.</p>
-        press the <b>SPACE BAR</b> to continue.`,
+        Press the <b>SPACE BAR</b> to continue.`,
       choices: [' '],
       post_trial_gap: 1000
     };
