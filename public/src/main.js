@@ -33,9 +33,10 @@ const nImageInst = 2;
         closeFullscreen();
         document.body.style.cursor = 'auto';
         jsPsych.endExperiment(`<div>
-        Thank you for your participation! You can close the browser to end the experiment now. </br>
+        Your survey code is: <b> ${makeSurveyCode('success')}</b> </br>
+        You can close the browser to end the experiment now. </br>
                     The webcam will turn off when you close the browser. </br>
-                      Your survey code is: ${makeSurveyCode('success')}. </br>
+                     
                      
         </div>`);
         }
@@ -105,9 +106,9 @@ const nImageInst = 2;
       This will help the study run more smoothly.    <br/>
       Also, please close any browser tabs that could produce popups or alerts that would interfere with the study.    <br/>
       Finally, once the study has started, <b>DO NOT EXIT</b> fullscreen mode or you will terminate the study and not receive any payment. <br/>   
-      <br><br/>
+      <br>
       The study will switch to full screen mode when you press the button below.  <br/>
-      When you are ready to begin, press the button.</div>
+      When you are ready to begin, press the button.<br> <br></div>
     `,
       fullscreen_mode: true,
       on_finish: function () {
@@ -160,8 +161,6 @@ const nImageInst = 2;
     };
 
     var SVO_prompt = "You receive: <br> | <br> Other receives:";
-    
-   
 
 
     var SVO_trial_likert = {
@@ -334,10 +333,9 @@ const nImageInst = 2;
                 During calibration, you will see a series of dots like this <span id="calibration_dot_instruction"></span> appear on the screen, each for 2 seconds.<br/>
                 Your task is simply to stare directly at each dot until it disappears.<br/>
                 Then, quickly move your eyes to the next dot and repeat.<br/>
-                <br><br/>
+                <br>
                 Validation is basically the same as calibration. You simply need to stare at each dot until it and disappears.<br/>
           
-                <!-- <font size=5px; font color = 'red';> <b>NOTE</b>:  <br/>
 
             If you are back on this page, it means the calibration and validation did not work as well as we would like.  <br/>
             Please read the tips above again, make any adjustments, and try again.  <br/>
@@ -413,7 +411,7 @@ const nImageInst = 2;
       stimulus: `
       <div>
       <p> Now, we will begin with the choice task. Please keep your head still. <br/>
-      As a quick reminder, you are choosing which option you would choose based on previous instruction</p>
+      As a quick reminder,  ${condition_id['instruction']}</p>
      <br/>
       To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
       To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
@@ -588,6 +586,23 @@ const nImageInst = 2;
       }
     };
 
+    
+    var feedback = {
+      type: jsPsychSurveyText,
+      questions: [
+        {prompt: "Do you have any feedback for us?", rows: 5, columns:100 , required:false} 
+        ],
+      preamble: `<div style="max-width: 1000px;"> You have come to the end of our study.
+      We thank you very much for your participation! <br>
+      At this point, we would like to ask you for any feedback that you might have with regard to our
+      study. If you do, please enter them in the box below. If you do not have any feedback,
+      please leave the box empty and click on the <b>Continue</b> button.
+       </div>`,
+      on_load: function () {
+        document.body.style.cursor = 'auto'
+      }
+    };
+
     var success_guard = {
         type: jsPsychCallFunction,
         func: () => {successExp = true}
@@ -624,7 +639,9 @@ const nImageInst = 2;
     function startExp(){
         var timeline = [];
         timeline.push(start_exp_survey_trial);
+        
         timeline.push(fullscreenEnter);
+        
         timeline.push(SVO_instruction);
         // timeline.push(SVO_trial);
         timeline.push(SVO_trial_likert);
@@ -639,11 +656,11 @@ const nImageInst = 2;
         timeline.push(charity_prac_choice);
         timeline.push(EnterRealChoice);
         timeline.push(real_choice);
-
+        
         // timeline.push(trial_proc);
         // timeline.push(done);
         timeline.push(success_guard);
-    
+        timeline.push(feedback);
         jsPsych.run(timeline);
     }
     
