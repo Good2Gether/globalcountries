@@ -335,13 +335,7 @@ const nImageInst = 2;
                 Then, quickly move your eyes to the next dot and repeat.<br/>
                 <br>
                 Validation is basically the same as calibration. You simply need to stare at each dot until it and disappears.<br/>
-          
-
-            If you are back on this page, it means the calibration and validation did not work as well as we would like.  <br/>
-            Please read the tips above again, make any adjustments, and try again.  <br/>
-            There are only <b>THREE</b> chances to get this right.  <br/>
-            Otherwise, the study cannot proceed and you will only receive 50 cents for participating.  </font><br/>
-            <br><br/> -->
+          <br>
              <font   >When you are ready, press the <b>SPACE BAR</b> to continue. </font></div
       `,
       choices: [' '],
@@ -659,8 +653,9 @@ const nImageInst = 2;
         
         // timeline.push(trial_proc);
         // timeline.push(done);
-        timeline.push(success_guard);
         timeline.push(feedback);
+        timeline.push(success_guard);
+        
         jsPsych.run(timeline);
     }
     
