@@ -33,7 +33,7 @@ const nImageInst = 2;
         closeFullscreen();
         document.body.style.cursor = 'auto';
         jsPsych.endExperiment(`<div>
-        Your survey code is: <b> ${makeSurveyCode('success')}</b> </br>
+        Your survey code is: <b> 756CE43D </br>
         You can close the browser to end the experiment now. </br>
                     The webcam will turn off when you close the browser. </br>
                      
@@ -90,7 +90,7 @@ const nImageInst = 2;
     var start_exp_survey_trial = {
       type: jsPsychSurveyText,
       questions: [
-        {prompt: "What's your worker ID?", rows: 2, columns:50 , required:true}, 
+        {prompt: "What's your prolific ID?", rows: 2, columns:50 , required:true}, 
         {prompt: "What's your age?", rows: 1, columns: 50, required:true},
         {prompt: "What's your gender? (Female/Male/Other)", rows: 1, columns: 50,require: true},
       ],
