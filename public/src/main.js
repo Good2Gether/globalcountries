@@ -498,7 +498,7 @@ const nImageInst = 2;
     var if_node1 = {
         timeline: [cali_vali_instructions ,fixation_cali, fixation1],
         conditional_function: function(){
-            if(real_choice_counts == 5 || real_choice_counts == 10){
+            if(real_choice_counts == 5 ){
                 return true;
             } else {
                 return false;
@@ -511,6 +511,17 @@ const nImageInst = 2;
         timeline: [fixation],
         conditional_function: function(){
             if(real_choice_counts != 5 && real_choice_counts != 10){
+                return true;
+            } else {
+                return false;
+            }
+        }
+      }
+
+      var if_node3 = {
+        timeline: [cali_vali_instructions , fixation1],
+        conditional_function: function(){
+            if (real_choice_counts == 10){
                 return true;
             } else {
                 return false;
