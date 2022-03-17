@@ -534,6 +534,7 @@ const nImageInst = 2;
         timeline: [
             if_node1,
             if_node2,
+            if_node3,
             {
                 type: jsPsychBinaryChoiceTableFour,
                 stimulus: () => stimuli_data[real_choice_counts],
