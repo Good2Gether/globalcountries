@@ -35,7 +35,7 @@ const nImageInst = 2;
         closeFullscreen();
         document.body.style.cursor = 'auto';
         jsPsych.endExperiment(`<div>
-        Your survey code is: <b> 756CE43D </br>
+        Your survey code is: <b> 29FA7739 </br>
         You can close the browser to end the experiment now. </br>
                     The webcam will turn off when you close the browser. </br>
                      
@@ -323,13 +323,14 @@ const nImageInst = 2;
 
         {
           prompt: `<div style="max-width: 80%; margin:auto;"> 
-          Imagine the following trial is shown to you and you choose option A.
-          Based on this example, please answer the question below. <br>
+           
           <img height="600px" src="${comp_check}"><br/>
           <br>
           </div>
 
-          <p>
+          Imagine the trial above is shown to you and you choose option A.
+          Based on this example, please answer the question below.<br>
+
           If this trial is randomly selected for you and your paired participant’s payoff,
           how much will the <b> other person </b> recieve? <p>
           `, 
@@ -424,16 +425,16 @@ const nImageInst = 2;
       To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
       To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
                  <br><br/>
-                 <p>
+                 <p> <b> 
                  One of your subsequent decisions is randomly selected for the bonus,
                  so each decision has the same probability of actually being implemented.
                  A draw will also determine whether your decision or the decision of the other player
                  assigned to you will be relevant to the payoff for both of you.
-                 </p>
+                 </b> </p>
       After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
       This is part of ongoing adjustments to the eye-tracking.<br/> 
       
-      <p>Each point equals 1 pence.</p>
+      <p><b> Each point equals 1 pence.</b></p>
 
       <p> When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds.</p></div>
       `,
@@ -600,8 +601,8 @@ const nImageInst = 2;
         To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
                    <br><br/>
                    <p>
-                   You will receive 50 pence for your correct answers if one of the trials from this block is chosen randomly as the bonus.
-                   </p>
+                   <b> You will receive 50 pence for your correct answers if one of the trials from this block is chosen randomly as the bonus.
+                   </b></p>
         After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
         This is part of ongoing adjustments to the eye-tracking.<br/>
         <p> When you are ready, press the <b>SPACE BAR</b> to continue.</p></div>
@@ -644,9 +645,9 @@ const nImageInst = 2;
         To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
         To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
                    <br><br/>
-                   <p>
+                   <p> <b>
                    You will receive 50 pence for your correct answers if one of the trials from this block is chosen randomly as the bonus.
-                   </p>
+                   </b></p>
         After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
         This is part of ongoing adjustments to the eye-tracking.<br/> 
         <p> When you are ready, press the <b>SPACE BAR</b> to continue.</p></div>
