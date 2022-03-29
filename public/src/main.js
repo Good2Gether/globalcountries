@@ -5,6 +5,8 @@ const nImageInst = 2;
       instruct_img.push('../img/instruct' + i + '.png');
     }
     instruct_img.push('../img/svo_example.jpg');
+    var comp_check = "../img/example_dictator.jpg";
+
     var fixation_duration = 1000;
     var successExp = false;
     var resize_screen = false;
@@ -62,11 +64,12 @@ const nImageInst = 2;
     var participant_stimuli_list = ['you_top', "top_down"];
     var participant_payoff_order = (jsPsych.randomization.shuffle(participant_stimuli_list)[1] == 'you_top');
     var participant_condition_list = ['proself_first', "proself_second"];
-    var condition_order = 
+    // var condition_order = 
 
     stimuli_data = jsPsych.randomization.shuffle(stimuli_data);
     console.log(stimuli_data);
 
+    stimuli_data_r1 = jsPsych.randomization.shuffle(stimuli_data_r1);
 
 
     function makeSurveyCode(status) {
@@ -136,31 +139,30 @@ const nImageInst = 2;
     var SVO_instruction = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: ` <div style="width: 80%; margin: auto;">
-      <p> In this task, imagine that you have been randomly paired with another person,
-      whom we will refer to as <b>the other</b>. This other person is someone you do not
-      know and will remain mutually anonymous. All of your choices would be
-      completely confidential. </p> 
-      <p> You will be making a series of decisions about allocating resources between you
-      and this other person. For each of the following questions, please indicate the
-      distribution you prefer most by <b> selecting the button above the payoff
-      allocations</b>. You can only make one selection for each question. Your decisions
-      will yield money for both yourself and the other person. In the example below, a
-      person has chosen to distribute the payoff so that he/she receives 40 points, while
-      the anonymous other person receives 50 points. </p>
+      <p> In this task, you are randomly paired with another Prolific participant,
+      whom we will refer to as  <b>the other</b>. This other person is someone you do not know and will
+      remain mutually anonymous.
+      All of your choices would be completely confidential. </p> 
+      <p> You will be making a series of decisions about allocating resources between you and this other person.
+      For each of the following questions, 
+      please indicate the distribution you prefer most by <b> selecting the button above the payoff
+      allocations</b>. You can only make one selection for each question. Your decisions will yield money for
+      both yourself and the other person. In the example below, a person has chosen to distribute the payoff
+      so that he/she receives 40 points, while the anonymous other person receives 50 points.</p>
       
       <img height="150px" src="${instruct_img[2]}"><br/>
 
-      <p> There	are	no	right	or	wrong	answers,	this	is	all	about	personal	preferences.	After	you	
-      have	made	your	decision,	<b> select	the	resulting	distribution	of	money	by	clicking	on	
+      <p> There are no right or wrong answers, this is all about personal preferences.
+      After you have made your decision,	<b> select	the	resulting	distribution	of	money	by	clicking	on	
       button	above	your	choice. </b>	
       </p>
       <p>
-      Your payout in this part of the study will depend on either your own decision,
-      or that of another player you have been randomly matched with. Either one of your
-      or the other person’s choices will be randomly selected and implemented for both
-      of you.
+      At the end of the study it will be randomly chosen whether YOUR choice (determining the
+        payoffs for yourself and another participant)
+      will be implemented OR if the choice of another participant will be implemented for you. 
       <br> 
-      <b> Each 100 points equals to X pounds.  </b>
+      <br>
+      <b> Every 100 points equals 60 pence.  </b>
 
       </p>
       <br>
@@ -279,7 +281,7 @@ const nImageInst = 2;
       <p> In the following trials, we will show you two options. In each option,
       you will see your payoff as well as another random participant's payoff value.
       You have to choose between the left option and right option by pressing on the following keys: </p>
-      <br>
+    
       To select the left option, press the <b><font color='green'>F</font></b> key
       <br>
       To select the right option, press the <b><font color='green'>J</font></b> key
@@ -291,10 +293,9 @@ const nImageInst = 2;
       </p>
       <p>
       The amount of money earned depends on your own or someone else's decisions.
-      One of your subsequent decisions is randomly selected for the payout, so each
-      decision has the same probability of actually being implemented. A draw will also
-      determine whether your decision or the decision of the other player assigned to you
-      will be relevant to the payout for both of you.
+      One of your subsequent decisions is randomly selected for the payout, so each decision has the same
+      probability of actually being implemented. A draw will also determine whether your decision or the decision
+      of the other player assigned to you will be relevant to the payout for both of you.
 
       </p>
 
@@ -316,6 +317,29 @@ const nImageInst = 2;
     };
 
 
+    var comprehansion_check = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+
+        {
+          prompt: `<div style="max-width: 80%; margin:auto;"> 
+          Imagine the following trial is shown to you and you choose option A.
+          Based on this example, please answer the question below. <br>
+          <img height="600px" src="${comp_check}"><br/>
+          <br>
+          </div>
+
+          <p>
+          If this trial is randomly selected for you and your paired participant’s payoff,
+          how much will the <b> other person </b> recieve? <p>
+          `, 
+          name: 'comp_check', 
+          options: ['5.9', '5.6', '2.2', '1.5'], 
+          required: true,
+          horizontal: true
+        }
+      ],
+    };
     
     var init_camera = {
       type: jsPsychWebgazerInitCamera,
@@ -342,7 +366,7 @@ const nImageInst = 2;
              <div>
                 There are two parts to this process. The first part is calibration and the second part is validation.<br/>
                 <br><br/>
-                During calibration, you will see a series of dots like this <span id="calibration_dot_instruction"></span> appear on the screen, each for 2 seconds.<br/>
+                During calibration, you will see a series of dots like this <span id="calibration_dot_instruction"></span> appear on the screen, each for 2.5 seconds.<br/>
                 Your task is simply to stare directly at each dot until it disappears.<br/>
                 Then, quickly move your eyes to the next dot and repeat.<br/>
                 <br>
@@ -395,7 +419,7 @@ const nImageInst = 2;
       stimulus: `
       <div style="width: 80%; margin: auto;">
       <p> Now, we will begin with the choice task. Please keep your head still. <br/>
-      As a quick reminder,  ${condition_control['instruction']}</p>
+      As a quick reminder, <b> ${condition_control['instruction']} </b></p>
      <br/>
       To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
       To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
@@ -403,11 +427,14 @@ const nImageInst = 2;
                  <p>
                  One of your subsequent decisions is randomly selected for the bonus,
                  so each decision has the same probability of actually being implemented.
-                 A draw will also determine whether your decision or the decision of the
-                 other player assigned to you will be relevant to the bonus for both of you.
+                 A draw will also determine whether your decision or the decision of the other player
+                 assigned to you will be relevant to the payoff for both of you.
                  </p>
       After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
       This is part of ongoing adjustments to the eye-tracking.<br/> 
+      
+      <p>Each point equals 1 pence.</p>
+
       <p> When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds.</p></div>
       `,
       choices: [' '],
@@ -521,7 +548,7 @@ const nImageInst = 2;
             }
         }
       }
-      stimuli_data = jsPsych.randomization.shuffle(stimuli_data);
+      var stimuli_data_b1 = jsPsych.randomization.shuffle(stimuli_data_r1[0]);
     
       var real_choice_counts = 0;
     
@@ -531,7 +558,7 @@ const nImageInst = 2;
             if_node2,
             {
                 type: jsPsychBinaryChoiceTableFour,
-                stimulus: () => stimuli_data[real_choice_counts],
+                stimulus: () => stimuli_data_b1[real_choice_counts%10],
                 choices: ["F", "J"],
                 realOrPrac: true,
                 payoffYouTop: participant_payoff_order,
@@ -547,34 +574,51 @@ const nImageInst = 2;
         loop_function: () => real_choice_counts < 10,
       };
 
+      var block_break = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+        <div style="width: 80%; margin: auto;">
+        <p>
+        You are now entering the next block of decisions.
+        Be aware your task will be changing. Please pay attention.
+        Your bonus depends on it.
+        </p>
+        <p>Press the <b>SPACE BAR</b> to continue.</p></div>
+        `,
+        choices: [' '],
+        post_trial_gap: 1000
+      };
+
       var task_instructions_cond1 = {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `
         <div style="width: 80%; margin: auto;">
         <p> Please keep your head still. <br/>
-        As a quick reminder,  ${condition_id[0]['instruction']}</p>
+        In this part we would like to ask you: <b> ${condition_id[0]['instruction']}</b></p>
        <br/>
         To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
         To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
                    <br><br/>
                    <p>
-                   You will receive X pounds for your correct answers if one of the trials from this block is chosen randomly as the bonus.
+                   You will receive 50 pence for your correct answers if one of the trials from this block is chosen randomly as the bonus.
                    </p>
         After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
         This is part of ongoing adjustments to the eye-tracking.<br/>
-        <p> When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds.</p></div>
+        <p> When you are ready, press the <b>SPACE BAR</b> to continue.</p></div>
         `,
         choices: [' '],
         post_trial_gap: 1000
       };
   
+      var stimuli_data_b2 = jsPsych.randomization.shuffle(stimuli_data_r1[1]);
+
       var real_choice_cond1 = {
         timeline: [
             if_node1,
             if_node2,
             {
                 type: jsPsychBinaryChoiceTableFour,
-                stimulus: () => stimuli_data[real_choice_counts],
+                stimulus: () => stimuli_data_b2[real_choice_counts%10],
                 choices: ["F", "J"],
                 realOrPrac: true,
                 payoffYouTop: participant_payoff_order,
@@ -595,21 +639,23 @@ const nImageInst = 2;
         stimulus: `
         <div style="width: 80%; margin: auto;">
         <p> This is the last block of the experiment. Please keep your head still. <br/>
-        As a quick reminder,  ${condition_id[1]['instruction']}</p>
+        In this part we would like to ask you: <b> ${condition_id[1]['instruction']} </b></p>
        <br/>
         To select the left option, press  the <b><font color='green'>F</font></b> key; <br/>
         To select the right option, press the <b><font color='green'>J</font></b>  key;<br/>
                    <br><br/>
                    <p>
-                   You will receive X pounds for your correct answers if one of the trials from this block is chosen randomly as the bonus.
+                   You will receive 50 pence for your correct answers if one of the trials from this block is chosen randomly as the bonus.
                    </p>
         After each choice, make sure to stare at the + that will appear on the screen, until they disappear.  <br/>
         This is part of ongoing adjustments to the eye-tracking.<br/> 
-        <p> When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds.</p></div>
+        <p> When you are ready, press the <b>SPACE BAR</b> to continue.</p></div>
         `,
         choices: [' '],
         post_trial_gap: 1000
       };
+
+      var stimuli_data_b3 = jsPsych.randomization.shuffle(stimuli_data_r1[2]);
 
       var real_choice_cond2 = {
         timeline: [
@@ -617,7 +663,7 @@ const nImageInst = 2;
             if_node2,
             {
                 type: jsPsychBinaryChoiceTableFour,
-                stimulus: () => stimuli_data[real_choice_counts],
+                stimulus: () => stimuli_data_b3[real_choice_counts%10],
                 choices: ["F", "J"],
                 realOrPrac: true,
                 payoffYouTop: participant_payoff_order,
@@ -630,7 +676,7 @@ const nImageInst = 2;
             ]
             }
         ],
-        loop_function: () => real_choice_counts < 24,
+        loop_function: () => real_choice_counts < 30,
       };
       
 
@@ -699,7 +745,7 @@ const nImageInst = 2;
             browser_name: bowser.name,
             browser_type: bowser.version,
             subject: subject_id,
-            condition: condition_id['condition'],
+            condition: condition_id[0]['condition'],
             payoff_order: participant_payoff_order,
             interaction: jsPsych.data.getInteractionData().json(),
             //quiz: quiz_correct_count,
@@ -731,6 +777,8 @@ const nImageInst = 2;
         // timeline.push(SVO_trial);
         timeline.push(SVO_trial_likert);
         timeline.push(choice_instructions);
+        timeline.push(comprehansion_check);
+        
         timeline.push(calibration_instructions);
         timeline.push(camera_instructions);
         timeline.push(init_camera);
@@ -742,8 +790,11 @@ const nImageInst = 2;
         timeline.push(EnterRealChoice);
         timeline.push(real_choice);
         
+        timeline.push(block_break);
         timeline.push(task_instructions_cond1);
         timeline.push(real_choice_cond1);
+        
+        timeline.push(block_break);
         timeline.push(task_instructions_cond2);
         timeline.push(real_choice_cond2);
         

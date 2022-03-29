@@ -128,14 +128,14 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
               </tr>
               <tr style="vertical-align: top; height: 400px;">
                   <td style="text-align: left; padding-top: 150px;">${trial.payoffYouTop ? 'You receive' : 'The other player receives'} </td>
-                  <td style="text-align: right; padding-right: 250px; padding-top: 150px;" id="up-left">${trial.payoffYouTop ? trial.stimulus['s1'].toFixed(1) : trial.stimulus['o1'].toFixed(1) } </td>
-                  <td style="text-align: left; padding-top: 150px;  padding-left: 250px;">${trial.payoffYouTop ? trial.stimulus['s2'].toFixed(1) : trial.stimulus['o2'].toFixed(1) }</td>
+                  <td style="text-align: right; padding-right: 250px; padding-top: 150px;" id="up-left">${trial.payoffYouTop ? trial.stimulus['s1'].toFixed(0) : trial.stimulus['o1'].toFixed(0) } </td>
+                  <td style="text-align: left; padding-top: 150px;  padding-left: 250px;">${trial.payoffYouTop ? trial.stimulus['s2'].toFixed(0) : trial.stimulus['o2'].toFixed(0) }</td>
                   <td style="text-align: right; padding-top: 150px;">${trial.payoffYouTop ? 'You receive' : 'The other player receives'}</td>
               </tr>
               <tr style="vertical-align: bottom; height: 400px; border-top: 1px gray solid;">
                   <td style="text-align: left; padding-bottom: 150px;">${trial.payoffYouTop ? 'The other player receives' : 'You receive'}</td>
-                  <td style="text-align: right; padding-right: 250px; padding-bottom: 150px;"> ${trial.payoffYouTop ? trial.stimulus['o1'].toFixed(1) : trial.stimulus['s1'].toFixed(1) }</td>     
-                  <td style="text-align: left; padding-bottom: 150px;  padding-left: 250px;" id="bottom-right"> ${trial.payoffYouTop ? trial.stimulus['o2'].toFixed(1) : trial.stimulus['s2'].toFixed(1) } </td>
+                  <td style="text-align: right; padding-right: 250px; padding-bottom: 150px;"> ${trial.payoffYouTop ? trial.stimulus['o1'].toFixed(0) : trial.stimulus['s1'].toFixed(0) }</td>     
+                  <td style="text-align: left; padding-bottom: 150px;  padding-left: 250px;" id="bottom-right"> ${trial.payoffYouTop ? trial.stimulus['o2'].toFixed(0) : trial.stimulus['s2'].toFixed(0) } </td>
                   <td style="text-align: right; padding-bottom: 150px;">${trial.payoffYouTop ? 'The other player receives' : 'You receive'}</td>
               </tr>
               <th></th>
