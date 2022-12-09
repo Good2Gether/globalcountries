@@ -473,9 +473,6 @@ const nImageInst = 2;
         }
       ],
       loop_function: () => charity_prac_choice_count < 3,
-      // on_start: () => {this.jsPsych.extensions.webgazer.showPredictions();
-      //   this.jsPsych.extensions.webgazer.resume();
-      // }
     };
 
 
@@ -800,8 +797,6 @@ const nImageInst = 2;
         timeline.push(real_choice_cond2);
         
         
-        // timeline.push(trial_proc);
-        // timeline.push(done);
         timeline.push(feedback);
         timeline.push(success_guard);
         
