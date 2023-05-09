@@ -128,22 +128,22 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
                         <col span="1" style="width: 33%; border-left: 1px gray solid;">
                       </colgroup>
                       <tr style="height:10%;">
-                        <th style="vertical-align: top; ">${trial.payoffGroupTop ? 'Other in ' + globalgroup_text + '?': 'Other&rsquo;s Random Number'}</th>
+                        <th style="vertical-align: top; ">${trial.payoffGroupTop ? 'Other&rsquo;s Country' : 'Other&rsquo;s Random Number'}</th>
                         <th style="vertical-align: top; ">Option F: ${trial.payoffYouTop ? 'You get' : 'Other gets'}</th>
                         <th style="vertical-align: top; ">Option J: ${trial.payoffYouTop ? 'You get' : 'Other gets'}</th>
                       </tr>
                       <tr style="vertical-align: center; height: 40%;">
-                        <td style="text-align: center;  ">${trial.payoffGroupTop ? trial.stimulus['ingroup'].toFixed(0) : trial.stimulus['random'].toFixed(0)}</td>
-                        <td style="text-align: center; " id="up-left">${trial.payoffYouTop ? trial.stimulus['s1'].toFixed(0) : trial.stimulus['o1'].toFixed(0) } </td>
-                        <td style="text-align: center;   ">${trial.payoffYouTop ? trial.stimulus['s2'].toFixed(0) : trial.stimulus['o2'].toFixed(0) }</td>
+                        <td style="text-align: center;  ">${trial.payoffGroupTop ? trial.stimulus['ingroup'] : trial.stimulus['random']}</td>
+                        <td style="text-align: center; " id="up-left">${trial.payoffYouTop ? trial.stimulus['s1'] : trial.stimulus['o1'] } </td>
+                        <td style="text-align: center;   ">${trial.payoffYouTop ? trial.stimulus['s2'] : trial.stimulus['o2'] }</td>
                     </tr>
                     <tr style="vertical-align: center; height: 40%;">
-                      <td style="text-align: center;   border-top: 1px gray solid;"" id="bottom-right">${trial.payoffGroupTop ? trial.stimulus['random'].toFixed(0) : trial.stimulus['ingroup'].toFixed(0)}</td>
-                        <td style="text-align: center;  border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o1'].toFixed(0) : trial.stimulus['s1'].toFixed(0) }</td>     
-                        <td style="text-align: center;   border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o2'].toFixed(0) : trial.stimulus['s2'].toFixed(0) } </td>
+                      <td style="text-align: center;   border-top: 1px gray solid;"" id="bottom-right">${trial.payoffGroupTop ? trial.stimulus['random'] : trial.stimulus['ingroup']}</td>
+                        <td style="text-align: center;  border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o1'] : trial.stimulus['s1'] }</td>     
+                        <td style="text-align: center;   border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o2'] : trial.stimulus['s2'] } </td>
                     </tr>
                       <tr style="height:10%;">
-                      <th style="vertical-align: bottom; ">${trial.payoffGroupTop ? 'Other&rsquo;s Random Number' : 'Other in ' + globalgroup_text + '?'}</th>
+                      <th style="vertical-align: bottom; ">${trial.payoffGroupTop ? 'Other&rsquo;s Random Number' : 'Other&rsquo;s Country' }</th>
                   <th style="vertical-align: bottom;  height: 25px;">Option F: ${trial.payoffYouTop ? 'Other gets' : 'You get'}</th>
                   <th style="vertical-align: bottom; ">Option J: ${trial.payoffYouTop ? 'Other gets' : 'You get'}</th>
                   </tr>
@@ -171,22 +171,22 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
                       </colgroup>
                       <tr style="height:10%;">
                         <th style="vertical-align: top; ">Option F: ${trial.payoffYouTop ? 'You get' : 'Other gets'}</th>
-                        <th style="vertical-align: top; ">${trial.payoffGroupTop ? 'Other in ' + globalgroup_text + '?': 'Other´s Random Number'}</th>
+                        <th style="vertical-align: top; ">${trial.payoffGroupTop ? 'Other&rsquo;s Country' : 'Other´s Random Number'}</th>
                         <th style="vertical-align: top; ">Option J: ${trial.payoffYouTop ? 'You get' : 'Other gets'}</th>
                       </tr>
                       <tr style="vertical-align: center; height: 40%;">
-                        <td style="text-align: center; " id="up-left">${trial.payoffYouTop ? trial.stimulus['s1'].toFixed(0) : trial.stimulus['o1'].toFixed(0) } </td>
-                        <td style="text-align: center;  ">${trial.payoffGroupTop ? trial.stimulus['ingroup'].toFixed(0) : trial.stimulus['random'].toFixed(0)}</td>
-                        <td style="text-align: center;   ">${trial.payoffYouTop ? trial.stimulus['s2'].toFixed(0) : trial.stimulus['o2'].toFixed(0) }</td>
+                        <td style="text-align: center; " id="up-left">${trial.payoffYouTop ? trial.stimulus['s1'] : trial.stimulus['o1'] } </td>
+                        <td style="text-align: center;  ">${trial.payoffGroupTop ? trial.stimulus['ingroup'] : trial.stimulus['random']}</td>
+                        <td style="text-align: center;   ">${trial.payoffYouTop ? trial.stimulus['s2'] : trial.stimulus['o2'] }</td>
                     </tr>
                     <tr style="vertical-align: center; height: 40%;">
-                        <td style="text-align: center;  border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o1'].toFixed(0) : trial.stimulus['s1'].toFixed(0) }</td>     
-                        <td style="text-align: center;   border-top: 1px gray solid;"" id="bottom-right">${trial.payoffGroupTop ? trial.stimulus['random'].toFixed(0) : trial.stimulus['ingroup'].toFixed(0)}</td>
-                        <td style="text-align: center;   border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o2'].toFixed(0) : trial.stimulus['s2'].toFixed(0) } </td>
+                        <td style="text-align: center;  border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o1'] : trial.stimulus['s1'] }</td>     
+                        <td style="text-align: center;   border-top: 1px gray solid;"" id="bottom-right">${trial.payoffGroupTop ? trial.stimulus['random'] : trial.stimulus['ingroup']}</td>
+                        <td style="text-align: center;   border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o2'] : trial.stimulus['s2'] } </td>
                     </tr>
                       <tr style="height:10%;">
                   <th style="vertical-align: bottom;  height: 25px;">Option F: ${trial.payoffYouTop ? 'Other gets' : 'You get'}</th>
-                  <th style="vertical-align: bottom; ">${trial.payoffGroupTop ? 'Other&rsquo;s Random Number' : 'Other in ' + globalgroup_text + '?'}</th>
+                  <th style="vertical-align: bottom; ">${trial.payoffGroupTop ? 'Other&rsquo;s Random Number' : 'Other&rsquo;s Country' }</th>
                   <th style="vertical-align: bottom; ">Option J: ${trial.payoffYouTop ? 'Other gets' : 'You get'}</th>
                   </tr>
                 
@@ -214,22 +214,22 @@ var jsPsychBinaryChoiceTableFour = (function (jspsych) {
                       <tr style="height:10%;">
                         <th style="vertical-align: top; ">Option F: ${trial.payoffYouTop ? 'You get' : 'Other gets'}</th>
                         <th style="vertical-align: top; ">Option J: ${trial.payoffYouTop ? 'You get' : 'Other gets'}</th>
-                        <th style="vertical-align: top; ">${trial.payoffGroupTop ? 'Other in ' + globalgroup_text + '?': 'Other´s Random Number'}</th>
+                        <th style="vertical-align: top; ">${trial.payoffGroupTop ? 'Other&rsquo;s Country' : 'Other´s Random Number'}</th>
                       </tr>
                       <tr style="vertical-align: center; height: 40%;">
-                        <td style="text-align: center; " id="up-left">${trial.payoffYouTop ? trial.stimulus['s1'].toFixed(0) : trial.stimulus['o1'].toFixed(0) } </td>
-                        <td style="text-align: center;   ">${trial.payoffYouTop ? trial.stimulus['s2'].toFixed(0) : trial.stimulus['o2'].toFixed(0) }</td>
-                        <td style="text-align: center;  ">${trial.payoffGroupTop ? trial.stimulus['ingroup'].toFixed(0) : trial.stimulus['random'].toFixed(0)}</td>
+                        <td style="text-align: center; " id="up-left">${trial.payoffYouTop ? trial.stimulus['s1'] : trial.stimulus['o1'] } </td>
+                        <td style="text-align: center;   ">${trial.payoffYouTop ? trial.stimulus['s2'] : trial.stimulus['o2'] }</td>
+                        <td style="text-align: center;  ">${trial.payoffGroupTop ? trial.stimulus['ingroup'] : trial.stimulus['random']}</td>
                     </tr>
                     <tr style="vertical-align: center; height: 40%;">
-                        <td style="text-align: center;  border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o1'].toFixed(0) : trial.stimulus['s1'].toFixed(0) }</td>     
-                        <td style="text-align: center;   border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o2'].toFixed(0) : trial.stimulus['s2'].toFixed(0) } </td>
-                        <td style="text-align: center;   border-top: 1px gray solid;"f" id="bottom-right">${trial.payoffGroupTop ? trial.stimulus['random'].toFixed(0) : trial.stimulus['ingroup'].toFixed(0)}</td>
+                        <td style="text-align: center;  border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o1'] : trial.stimulus['s1'] }</td>     
+                        <td style="text-align: center;   border-top: 1px gray solid;"> ${trial.payoffYouTop ? trial.stimulus['o2'] : trial.stimulus['s2'] } </td>
+                        <td style="text-align: center;   border-top: 1px gray solid;"f" id="bottom-right">${trial.payoffGroupTop ? trial.stimulus['random'] : trial.stimulus['ingroup']}</td>
                     </tr>
                       <tr style="height:10%;">
                   <th style="vertical-align: bottom;  height: 25px;">Option F: ${trial.payoffYouTop ? 'Other gets' : 'You get'}</th>
                   <th style="vertical-align: bottom; ">Option J: ${trial.payoffYouTop ? 'Other gets' : 'You get'}</th>
-                  <th style="vertical-align: bottom; ">${trial.payoffGroupTop ? 'Other&rsquo;s Random Number' : 'Other in ' + globalgroup_text + '?'}</th>
+                  <th style="vertical-align: bottom; ">${trial.payoffGroupTop ? 'Other&rsquo;s Random Number' : 'Other&rsquo;s Country'}</th>
                   </tr>
                 
                   </table>

@@ -10,16 +10,6 @@
     var preload = {
       type: jsPsychPreload,
       images: [
-        '../img/b2.png', 
-        '../img/b3.png',  
-        '../img/g2.png', 
-        '../img/g3.png', 
-        '../img/bg3.png', 
-        '../img/bg4.png', 
-        '../img/bg5.png', 
-        '../img/bg6.png', 
-        '../img/gexample.png', 
-        '../img/bexample.png',
         '../img/star_purple.jpg', 
         '../img/star_yellow.jpg', 
         '../img/star_patterned.jpg',
@@ -242,77 +232,71 @@
       preamble: "For each task, click on the option you prefer.", 
     };
 
+  
+
     ///////
     /////// GROUP ALLOCATION
     ///////
 
-    /* define instructions trial */
-    var group_instructions = {
+     /* Define global variables */
+     var globalothergroup_text;
+     var globalgroup_letter;
+     var globalgroup_text;
+     var globalothergroup_letter1;
+     var globalothergroup_letter2;
+     var globalothergroup_letter3;
+   
+
+    var groupassignment = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `
-      <p>In this task, we will show you 8 images. Your task is to decide which color each image has.</p>
-      <p>Each time, you decide if the color is green or blue. </p>
-    <p>This is about your personal perception. There are no right or wrong answers. </p>
-    <p>Place your fingers on the buttons to get ready. </p>
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
-        <div style="display: flex; flex-direction: column; align-items: center;">
-             <img src="img/gexample.png" style="width: 100px;">
-             <p class='small'><strong>Press F</strong><br> for green colors!</p> 
-             </div>
-         <div style="display: flex; flex-direction: column; align-items: center;">
-            <img src="img/bexample.png" style="width: 100px;">
-            <p class='small'><strong>Press J</strong><br> for blue colors!</p>
-            </div>
-        </div>
-
-    <p>Press <b>SPACE</b> to begin!</p>
-      `,
-      post_trial_gap: 1000,
-      choices: [' '],
-    };
-
-
-     /* define trial stimuli array for timeline variables where blue is "correct"*/
-     var group_test_stimuli = [
-      { stimulus: "img/b2.png",  correct_response: 'j'},
-      { stimulus: "img/b3.png",  correct_response: 'j'},
-      { stimulus: "img/g2.png",  correct_response: 'j'},
-      { stimulus: "img/g3.png",  correct_response: 'j'},
-      { stimulus: "img/bg3.png",  correct_response: 'j'},
-      { stimulus: "img/bg4.png",  correct_response: 'j'},
-      { stimulus: "img/bg5.png",  correct_response: 'j'},
-      { stimulus: "img/bg6.png",  correct_response: 'j'},
-    ];
-
-    var group_test = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: function(){
-        return '<img src="'+jsPsych.timelineVariable('stimulus')+'"></img>' +
-               '<br><br><strong>F</strong><br> for green. </p><strong>J</strong><br> for blue. ';
-      },
-      choices: ['f', 'j'],
-      data: {
-        task: 'group_response',
-        correct_response: jsPsych.timelineVariable('correct_response')
-      },
-      post_trial_gap: 200,
+      stimulus: function() {
+        return `<p>In this study, you work together with other participants from your country. 
+        There are also participants from other countries. </br> </br>  Which country are you from? </br> </br> 
+        Press I for India. </br>  Press M for Mexico. </br>  Press G for Germany. </br>  Press S for South Africa.
+        `
+    },
+      choices: ['g','s','i','m'],
       on_finish: function(data){
-        data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
-      }
-    };
-
-    /* define test procedure */
-    var group_test_procedure = {
-      timeline: [group_test],
-      timeline_variables: group_test_stimuli,
-      randomize_order: true
-    };
-
-    /* Define global variables */
-    var globalcolor_text;
-    var globalgroup_text;
-    var othergroup_text;
-    var othercolor_text;
+        // score the resp onse by comparing the key that was pressed (data.response) against the 
+        // correct response for this trial ('f'), and store reponse accuracy in the trial data
+        if(jsPsych.pluginAPI.compareKeys(data.response, 's')){
+          globalgroup_text = "South Africa";
+          globalgroup_letter = "S";
+          globalothergroup_text = "Germany, Mexico, and India";
+          globalothergroup_letter1 = "G";
+          globalothergroup_letter2 = "M";
+          globalothergroup_letter3 = "I";
+        } else if(jsPsych.pluginAPI.compareKeys(data.response, 'm')){
+          globalgroup_text = "Mexico";
+          globalgroup_letter = "M";
+          globalothergroup_text = "Germany, South Africa, and India";
+          globalothergroup_letter1 = "G";
+          globalothergroup_letter2 = "S";
+          globalothergroup_letter3 = "I";
+        } else if(jsPsych.pluginAPI.compareKeys(data.response, 'g')){
+          globalgroup_text = "Germany";
+          globalgroup_letter = "G";
+          globalothergroup_text = "South Africa, Mexico, and India";
+          globalothergroup_letter1 = "S";
+          globalothergroup_letter2 = "M";
+          globalothergroup_letter3 = "I";
+        } else if(jsPsych.pluginAPI.compareKeys(data.response, 'i')){
+          globalgroup_text = "India";
+          globalgroup_letter = "I";
+          globalothergroup_text = "Germany, Mexico, and South Africa";
+          globalothergroup_letter1 = "G";
+          globalothergroup_letter2 = "M";
+          globalothergroup_letter3 = "S";
+        }
+        console.log(globalgroup_text, globalothergroup_text)
+      },
+      data: function() { 
+        return {group_text: globalgroup_text,
+                othergroup_text: globalothergroup_text,
+            };
+        }, 
+    }
+    
 
     /* donetext */
     var donetext = {
@@ -327,57 +311,14 @@
     var group_debrief_block = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function() {
-        var group_trials = jsPsych.data.get().filter({task: 'group_response'});
-        var group_blue_trials = group_trials.filter({correct: true});
-        var group_proportion = Math.round(group_blue_trials.count() / group_trials.count() * 100);
-        var group_rt = Math.round(group_blue_trials.select('rt').mean());
-
-        var color_text; 
-         if (group_proportion >= 50) {
-           color_text = "blue";
-           globalcolor_text = color_text;
-         } else {
-            color_text = "green";
-            globalcolor_text = color_text;
-          }
-
-        var group_text; 
-          if (group_proportion >= 50) {
-            group_text = "TEAM BLUE";
-            globalgroup_text = group_text;
-          } else {
-             group_text = "TEAM GREEN";
-             globalgroup_text = group_text;
-          }
-
-        var othercolor_text; 
-         if (group_proportion >= 50) {
-            othercolor_text = "green";
-            globalothercolor_text = othercolor_text;
-         } else {
-            othercolor_text = "blue";
-            globalothercolor_text = othercolor_text;
-          }
-
-        var othergroup_text; 
-          if (group_proportion >= 50) {
-            othergroup_text = "TEAM GREEN";
-            globalothergroup_text = othergroup_text;
-          } else {
-             othergroup_text = "TEAM BLUE";
-            globalothergroup_text = othergroup_text;
-          }
-
-        return `<p style=color:${globalcolor_text}>You indicated that you saw mostly ${globalcolor_text} colors.</p>
-          <p>Some people perceive the colors as mostly ${globalcolor_text}, just like you. Other people see it differently.</p>
-          <p>People differ a lot in whether they see more blue or more green in these images. </p>
+        return `<p style=color: magenta; >You indicated that you are from ${globalgroup_text}.</p>
+          <p>You will join other participants from ${globalgroup_text} in a team: Team ${globalgroup_text}!</p>
+          <p></p>
           <p>Press <b>SPACE</b> to move on!</p>`;
         },
       data: function() { 
         return {group_text: globalgroup_text,
-                color_text: globalcolor_text,
                 othergroup_text: globalothergroup_text,
-                othercolor_text: globalothercolor_text,
             };
         }, 
       post_trial_gap: 1000,
@@ -385,23 +326,26 @@
       
     };
   
+        /* define debrief */
+        var group_debrief_block2 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: function() {
+            return `<p style=color: magenta; >Other participants in this study are from ${globalothergroup_text}. They each form their own teams.</p>
+              <p>Your team is Team ${globalgroup_text}!</p>
+              <p></p>
+              <p>Press <b>SPACE</b> to move on!</p>`;
+            },
+          data: function() { 
+            return {group_text: globalgroup_text,
+                    othergroup_text: globalothergroup_text,
+                };
+            }, 
+          post_trial_gap: 1000,
+          choices: [' '],
+          
+        };
 
-    /* define debrief pt 2 */
-    var group_debrief_block2 = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: function() {
-        return `
-          <p>You will join a team with all participants who also saw more ${globalcolor_text}, just as you did. </p>
-          <p style=color:${globalcolor_text}>Together, you are ${globalgroup_text}! </p>
-          <p>Please remember your team name (${globalgroup_text}). You will work together with your team to earn bonus payments. </p>
-          <p>You will also compete against the other team (${globalothergroup_text}), trying to win bonus payments for your team.</p>
-          <p>Press <b>SPACE</b> to move on!</p>`;
-        }, 
-      post_trial_gap: 1000,
-      choices: [' '],
-      
-    };
-        
+ 
     ///////
     /////// GROUP REINFORCEMENT
     ///////
@@ -411,12 +355,12 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function(){
         return `
-         <p>In this task, you will work together with ${globalgroup_text} to win a game against ${globalothergroup_text}. </p>
-         <p>A star will appear in the middle of the screen. For each round, you decide which color it has. Stars can be purple, yellow or have your team color: ${globalcolor_text}. </br> </br></p>
-         <p>When you press the <strong>correct key</strong>, you win 10 points for your team, ${globalgroup_text}.</p>
+         <p>In this task, you will work together with Team ${globalgroup_text} to win a game against participants from the other countries (${globalothergroup_text}). </p>
+         <p>A star will appear in the middle of the screen. For each round, you decide which color it has. Stars can be purple, yellow or blue. </br> </br></p>
+         <p>When you press the <strong>correct key</strong>, you win 10 points for your team, Team ${globalgroup_text}.</p>
          <p>But when you press the <strong>wrong key</strong>, your team looses 10 points.</p>
-         <p>Bonus: If you're faster than a random person from the other team, you team wins 100 extra points.</p>
-         <p>${globalgroup_text} wins if you gather more points than ${globalothergroup_text}. The winning team gets a bonus payment of 0.60€. </br> </br></p> 
+         <p>Bonus: If you're faster than a random person from all teams, you team wins 100 extra points.</p>
+         <p>Team ${globalgroup_text} wins if you gather more points than the other teams (teams from ${globalothergroup_text}). The winning team gets a bonus payment of 0.60€. </br> </br></p> 
          <p>Place your fingers on the keys to get ready. </p>
          <div style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
          <div style="display: flex; flex-direction: column; align-items: center;">
@@ -425,7 +369,7 @@
              </div>
          <div style="display: flex; flex-direction: column; align-items: center;">
             <img src="img/star_patterned.jpg" style="width: 100px;">
-            <p class='small';  style=color:${globalcolor_text}><strong>Press SPACE</strong><br> for stars with your team color: ${globalcolor_text}!</p>
+            <p class='small';><strong>Press SPACE</strong><br> for blue stars!</p>
             </div>
         <div style="display: flex; flex-direction: column; align-items: center;">
             <img src="img/star_yellow.jpg" style="width: 100px;">
@@ -433,12 +377,17 @@
             </div>
         </div>
 
-        <p style=color:${globalcolor_text}>Give your best for ${globalgroup_text}! </p>
+        <p style=color: magenta; >Give your best for Team ${globalgroup_text}! </p>
         <p>Press <b>SPACE</b> to begin!</p>
         `;
       },
       post_trial_gap: 1000,
       choices: [' '],
+      data: function() { 
+        return {group_text: globalgroup_text,
+                othergroup_text: globalothergroup_text,
+            };
+        }, 
     };
 
  /* define trial stimuli array for timeline variables */
@@ -493,7 +442,7 @@
         var star_accuracy = Math.round(star_correct_trials.count() / star_trials.count() * 100);
         var star_rt = Math.round(star_correct_trials.select('rt').mean());
 
-        return `<p style=color:${globalcolor_text}>Good job ${globalgroup_text}!</p>
+        return `<p style=color: magenta; >Good job, Team ${globalgroup_text}!</p>
           <p>You pressed the correct key ${star_accuracy}% of the time.</p>
           <p>Your average response time was ${star_rt}ms.</p>
           <p>You will learn about the bonus payments for your team after the study, when all the other participants had a chance to compete.</p>
@@ -513,7 +462,8 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<div style="width: 80%; margin: auto;">
       <p> In the next task, you will decide to give points to yourself and other participants in this study in multiple rounds. </p>
-      For each decision, another participant is randomly matched with you. For each option, you will see <b>how many points you get</b>, and <b>how many points the other participant gets</b>. </p>
+      For each decision, another participant is randomly matched with you. For each option, you will see <b>how many points you get</b>, 
+      and <b>how many points the other participant gets</b>. </p>
       <p> Each time, you have two options: Option F (on the left) and Option J (on the right). </p>
     
       Press <b><font color='magenta'>F</font></b> to choose <b><font color='magenta'>Option F</font></b> (the option on the left).
@@ -540,10 +490,13 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function() {
         return ` <p> In each round, you will also see two pieces of information about the other participant:</p>
-            <p> <b>Other in ${globalgroup_text}?</b>    and    <b>Other's Random Number</b> </br></br> </p>
-            <p> <b>Other in ${globalgroup_text}?</b>: This information tells you if the other person belongs to your team (${globalgroup_text}).</br>
-            If the person <span style="color: ${globalcolor_text};"><b>IS</b> in your team</span>, you will see the number <span style="color: ${globalcolor_text};"> <strong>1</strong></span>. </br>
-            If the person <span style="color: ${globalothercolor_text};">is <b>NOT</b> in your team</span>, you will see the number <span style="color: ${globalothercolor_text};"> <strong>0</strong></span>. </p>
+            <p> <b>Other's Country</b>    and    <b>Other's Random Number</b> </br></br> </p>
+            <p> <b>Other's Country</b>: This information tells you if the other person belongs to your team (Team ${globalgroup_text}).</br>
+            If the person <span style="color: magenta;"><b>IS</b> in your team</span>, you will see the 
+            letter <span style="color: magenta;"> <strong>${globalgroup_letter}</strong>, the first letter of ${globalgroup_text}</span>. </br>
+            If the person <span style="color: magenta;">is <b>NOT</b> in your team</span>, you will see the 
+            letters <span style="color: magenta;"> <strong>${globalothergroup_letter1}, ${globalothergroup_letter2}, or ${globalothergroup_letter3}</strong> 
+            </span> (first letters of the countries ${globalothergroup_text}).</p>
             <p> <b>Other's Random Number</b>: This information tells you a random number that belongs to the other participant. It can be any number up to 99. </br>
             Every person gets a random number in this study.</p>
             <p>Press <b>SPACE</b> to see an example!</p>  
@@ -558,55 +511,55 @@
     var choice_instructions3 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function() {
-        if (globalgroup_text === "TEAM GREEN" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
+        if (globalgroup_text === "India" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
           imgSrc = "../img/comp_checkG_YouTop_GroupTop0.png";
-        } else if (globalgroup_text === "TEAM GREEN" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
+        } else if (globalgroup_text === "India" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
           imgSrc = "../img/comp_checkG_YouBottom_GroupBottom0.png";
-        } else if (globalgroup_text === "TEAM GREEN" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
+        } else if (globalgroup_text === "India" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
           imgSrc = "../img/comp_checkG_YouTop_GroupBottom0.png";
-        } else if (globalgroup_text === "TEAM GREEN" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
+        } else if (globalgroup_text === "India" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
           imgSrc = "../img/comp_checkG_YouBottom_GroupTop0.png";
-        } else if (globalgroup_text === "TEAM BLUE" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
+        } else if (globalgroup_text === "Mexico" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
           imgSrc = "../img/comp_checkB_YouTop_GroupTop0.png";
-        } else if (globalgroup_text === "TEAM BLUE" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
+        } else if (globalgroup_text === "Mexico" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
           imgSrc = "../img/comp_checkB_YouBottom_GroupBottom0.png";
-        } else if (globalgroup_text === "TEAM BLUE" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
+        } else if (globalgroup_text === "Mexico" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
           imgSrc = "../img/comp_checkB_YouTop_GroupBottom0.png";
-        } else if (globalgroup_text === "TEAM BLUE" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
+        } else if (globalgroup_text === "Mexico" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
           imgSrc = "../img/comp_checkB_YouBottom_GroupTop0.png";
         } 
-        else if (globalgroup_text === "TEAM GREEN" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
+        else if (globalgroup_text === "India" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
           imgSrc = "../img/comp_checkG_YouTop_GroupTop1.png";
-        } else if (globalgroup_text === "TEAM GREEN" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
+        } else if (globalgroup_text === "India" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
           imgSrc = "../img/comp_checkG_YouBottom_GroupBottom1.png";
-        } else if (globalgroup_text === "TEAM GREEN" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
+        } else if (globalgroup_text === "India" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
           imgSrc = "../img/comp_checkG_YouTop_GroupBottom1.png";
-        } else if (globalgroup_text === "TEAM GREEN" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
+        } else if (globalgroup_text === "India" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
           imgSrc = "../img/comp_checkG_YouBottom_GroupTop1.png";
-        } else if (globalgroup_text === "TEAM BLUE" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
+        } else if (globalgroup_text === "Mexico" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
           imgSrc = "../img/comp_checkB_YouTop_GroupTop1.png";
-        } else if (globalgroup_text === "TEAM BLUE" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
+        } else if (globalgroup_text === "Mexico" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
           imgSrc = "../img/comp_checkB_YouBottom_GroupBottom1.png";
-        } else if (globalgroup_text === "TEAM BLUE" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
+        } else if (globalgroup_text === "Mexico" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
           imgSrc = "../img/comp_checkB_YouTop_GroupBottom1.png";
-        } else if (globalgroup_text === "TEAM BLUE" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
+        } else if (globalgroup_text === "Mexico" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
           imgSrc = "../img/comp_checkB_YouBottom_GroupTop1.png";
         }  
-        else if (globalgroup_text === "TEAM GREEN" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
+        else if (globalgroup_text === "India" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
           imgSrc = "../img/comp_checkG_YouTop_GroupTop2.png";
-        } else if (globalgroup_text === "TEAM GREEN" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
+        } else if (globalgroup_text === "India" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
           imgSrc = "../img/comp_checkG_YouBottom_GroupBottom2.png";
-        } else if (globalgroup_text === "TEAM GREEN" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
+        } else if (globalgroup_text === "India" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
           imgSrc = "../img/comp_checkG_YouTop_GroupBottom2.png";
-        } else if (globalgroup_text === "TEAM GREEN" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
+        } else if (globalgroup_text === "India" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
           imgSrc = "../img/comp_checkG_YouBottom_GroupTop2.png";
-        } else if (globalgroup_text === "TEAM BLUE" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
+        } else if (globalgroup_text === "Mexico" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
           imgSrc = "../img/comp_checkB_YouTop_GroupTop2.png";
-        } else if (globalgroup_text === "TEAM BLUE" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
+        } else if (globalgroup_text === "Mexico" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
           imgSrc = "../img/comp_checkB_YouBottom_GroupBottom2.png";
-        } else if (globalgroup_text === "TEAM BLUE" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
+        } else if (globalgroup_text === "Mexico" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
           imgSrc = "../img/comp_checkB_YouTop_GroupBottom2.png";
-        } else if (globalgroup_text === "TEAM BLUE" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
+        } else if (globalgroup_text === "Mexico" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
           imgSrc = "../img/comp_checkB_YouBottom_GroupTop2.png";
         }  
         return `<div style="width: 80%; margin: auto; text-align: center;">
@@ -617,7 +570,7 @@
       <ul>
       <li>How many points you get if you choose Option F or J.</li>
       <li>How many points the other person get if you choose Option F or J.</li> 
-      <li>If the other person belongs to ${globalgroup_text} (1) or not (0). </li>
+      <li>If the other person belongs to ${globalgroup_text} (letter ${globalgroup_letter}) or not (letters ${globalothergroup_letter1}, ${globalothergroup_letter2}, ${globalothergroup_letter3}). </li>
       <li>What random number the other person has.</li>
       </ul></p> 
       </div> </br> </br>
@@ -701,8 +654,8 @@
         <img height="600px" src="${imgSrc}"><br/>
         <br>
         </div>
-        <p style=color:${globalcolor_text}>In this example, the other person <b>IS IN YOUR TEAM </b>(${globalgroup_text}). You can tell because there is a <b>1</b> shown.</p>
-        <p style=color:${globalothercolor_text}>When the other person is not in your team, there is a <b>0</b> shown.</p>`;
+        <p style=color: magenta;}>In this example, the other person <b>IS IN YOUR TEAM </b>(Team ${globalgroup_text}). You can tell because there is a <b>${globalgroup_letter}</b> shown.</p>
+        <p style=color: magenta;}>When the other person is not in your team, there is a <b>${globalothergroup_letter1}, ${globalothergroup_letter2}, or ${globalothergroup_letter3}</b> shown.</p>`;
         }, 
       post_trial_gap: 1000,
       choices: ['OK I understand'],
@@ -880,7 +833,7 @@
       ]
         }
       ],
-      loop_function: () => charity_prac_choice_count < 3,
+      loop_function: () => charity_prac_choice_count < 4,
     };
 
     ///////
@@ -1023,7 +976,7 @@
         return `
          <p>In this task, you have 100 points that are worth 0.30€.</p> 
          <p>You can keep these points to yourself, or you can give some or all of the points to another participant in this study. </p>
-         <p>This other participant is either a member of your team, ${globalgroup_text}, or a member of the other team, ${globalothergroup_text}.</p>
+         <p>This other participant is either a member of your team, ${globalgroup_text}, or a member of the other teams from ${globalothergroup_text}.</p>
          <p><strong>Would you like to know which team the other participant belongs to?</strong></p>`;
         },
         choices: ['YES, I want to know which team the other participant belongs to!','NO, I do not want to know which team the other participant belongs to.'],
@@ -1031,23 +984,43 @@
         required: true
       }
 
-      var lookcheck_trial_G = {
+      var lookcheck_trial_M = {
         type: jsPsychSurveyText,
         questions: [
         {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number between 0 and 100', name:'lookcheck_other_G'}, 
         ], 
         preamble: `
-        <div style="color: green;">The other participant belongs to TEAM GREEN.</div>
+        <div style="color: magenta;">The other participant belongs to TEAM MEXICO.</div>
         <div>You have 100 points. Decide how much to give to the other participant. You will keep the rest for yourself. </div>`,
       };
 
-      var lookcheck_trial_B = {
+      var lookcheck_trial_I = {
         type: jsPsychSurveyText,
         questions: [
         {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number between 0 and 100', name:'lookcheck_other_B'}, 
         ], 
         preamble: `
-        <div style="color: blue;">The other participant belongs to TEAM BLUE.</div>
+        <div style="color: magenta;">The other participant belongs to TEAM INDIA.</div>
+        <div>You have 100 points. Decide how much to give to the other participant. You will keep the rest for yourself. </div>`,
+      };
+
+      var lookcheck_trial_G = {
+        type: jsPsychSurveyText,
+        questions: [
+        {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number between 0 and 100', name:'lookcheck_other_B'}, 
+        ], 
+        preamble: `
+        <div style="color: magenta;">The other participant belongs to TEAM GERMANY.</div>
+        <div>You have 100 points. Decide how much to give to the other participant. You will keep the rest for yourself. </div>`,
+      };
+
+      var lookcheck_trial_S = {
+        type: jsPsychSurveyText,
+        questions: [
+        {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number between 0 and 100', name:'lookcheck_other_B'}, 
+        ], 
+        preamble: `
+        <div style="color: magenta;">The other participant belongs to TEAM SOUTH AFRICA.</div>
         <div>You have 100 points. Decide how much to give to the other participant. You will keep the rest for yourself. </div>`,
       };
   
@@ -1057,13 +1030,13 @@
         {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number between 0 and 100', name:'lookcheck_other_anonymous'}, 
         ], 
         preamble: `
-        <div>We won't tell you which team the other player belongs to.</div>
+        <div style="color: magenta;">We won't tell you which team the other player belongs to.</div>
         <div>You have 100 points. Decide how much to give to the other participant. You will keep the rest for yourself. </div>`,
       };
 
 
     // Randomly select one of the trials
-    var lookcheck_trials = [lookcheck_trial_G, lookcheck_trial_B, lookcheck_trial_anonymous];
+    var lookcheck_trials = [lookcheck_trial_G, lookcheck_trial_M, lookcheck_trial_I, lookcheck_trial_S, lookcheck_trial_anonymous];
     var selected_lookcheck = jsPsych.randomization.sampleWithoutReplacement(lookcheck_trials, 1)[0];
 
     // Push the selected trial to the timeline
@@ -1111,7 +1084,7 @@
     var teamcheck_trial = {
       type: jsPsychHtmlButtonResponse,
       stimulus: '<p>Which team do you belong to?  </br> </br> Click on the correct answer!</p>',
-      choices: ['TEAM BLUE', 'TEAM GREEN'],
+      choices: ['TEAM INDIA', 'TEAM GERMANY', 'TEAM MEXICO', 'TEAM SOUTH AFRICA'],
       button_html: '<button class="jspsych-btn">%choice%</button>',
       required: true
     };
@@ -1143,7 +1116,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function() {
         return `
-         <p>Next, we will ask you some questions about your team, ${globalgroup_text}, and about the other team, ${globalothergroup_text}. </p>
+         <p>Next, we will ask you some questions about your team, ${globalgroup_text}, and about the other teams from ${globalothergroup_text}. </p>
          <p>Press <b>SPACE</b> to continue!</p>`;
         },
       choices: [' '],
@@ -1151,14 +1124,21 @@
 
 
     // Define the statements to be rated
-    var group_statements_G = [   
-      "I see myself as a member of TEAM GREEN.",  
-      "I like TEAM GREEN."];
+    var group_statements_M = [   
+      "I see myself as a member of TEAM MEXICO.",  
+      "I like TEAM MEXICO."];
 
-   var group_statements_B = [  
-      "I see myself as a member of TEAM BLUE.",  
-      "I like TEAM BLUE."];
+   var group_statements_I = [  
+      "I see myself as a member of TEAM INDIA.",  
+      "I like TEAM INDIA."];
 
+    var group_statements_G = [  
+      "I see myself as a member of TEAM GERMANY.",  
+      "I like TEAM GERMANY."];
+
+      var group_statements_S = [  
+        "I see myself as a member of TEAM SOUTH AFRICA.",  
+        "I like TEAM SOUTH AFRICA."];
 
    // Define the Likert scale labels
    var group_scale_labels = [
@@ -1175,20 +1155,40 @@
    for (var i = 0; i < group_statements_G.length; i++) {
      var ident_G_trial = {
        type: jsPsychSurveyLikert,
-       preamble: "Please rate your agreement with the these statements about <span style='color: green;'>TEAM GREEN:</span>",
+       preamble: "Please rate your agreement with the these statements about <span style='color: magenta;'>TEAM GERMANY:</span>",
        questions: [{prompt: group_statements_G[i], labels: group_scale_labels, required: true, name: 'ident_g'+i}],
      };
      ident_G_trials.push(ident_G_trial); 
    }
 
-   var ident_B_trials = [];
-   for (var i = 0; i < group_statements_B.length; i++) {
-     var ident_B_trial = {
+   var ident_I_trials = [];
+   for (var i = 0; i < group_statements_I.length; i++) {
+     var ident_I_trial = {
        type: jsPsychSurveyLikert,
-       preamble: "Please rate your agreement with the these statements about <span style='color: blue;'>TEAM BLUE:</span>",
-       questions: [{prompt: group_statements_B[i], labels: group_scale_labels, required: true, name: 'ident_b'+i}],
+       preamble: "Please rate your agreement with the these statements about <span style='color: magenta;'>TEAM INDIA:</span>",
+       questions: [{prompt: group_statements_I[i], labels: group_scale_labels, required: true, name: 'ident_i'+i}],
      };
-     ident_B_trials.push(ident_B_trial); 
+     ident_I_trials.push(ident_I_trial); 
+   }
+
+   var ident_M_trials = [];
+   for (var i = 0; i < group_statements_M.length; i++) {
+     var ident_M_trial = {
+       type: jsPsychSurveyLikert,
+       preamble: "Please rate your agreement with the these statements about <span style='color: magenta;'>TEAM MEXICO:</span>",
+       questions: [{prompt: group_statements_M[i], labels: group_scale_labels, required: true, name: 'ident_m'+i}],
+     };
+     ident_M_trials.push(ident_M_trial); 
+   }
+
+   var ident_S_trials = [];
+   for (var i = 0; i < group_statements_S.length; i++) {
+     var ident_S_trial = {
+       type: jsPsychSurveyLikert,
+       preamble: "Please rate your agreement with the these statements about <span style='color: magenta;'>TEAM SOUTH AFRICA:</span>",
+       questions: [{prompt: group_statements_S[i], labels: group_scale_labels, required: true, name: 'ident_s'+i}],
+     };
+     ident_S_trials.push(ident_S_trial); 
    }
    ///////
    //// Individualism collectivism
@@ -1328,64 +1328,63 @@
         timeline.push(fullscreenEnter);
         timeline.push(SVO_instruction);
         timeline.push(SVO_trial_likert);
-        timeline.push(group_instructions);
-        timeline.push(group_test_procedure);
-        timeline.push(donetext);
-        timeline.push(group_debrief_block);
-        timeline.push(group_debrief_block2);
-        timeline.push(star_instructions);
-        timeline.push(star_test_procedure);
-        timeline.push(donetext);
-        timeline.push(star_debrief_block);
-        timeline.push(choice_instructions1);
-        timeline.push(choice_instructions2);
-        timeline.push(choice_instructions3);
-        timeline.push(comprehension_check1);
-        timeline.push(comprehension_feedback1);
-        timeline.push(comprehension_check2);
-        timeline.push(comprehension_feedback2);
-        timeline.push(comprehension_check3);
-        timeline.push(comprehension_feedback3);
-        timeline.push(calibration_instructions);
-        timeline.push(init_camera);
-        timeline.push(calibration);
-        timeline.push(validation_instructions);
-        timeline.push(validation);
-        timeline.push(task_instructions);
-        timeline.push(charity_prac_choice);
-        timeline.push(EnterRealChoice);
-        timeline.push(real_choice);
-        timeline.push(donecursor);
-
-        timeline.push(lookcheck_trial);
-        timeline.push(selected_lookcheck);
-
-        timeline.push(expectations_favoritism);
-        timeline.push(expectations_others);
-
-        timeline.push(teamcheck_trial);
-        timeline.push(ios_trial);
-
-        timeline.push(rateintro);
-        // randomly decide which rating block to present first
-       if (Math.random() < 0.5) {
-         for (var i = 0; i < ident_G_trials.length; i++) {
-           timeline.push(ident_G_trials[i]);
-         }
-         for (var i = 0; i < ident_B_trials.length; i++) {
-           timeline.push(ident_B_trials[i]);
-         }
-       } else {
-         for (var i = 0; i < ident_B_trials.length; i++) {
-           timeline.push(ident_B_trials[i]);
-         }
-         for (var i = 0; i < ident_G_trials.length; i++) {
-           timeline.push(ident_G_trials[i]);
-         }
-       }
-       timeline.push(indicol);
-       timeline.push(visioncheck_trial);
-       timeline.push(country_survey_trial);
+       timeline.push(groupassignment);
+       timeline.push(group_debrief_block);
+       timeline.push(group_debrief_block2);
+       timeline.push(star_instructions);
+       timeline.push(star_test_procedure);
+       timeline.push(donetext);
+       timeline.push(star_debrief_block);
+       timeline.push(choice_instructions1);
+       timeline.push(choice_instructions2);
+       timeline.push(choice_instructions3);
+       timeline.push(comprehension_check1);
+       timeline.push(comprehension_feedback1);
+       timeline.push(comprehension_check2);
+       timeline.push(comprehension_feedback2);
+       timeline.push(comprehension_check3);
+       timeline.push(comprehension_feedback3);
+       timeline.push(calibration_instructions);
+       timeline.push(init_camera);
+       timeline.push(calibration);
+       timeline.push(validation_instructions);
+       timeline.push(validation);
+       timeline.push(task_instructions);
+       timeline.push(charity_prac_choice);
+       timeline.push(EnterRealChoice);
+       timeline.push(real_choice);
+       timeline.push(donecursor);
+//
+       timeline.push(lookcheck_trial);
+       timeline.push(selected_lookcheck);
+//
+       timeline.push(expectations_favoritism);
+       timeline.push(expectations_others);
+//
+       timeline.push(teamcheck_trial);
+       timeline.push(ios_trial);
+//
+       timeline.push(rateintro);
+       for (var i = 0; i < ident_G_trials.length; i++) {
+        timeline.push(ident_G_trials[i]);
+      }
+      
+      for (var i = 0; i < ident_M_trials.length; i++) {
+        timeline.push(ident_M_trials[i]);
+      }
+      
+      for (var i = 0; i < ident_I_trials.length; i++) {
+        timeline.push(ident_I_trials[i]);
+      }
+      
+      for (var i = 0; i < ident_S_trials.length; i++) {
+        timeline.push(ident_S_trials[i]);
+      }
+      
+//
+      timeline.push(indicol);
+      timeline.push(visioncheck_trial);
+      timeline.push(country_survey_trial);
         timeline.push(feedback);
         timeline.push(success_guard);
         
