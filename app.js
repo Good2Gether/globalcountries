@@ -4,6 +4,10 @@ var express = require("express"),
     body_parser = require("body-parser"),
     http = require("http");
 
+const dotenv = require('dotenv');
+const path = require('path');
+dotenv.config({ path: path.join(__dirname, 'secrets', '.env') });
+
 const aws = require('aws-sdk');
 const S3_BUCKET = process.env.S3_BUCKET;
 const s3 = new aws.S3({
