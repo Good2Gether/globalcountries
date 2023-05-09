@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="https://unpkg.com/jspsych@7.3.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.2"></script>
+    <link href="https://unpkg.com/jspsych@7.3.2/css/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+
+    ////// REMEMBER!!!! PRELOAD IMAGES + CHECK WERE I SHORTENED THE TRIALS!!
+
+    /* initialize jsPsych */
+    var jsPsych = initJsPsych({
+      on_finish: function() {
+        jsPsych.data.displayData();
+      }
+    });
+
+    /* create timeline */
+    var timeline = [];
+
+    /* preload images */
+    var preload = {
+      type: jsPsychPreload,
+      images: [
+        'img/b1.png', 
+        'img/b2.png', 
+        'img/b3.png', 
+        'img/g1.png', 
+        'img/g2.png', 
+        'img/g3.png', 
+        'img/bg1.png', 
+        'img/bg2.png', 
+        'img/bg3.png', 
+        'img/bg4.png', 
+        'img/bg5.png', 
+        'img/bg6.png', 
+        'img/gexample.png', 
+        'img/bexample.png',
+        'img/star_purple.jpg', 
+        'img/star_yellow.jpg', 
+        'img/star_patterned.jpg',
+        'img/ios1.png', 
+        'img/ios2.png', 
+        'img/ios3.png',
+        'img/ios4.png',
+        'img/ios5.png',
+        'img/ios6.png',
+        'img/ios7.png',]
+    };
+    timeline.push(preload);
+
+    ///////
+    /////// GROUP ALLOCATION
+    ///////
+
+    /* define instructions trial */
+    var group_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+      <p>In this part of the experiment, we will show you 12 color images. Your task is to indicate which color each image has.</p>
+      <p>Each time, you decide if the color is green or blue. </p>
+    <p>This is about your personal perception. Some cases could be easier for you than others. There are no right or wrong answers. </p>
+    <p>Place your fingers on the buttons to get ready. </p>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+             <img src="img/gexample.png" style="width: 100px;">
+             <p class='small'><strong>Press F</strong><br> for green colors!</p> 
+             </div>
+         <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="img/bexample.png" style="width: 100px;">
+            <p class='small'><strong>Press J</strong><br> for blue colors!</p>
+            </div>
+        </div>
+
+    <p>Press SPACE to begin.</p>
+      `,
+      post_trial_gap: 1000,
+      choices: [' '],
+    };
+    timeline.push(group_instructions);
+
+
+     /* define trial stimuli array for timeline variables where blue is "correct"*/
+     var group_test_stimuli = [
+      { stimulus: "img/b1.png",  correct_response: 'j'}, 
+      { stimulus: "img/b2.png",  correct_response: 'j'},
+      //{ stimulus: "img/b3.png",  correct_response: 'j'}, // remember to change
+      //{ stimulus: "img/g1.png",  correct_response: 'j'},
+      //{ stimulus: "img/g2.png",  correct_response: 'j'},
+      //{ stimulus: "img/g3.png",  correct_response: 'j'},
+      //{ stimulus: "img/bg1.png",  correct_response: 'j'},
+      //{ stimulus: "img/bg2.png",  correct_response: 'j'},
+      //{ stimulus: "img/bg3.png",  correct_response: 'j'},
+      //{ stimulus: "img/bg4.png",  correct_response: 'j'},
+      //{ stimulus: "img/bg5.png",  correct_response: 'j'},
+      //{ stimulus: "img/bg6.png",  correct_response: 'j'},
+    ];
+
+    /* define reminder and test trials */
+    var group_fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: ` <p>Remember: </p>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+             <img src="img/gexample.png" style="width: 100px;">
+             <p class='small'><strong>Press F</strong><br> for green colors!</p> 
+             </div>
+         <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="img/bexample.png" style="width: 100px;">
+            <p class='small'><strong>Press J</strong><br> for blue colors!</p>
+            </div>
+        </div>
+    
+    <p>Press SPACE to see the next image.</p>
+      `,
+      choices: [' '],
+    };
+    
+
+    var group_test = {
+      type: jsPsychImageKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: ['f', 'j'],
+      data: {
+        task: 'group_response',
+        correct_response: jsPsych.timelineVariable('correct_response')
+      },
+      post_trial_gap: 200,
+      on_finish: function(data){
+        data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response)}
+    };
+
+    /* define test procedure */
+    var group_test_procedure = {
+      timeline: [group_fixation, group_test],
+      timeline_variables: group_test_stimuli,
+      randomize_order: true
+    };
+    timeline.push(group_test_procedure)
+
+    /* Define global variables */
+    var globalcolor_text;
+    var globalgroup_text;
+    var othergroup_text;
+    var othercolor_text;
+
+    /* done */
+    var done = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: ` <p>Done! </p>
+    <p>Press SPACE to move on.</p>
+      `,
+      choices: [' '],
+    };
+    timeline.push(done);
+
+    /* define debrief */
+    var group_debrief_block = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function() {
+        var group_trials = jsPsych.data.get().filter({task: 'group_response'});
+        var group_blue_trials = group_trials.filter({correct: true});
+        var group_proportion = Math.round(group_blue_trials.count() / group_trials.count() * 100);
+        var group_rt = Math.round(group_blue_trials.select('rt').mean());
+
+        var color_text; 
+         if (group_proportion >= 50) {
+           color_text = "blue";
+           globalcolor_text = color_text;
+         } else {
+            color_text = "green";
+            globalcolor_text = color_text;
+          }
+
+        var group_text; 
+          if (group_proportion >= 50) {
+            group_text = "TEAM BLUE";
+            globalgroup_text = group_text;
+          } else {
+             group_text = "TEAM GREEN";
+             globalgroup_text = group_text;
+          }
+
+        var othercolor_text; 
+         if (group_proportion >= 50) {
+            othercolor_text = "green";
+            globalothercolor_text = othercolor_text;
+         } else {
+            othercolor_text = "blue";
+            globalothercolor_text = othercolor_text;
+          }
+
+        var othergroup_text; 
+          if (group_proportion >= 50) {
+            othergroup_text = "TEAM GREEN";
+            globalothergroup_text = othergroup_text;
+          } else {
+             othergroup_text = "TEAM BLUE";
+            globalothergroup_text = othergroup_text;
+          }
+
+        return `<p style=color:${globalcolor_text}>You indicated that you saw mostly ${globalcolor_text} colors.</p>
+          <p>Some people perceive the colors as mostly ${globalcolor_text}, just like you. Other people see it differently.</p>
+          <p>People differ a lot in whether they see more blue or more green in these images. </p>
+          <p>Press SPACE to move on!</p>`;
+        },
+      data: function() { 
+        return {group_text: globalgroup_text,
+                color_text: globalcolor_text,
+                othergroup_text: globalothergroup_text,
+                othercolor_text: globalothercolor_text,
+            };
+        }, 
+      post_trial_gap: 1000,
+      choices: [' '],
+      
+    };
+    timeline.push(group_debrief_block)
+  
+
+/* define debrief pt 2 */
+var group_debrief_block2 = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: function() {
+    return `
+      <p>You will join a team with all participants who also saw more ${globalcolor_text}, just as you did. </p>
+      <p style=color:${globalcolor_text}>Together, you are ${globalgroup_text}! </p>
+      <p>Please remember your team name (${globalgroup_text}). You will work together with your team to earn bonus payments. </p>
+      <p>You will also compete against the other team, trying to win bonus payments for your team.</p>
+      <p>Press SPACE to move on to the next task!</p>`;
+    }, 
+  post_trial_gap: 1000,
+  choices: [' '],
+  
+};
+timeline.push(group_debrief_block2)
+
+
+///////
+/////// GROUP REINFORCEMENT
+///////
+
+ /* define instructions trial */
+var star_instructions = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: function(){
+    return `
+     <p>In this part of the experiment, you will work together with ${globalgroup_text} to win a game against ${globalothergroup_text}. </p>
+     <p>A star will appear in the middle of the screen. For each round, your task is to say which color it has: purple, yellow or your team color: ${globalcolor_text}. </br> </br></p>
+     <p>Each time you press the <strong>correct key</strong>, you earn 10 points for your team, ${globalgroup_text}.</p>
+     <p>But each time you press the <strong>wrong key</strong>, your team looses 10 points.</p>
+     <p>Bonus: If you're faster than a random person from the other team, your team wins 100 extra points.</p>
+     <p>${globalgroup_text} wins if you gather more points than ${globalothergroup_text}. The winning team gets a bonus payment of XX MONEY. </br> </br></p> 
+     <p>Place your fingers on the keys to get ready. </p>
+     <div style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
+     <div style="display: flex; flex-direction: column; align-items: center;">
+         <img src="img/star_purple.jpg" style="width: 100px;">
+         <p class='small'><strong>Press F</strong><br> for purple stars!</p> 
+         </div>
+     <div style="display: flex; flex-direction: column; align-items: center;">
+        <img src="img/star_patterned.jpg" style="width: 100px;">
+        <p class='small';  style=color:${globalcolor_text}><strong>Press SPACE</strong><br> for stars with your team color: ${globalcolor_text}!</p>
+        </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <img src="img/star_yellow.jpg" style="width: 100px;">
+        <p class='small'><strong>Press J</strong><br> for yellow stars!</p>
+        </div>
+    </div>
+
+    <p style=color:${globalcolor_text}>Give your best for ${globalgroup_text}! </p>
+    <p>Press SPACE to begin.</p>
+    `;
+  },
+  post_trial_gap: 1000,
+  choices: [' '],
+};
+timeline.push(star_instructions);
+
+/* define trial stimuli array for timeline variables */
+var star_test_stimuli = [
+  { stimulus: "img/star_purple.jpg",  correct_response: 'f'},
+  { stimulus: "img/star_yellow.jpg",  correct_response: 'j'},
+  { stimulus: "img/star_patterned.jpg",  correct_response: ' '}
+];
+
+/* define fixation and test trials */
+var star_fixation = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<div style="font-size:60px;">+</div>',
+  choices: "NO_KEYS",
+  trial_duration: function(){
+    return jsPsych.randomization.sampleWithoutReplacement([100, 150, 200, 250, 500, 750, 1000, 1250], 1)[0];
+  },
+  data: {
+    task: 'star_fixation'
+  }
+};
+
+var star_test = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: jsPsych.timelineVariable('stimulus'),
+  choices: ['f', 'j', ' '],
+  data: {
+    task: 'star_response',
+    correct_response: jsPsych.timelineVariable('correct_response')
+  },
+  on_finish: function(data){
+    data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
+  }
+};
+
+/* define test procedure */
+var star_test_procedure = {
+  timeline: [star_fixation, star_test],
+  timeline_variables: star_test_stimuli,
+  repetitions: 1, // remember to change
+  randomize_order: true
+};
+timeline.push(star_test_procedure);
+timeline.push(done);
+
+
+/* define debrief */
+var star_debrief_block = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: function() {
+
+    var star_trials = jsPsych.data.get().filter({task: 'star_response'});
+    var star_correct_trials = star_trials.filter({correct: true});
+    var star_accuracy = Math.round(star_correct_trials.count() / star_trials.count() * 100);
+    var star_rt = Math.round(star_correct_trials.select('rt').mean());
+
+    return `<p style=color:${globalcolor_text}>Good job ${globalgroup_text}!</p>
+      <p>You pressed the correct key ${star_accuracy}% of the time.</p>
+      <p>Your average response time was ${star_rt}ms.</p>
+      <p>You will learn about the bonus payments for your team after the experiment, when all the other participants had a chance to compete.</p>
+      <p>Press SPACE to move on to the next task!</p>`;
+
+  },
+  post_trial_gap: 1000,
+  choices: [' '],
+};
+timeline.push(star_debrief_block);
+
+///////
+/////// EXPLICIT PREFERENCE TO LOOK
+///////
+
+    /* check if participants want to see */
+var lookcheck_trial = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function() {
+    return `
+     <p>In this task, you have 100 points that are worth XX MONEY.</p> 
+     <p>You can keep these points to yourself, or you can give some or all of the points to another participant in this study. </p>
+     <p>This other participant is either a member of your team, ${globalgroup_text}, or a member of the other team, ${globalothergroup_text}.</p>
+     <p><strong>Would you like to know which team the other participant belongs to?</strong></p>`;
+    },
+    choices: ['YES, I want to know which team the other participant belongs to!','NO, I do not want to know which team the other participant belongs to.'],
+    button_html: '<button class="jspsych-btn">%choice%</button>',
+    required: true
+  };
+  timeline.push(lookcheck_trial);
+
+  var lookcheck_trial_G = {
+    type: jsPsychSurveyText,
+    questions: [
+    {prompt: "How many points do you keep for yourself?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number', name:'lookcheck_self_G'},
+    {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number', name:'lookcheck_other_G'}, 
+    ], 
+    preamble: `
+    <div style="color: green;">The other participant belongs to TEAM GREEN.</div>
+    <div>Now decide about the 100 points. Make sure your responses add up to 100! </div>`,
+  };
+
+  var lookcheck_trial_B = {
+    type: jsPsychSurveyText,
+    questions: [
+    {prompt: "How many points do you keep for yourself?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number', name:'lookcheck_self_B'},
+    {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number', name:'lookcheck_other_B'}, 
+    ], 
+    preamble: `
+    <div style="color: blue;">The other participant belongs to TEAM BLUE.</div>
+    <div>Now decide about the 100 points. Make sure your responses below add up to 100! </div>`,
+  };
+
+var lookcheck_trial_anonymous = {
+    type: jsPsychSurveyText,
+    questions: [
+    {prompt: "How many points do you keep for yourself?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number', name:'lookcheck_self_anonymous'},
+    {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number', name:'lookcheck_other_anonymous'}, 
+    ], 
+    preamble: `
+    <div>We won't tell you which team the other player belongs to.</div>
+    <div>Now decide about the 100 points. Make sure your responses below add up to 100! </div>`,
+  };
+
+
+// Randomly select one of the trials
+var lookcheck_trials = [lookcheck_trial_G, lookcheck_trial_B, lookcheck_trial_anonymous];
+var selected_lookcheck = jsPsych.randomization.sampleWithoutReplacement(lookcheck_trials, 1)[0];
+
+// Push the selected trial to the timeline
+timeline.push(selected_lookcheck);
+
+///////
+/////// Expectations
+///////
+
+/* participant expectations about own payout */
+var expectations_favoritism = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p>Would you expect to get more points from somebody deciding such a task if this participant belonged to your own team, rather than to the other team? </br> </br> Click on your answer!</p>',
+  choices: ['YES', 'NO'],
+  button_html: '<button class="jspsych-btn">%choice%</button>',
+  required: true
+};
+timeline.push(expectations_favoritism);
+
+/* participant expectations about other players */
+var expectations_others = {
+  type: jsPsychSurveyText,
+  questions: [
+  {prompt: "... want to know which team the other participant belongs to?", rows: 2, columns:50 , required:true, placeholder: 'Enter a percentage', name:'expectations_others_look'},
+  {prompt: "... give more points to another participant whoy belongs to the same team?", rows: 2, columns:50 , required:true, placeholder: 'Enter a percentage', name:'expectations_others_give'}, 
+  {prompt: "... expect to get more points from another participant who belongs to the same team?", rows: 2, columns:50 , required:true, placeholder: 'Enter a percentage', name:'expectations_others_get'}, 
+  ], 
+  preamble: `
+  <div>Here are some questions about how you think other participants treat members of their own team,  </br> </br> and members of the other team.  </br> </br> 
+    These questions also refer to the task were you decided if and how to split 100 points.  </br> </br> </div>
+  <div>What percentage of all the other participants ...: </div>`,
+};
+timeline.push(expectations_others);
+
+///////
+/////// GROUP IDENTIFICATION, ATTITUDE, LIKING
+///////
+
+   // define the images to display
+   var ios_images = [
+     "img/ios1.png",
+     "img/ios2.png",
+     "img/ios3.png",
+     "img/ios4.png",
+     "img/ios5.png",
+     "img/ios6.png",
+     "img/ios7.png"
+];
+
+var teamcheck_trial = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p>Which team do you belong to?  </br> </br> Click on the correct answer!</p>',
+  choices: ['TEAM BLUE', 'TEAM GREEN'],
+  button_html: '<button class="jspsych-btn">%choice%</button>',
+  required: true
+};
+timeline.push(teamcheck_trial);
+
+
+
+var ios_trial = {
+type: jsPsychHtmlButtonResponse,
+stimulus: function() {
+    return `
+     <p>How do you feel about your team, ${globalgroup_text}? </p>
+     <p>Click on the image that best describes your relationship with your team:</p>`;
+},
+choices: [
+    "<img src='" + ios_images[0] + "' style='max-width: 200px;'/>",
+    "<img src='" + ios_images[1] + "' style='max-width: 200px;'/>",
+    "<img src='" + ios_images[2] + "' style='max-width: 200px;'/>",
+    "<img src='" + ios_images[3] + "' style='max-width: 200px;'/>",
+    "<img src='" + ios_images[4] + "' style='max-width: 200px;'/>",
+    "<img src='" + ios_images[5] + "' style='max-width: 200px;'/>",
+    "<img src='" + ios_images[6] + "' style='max-width: 200px;'/>"
+],
+button_html: '<button class="jspsych-btn">%choice%</button>',
+required: true
+};
+timeline.push(ios_trial);
+
+/* done */
+var rateintro = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: function() {
+    return `
+     <p>Next, we will ask you some questions about your team, ${globalgroup_text}, and about the other team, ${globalothergroup_text}. </p>
+     <p>Press SPACE to move on!</p>`;
+    },
+  choices: [' '],
+};
+timeline.push(rateintro);
+  
+
+
+    // Define the statements to be rated
+    var group_statements_G = [  
+       "I identify with TEAM GREEN.",  
+       "I see myself as a member of TEAM GREEN.", 
+       //"I'm glad to be a member of TEAM GREEN.",  
+       //"I feel a strong connection to TEAM GREEN.",  
+       "I like TEAM GREEN."  ];
+       //"TEAM GREEN is good."];
+
+    var group_statements_B = [  
+       "I identify with TEAM BLUE.", 
+       "I see myself as a member of TEAM BLUE.",  
+       //"I'm glad to be a member of TEAM BLUE.",  
+       //"I feel a strong connection to TEAM BLUE.",  
+       "I like TEAM BLUE." ]; 
+       //"TEAM BLUE is good."];
+
+
+    // Define the Likert scale labels
+    var group_scale_labels = [
+      "Totally Disagree",
+      "Somewhat Disagree",
+      "Slightly Disagree",
+      "Neutral",
+      "Slightly Agree",
+      "Somewhat Agree",
+      "Totally Agree"
+    ];
+
+
+    var ident_G_trials = [];
+    for (var i = 0; i < group_statements_G.length; i++) {
+      var ident_G_trial = {
+        type: jsPsychSurveyLikert,
+        preamble: "Please rate your agreement with the following statement about <span style='color: green;'>TEAM GREEN:</span>",
+        questions: [{prompt: group_statements_G[i], labels: group_scale_labels, required: true, name: 'ident_g'+i}],
+      };
+      ident_G_trials.push(ident_G_trial); 
+    }
+
+    var ident_B_trials = [];
+    for (var i = 0; i < group_statements_B.length; i++) {
+      var ident_B_trial = {
+        type: jsPsychSurveyLikert,
+        preamble: "Please rate your agreement with the following statement about <span style='color: blue;'>TEAM BLUE:</span>",
+        questions: [{prompt: group_statements_B[i], labels: group_scale_labels, required: true, name: 'ident_b'+i}],
+      };
+      ident_B_trials.push(ident_B_trial); 
+    }
+
+    // randomly decide which block to present first
+    if (Math.random() < 0.5) {
+  for (var i = 0; i < ident_G_trials.length; i++) {
+    timeline.push(ident_G_trials[i]);
+  }
+  for (var i = 0; i < ident_B_trials.length; i++) {
+    timeline.push(ident_B_trials[i]);
+  }
+} else {
+  for (var i = 0; i < ident_B_trials.length; i++) {
+    timeline.push(ident_B_trials[i]);
+  }
+  for (var i = 0; i < ident_G_trials.length; i++) {
+    timeline.push(ident_G_trials[i]);
+  }
+}
+    ///////
+    /////// COUNTRY, VISION
+    ///////
+
+    var visioncheck_trial = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: '<p>Do you use a vision aid (glasses, contact lenses)?  </br> </br> Click on your answer!</p>',
+      choices: ['YES', 'NO'],
+      button_html: '<button class="jspsych-btn">%choice%</button>',
+      required: true
+    };
+    timeline.push(visioncheck_trial);
+
+    var country_survey_trial = {
+      type: jsPsychSurveyText,
+      questions: [
+        {prompt: "In which country have you spent the most time before you turned 18?", rows: 2, columns:50 , required:true, name:'country10'}, 
+        {prompt: "In which country do you currently live?", rows: 2, columns: 50, required:true, name:'countrynow'},
+        {prompt: "Which country is your home country?", rows: 2, columns: 50,require: true, name:'countryhome'},
+      ], 
+      preamble: `<div>Please answer the following questions: </div>`,
+    };
+    timeline.push(country_survey_trial);
+
+
+    /* start the experiment */
+    jsPsych.run(timeline);
+
+  </script>
+</html>

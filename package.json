@@ -9,19 +9,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/hooman.hb/keep-looking.git"
+    "url": "git+https://github.com/Good2Gether/keeplooking.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/hooman.hb/keep-looking/issues"
+    "url": "https://github.com/Good2Gether/keeplooking/issues"
   },
-  "homepage": "https://gitlab.com/hooman.hb/keep-looking#readme",
+  "homepage": "https://github.com/Good2Gether/keeplooking#readme",
   "dependencies": {
-    "dotenv": "^16.0.0",
-    "dropbox": "^10.24.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.2",
-    "node-fetch": "^2.6.1"
+    "aws-sdk": "^2.1363.0",
+    "dotenv": "^16.0.3",
+    "dropbox": "^10.34.0",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.9",
+    "nodemon": "^2.0.21",
+    "webgazer": "^3.1.1"
   }
 }

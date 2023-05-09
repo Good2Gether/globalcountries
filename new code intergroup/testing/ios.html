@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="https://unpkg.com/jspsych@7.3.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.2"></script>
+    <link href="https://unpkg.com/jspsych@7.3.2/css/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+
+    /* initialize jsPsych */
+    var jsPsych = initJsPsych({
+      on_finish: function() {
+        jsPsych.data.displayData();
+      }
+    });
+
+    /* create timeline */
+    var timeline = [];
+
+    /* preload images */
+    var preload = {
+      type: jsPsychPreload,
+      images: [
+        'img/ios1.png', 
+        'img/ios2.png', 
+        'img/ios3.png',
+        'img/ios4.png',
+        'img/ios5.png',
+        'img/ios6.png',
+        'img/ios7.png',]
+    };
+    timeline.push(preload);
+
+    // define the images to display
+    var ios_images = [
+         "img/ios1.png",
+         "img/ios2.png",
+         "img/ios3.png",
+         "img/ios4.png",
+         "img/ios5.png",
+         "img/ios6.png",
+         "img/ios7.png"
+    ];
+    var teamcheck_trial = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: '<p>Which team do you belong to?</p>',
+      choices: ['TEAM BLUE', 'TEAM GREEN'],
+      button_html: '<button class="jspsych-btn">%choice%</button>',
+      required: true
+    };
+    timeline.push(teamcheck_trial);
+
+    var ios_trial = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: function() {
+        return `
+        <p>How do you feel about your team, ${window.group_text}? </p>
+         <p>Please click on the image below that best describes your relationship with your team:</p>`;
+    },
+    choices: [
+        "<img src='" + ios_images[0] + "' style='max-width: 200px;'/>",
+        "<img src='" + ios_images[1] + "' style='max-width: 200px;'/>",
+        "<img src='" + ios_images[2] + "' style='max-width: 200px;'/>",
+        "<img src='" + ios_images[3] + "' style='max-width: 200px;'/>",
+        "<img src='" + ios_images[4] + "' style='max-width: 200px;'/>",
+        "<img src='" + ios_images[5] + "' style='max-width: 200px;'/>",
+        "<img src='" + ios_images[6] + "' style='max-width: 200px;'/>"
+    ],
+    button_html: '<button class="jspsych-btn">%choice%</button>',
+    required: true
+    };
+    timeline.push(ios_trial);
+
+    /* start the experiment */
+    jsPsych.run(timeline);
+
+  </script>
+</html>

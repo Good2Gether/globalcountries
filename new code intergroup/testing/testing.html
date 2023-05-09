@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="https://unpkg.com/jspsych@7.3.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.2"></script>
+    <link href="https://unpkg.com/jspsych@7.3.2/css/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+
+    /* initialize jsPsych */
+    var jsPsych = initJsPsych({
+      on_finish: function() {
+        jsPsych.data.displayData();
+      }
+    });
+
+    /* create timeline */
+    var timeline = [];
+
+    /* preload images */
+    var preload = {
+      type: jsPsychPreload,
+      images: [
+        'img/b1.png', 
+        'img/b2.png', 
+        'img/b3.png', 
+        'img/g1.png', 
+        'img/g2.png', 
+        'img/g3.png', 
+        'img/bg1.png', 
+        'img/bg2.png', 
+        'img/bg3.png', 
+        'img/bg4.png', 
+        'img/bg5.png', 
+        'img/bg6.png', 
+        'img/gexample.png', 
+        'img/bexample.png',
+        'img/star_purple.jpg', 
+        'img/star_yellow.jpg', 
+        'img/star_patterned.jpg',
+        'img/ios1.png', 
+        'img/ios2.png', 
+        'img/ios3.png',
+        'img/ios4.png',
+        'img/ios5.png',
+        'img/ios6.png',
+        'img/ios7.png',]
+    };
+    timeline.push(preload);
+
+    // Define the statements to be rated
+    var group_statements_G = [  
+       "I identify with TEAM GREEN.",  
+       "I see myself as a member of TEAM GREEN.",   
+       "I like TEAM GREEN."  ];
+
+    var group_statements_B = [  
+       "I identify with TEAM BLUE.", 
+       "I see myself as a member of TEAM BLUE.",  
+       "I like TEAM BLUE." ]; 
+
+
+    // Define the Likert scale labels
+    var group_scale_labels = [
+      "Totally Disagree",
+      "Somewhat Disagree",
+      "Slightly Disagree",
+      "Neutral",
+      "Slightly Agree",
+      "Somewhat Agree",
+      "Totally Agree"
+    ];
+
+    var timeline_groupattitude = [];
+
+    var ident_G_trials = [];
+    for (var i = 0; i < group_statements_G.length; i++) {
+      var ident_G_trial = {
+        type: jsPsychSurveyLikert,
+        preamble: "Please rate your agreement with the following statement about <span style='color: green;'>TEAM GREEN:</span>",
+        questions: [{prompt: group_statements_G[i], labels: group_scale_labels, required: true, name: 'ident_g'+i}],
+      };
+      ident_G_trials.push(ident_G_trial);
+    }
+
+    var ident_B_trials = [];
+    for (var i = 0; i < group_statements_B.length; i++) {
+      var ident_B_trial = {
+        type: jsPsychSurveyLikert,
+        preamble: "Please rate your agreement with the following statement about <span style='color: blue;'>TEAM BLUE:</span>",
+        questions: [{prompt: group_statements_B[i], labels: group_scale_labels, required: true, name: 'ident_b'+i}],
+      };
+      ident_B_trials.push(ident_B_trial);
+    }
+
+    // randomly decide which block to present first
+    if (Math.random() < 0.5) {
+      timeline_groupattitude = ident_G_trials.concat(ident_B_trials);
+    } else {
+      timeline_groupattitude = ident_B_trials.concat(ident_G_trials);
+    }
+
+      
+
+    ///////
+    /////// COUNTRY, VISION
+    ///////
+
+    var country_survey_trial = {
+      type: jsPsychSurveyText,
+      questions: [
+      {prompt: "Do you use a vision aid (glasses, contact lenses)? Yes or no:", rows: 2, columns:50 , required:true, name:'visionaid'},
+        {prompt: "In which country have you spent the most time in the past 10 years?", rows: 2, columns:50 , required:true, name:'country10'}, 
+        {prompt: "In which country do you currently live?", rows: 1, columns: 50, required:true, name:'countrynow'},
+        {prompt: "Which country is your home country?", rows: 1, columns: 50,require: true, name:'countryhome'},
+      ], 
+      preamble: `<div>Please answer the following questions: </div>`,
+    };
+    timeline.push(country_survey_trial);
+
+    var combined_timeline = timeline_groupattitude.concat(timeline)
+
+    /* start the experiment */
+    jsPsych.run(combined_timeline);
+
+  </script>
+</html>

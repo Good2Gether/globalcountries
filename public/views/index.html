@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="js/jquery-3.6.0.min.js"></script>
-
-    <script src="js/bowser.js"></script>
-
-    <script src="dist/jspsych.js"></script>
-    <script src="dist/plugin-html-keyboard-response.js"></script>
-    <script src="dist/plugin-html-button-response.js"></script>
-    <script src="dist/plugin-survey.js"></script>
-    <script src="dist/plugin-survey-multi-choice.js"></script>
-    <script src="dist/plugin-call-function.js"></script>
-    <script src="dist/plugin-webgazer-init-camera.js"></script>
-    <script src="dist/plugin-webgazer-calibrate.js"></script>
-    <script src="dist/plugin-webgazer-validate.js"></script>
-    <script src="js/webgazer/webgazer.js"></script>
-    <script src="dist/plugin-survey-text.js"></script>
-    <script src="dist/plugin-fullscreen.js"></script>
-    <script src="dist/extension-webgazer.js"></script>
-    <link rel="stylesheet" href="dist/jspsych.css"> </link>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/jspsych@7.0.0"></script>
+<script src="js/bowser.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="dist/jspsych.js"></script>
+<script src="dist/plugin-html-keyboard-response.js"></script>
+<script src="dist/plugin-html-button-response.js"></script>
+<script src="dist/plugin-survey.js"></script>
+<script src="dist/plugin-survey-multi-choice.js"></script>
+<script src="dist/plugin-image-keyboard-response.js"></script>
+<script src="dist/plugin-survey-multi-choice.js"></script>
+<script src="dist/plugin-survey-likert.js"></script>
+<script src="dist/plugin-preload.js"></script>
+<script src="dist/plugin-call-function.js"></script>
+<script src="dist/plugin-webgazer-init-camera.js"></script>
+<script src="dist/plugin-webgazer-calibrate.js"></script>
+<script src="dist/plugin-webgazer-validate.js"></script>
+<script src="js/webgazer/webgazer.js"></script>
+<script src="dist/plugin-survey-text.js"></script>
+<script src="dist/plugin-fullscreen.js"></script>
+<script src="dist/extension-webgazer.js"></script>
+<link rel="stylesheet" href="dist/jspsych.css"> </link>
+<link rel="icon" href="../img/favicon_io/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon_io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon_io//favicon-16x16.png">
+<link rel="manifest" href="../img/favicon_io//site.webmanifest">
+    
     
     <!-- <link rel="stylesheet" href="../../dist/jspsych.css"> </link> -->
     
@@ -34,7 +44,16 @@
     <script src="js/svo-survey-likert.js"></script>
     <script src="../src/main.js"></script>
     <style>
+      html, body {
+			width: 100%;
+			height: 100%;
+		}
+       .no-scroll {
+      /* ban scrolling on the main task pages */
+      overflow: hidden;
+    }
       .jspsych-content {
+        max-height: 100%;
         max-width: 100%;
       }
     </style>
@@ -43,70 +62,65 @@
     <div
     style="max-width:1000px; margin:auto;  background-color: white;color:black; padding-bottom: 50px; padding-left: 50px;padding-right: 50px; padding-top: 50px; font-size: larger; font-family:Arial, Helvetica, sans-serif">
     <div id="top-bar">
-      <img src="..\img\WU_logo.png" alt="WU-logo"  height="100px">
+      <img src="..\img\MPI_logo.png" alt="MPI-logo"  height="100px">
 
     </div>
     <div id="content">
-      <h3> What is the purpose of this research?</h3>
       <p>
-        This research study is being conducted by the Institute of Cognition & Behavior of the WU Vienna.
-        This study will help us better understand human decision-making.
+        This is a study by the Max Planck Institute for Research on Collective Goods in Germany. 
+        The goal is to understand how people make decisions.
 
       </p>
-      <h3> What can I expect if I take part in this research?</h3>
-      <p>
-        This experiment will take approximately 20 minutes to complete. 
-        Your payout consists of a fixed amount, £1.67,
-        and a variable component that depends on your decisions and your chance in this study. <br>
-        This study begins with a brief survey, which includes three demographic questions. Afterward,
-        you will proceed to the experiment. This study requires webcam access, for which we will ask for
-        permission to turn on your webcam during the experiment. The data that we will be recording is where
-        you appear to be looking at your computer screen, but not the webcam recording itself.
-        This data consists of only two numbers, referring to the position of your gaze on the XY axis.
-        We do not access either your screen or your actual video footage.
-        There will be 4 calibration procedures during the study to correctly measure your gaze location.
-        In case you do not wish to allow webcam access, please do not participate in this experiment.
- 
+      <h3>Can I take part?</h3>
+      <p>Anyone between the ages of 18 and 35 who can complete the study while not wearing glasses can take part. 
+        The study will be conducted in English, and you can participate if you understand English well. 
+        You need a desktop computer with a webcam to participate.
       </p>
+      <h3> What can I expect if I take part in this research study?</h3>
       <p>
-        Kindly note that during the study, you will be asked for personal attitudes and demographic information
-        that is important for the results of the study. However, we do not require your name or sensitive
-        biographic information. To our knowledge, there are no risks associated with this research study.
-        The records of your responses will be coded in a completely anonymous way. Your records will be
-        arbitrarily assigned a subject code number by the system. To secure the transparency of scientific
-        findings, the completely anonymized data set will be published and made available to other researchers.
-        Please keep in mind that the potential purposes of future analyses of the data cannot be determined.  
+        This study will take approximately 20 minutes to complete. 
+        Your payout consists of a fixed amount, £2.50 (approx. 2.85€), 
+        and a variable bonus payment that depends on your decisions in this study and on chance. The total payment will be about 4.35€ on average.
       </p>
+      <h4>General Information</h4>
       <p>
-        All the information that you provide is completely confidential in nature.
-        
+        You will be asked about personal attitudes and demographic information. However, we do not ask for your name or sensitive
+        biographic information. All information that you provide is completely anonymous. Your records will be
+        randomly assigned a subject code number by the system.   
       </p>
-      <h3> What should I know about a research study?</h3>
+
+      <h4> Eye Tracking</h4>
+        <p>This study uses your webcam for eye tracking. The data that we will be recording is where
+          you appear to be looking at your computer screen. There will be NO video of you sent to us.
+            The data consists of only two numbers, indicating the position of your gaze on the screen.
+            We do NOT record your screen. We do NOT record your actual video footage.</p>
+        <p>To participate you must allow the experiment to use your camera on the next screen. If you do not want the experiment to use your camera, please close the page.</p>
+        <h3> What should I know about a research study?</h3>
       <ul>
-        <li>Whether or not you take part is up to you.</li>
-        <li>Your participation is completely voluntary.</li> 
-        <li>You can agree to take part and not finish the study. </li>
+        <li>If you take part is up to you.</li>
+        <li>To our knowledge, there are no risks associated with taking part in this study.</li>
+        <li>You can stop participating at any time. </li>
         <li>Your decisions will not be held against you.</li>
-        <li>Your refusal to participate will not result in any consequences or any loss of
-          benefits that you are otherwise entitled to receive.</li>
-      </ul>
-      <p>
-        As part of this research design, we are not allowed to further elaborate on the purpose of this research.
-      </p>
-      <h3>
-        Who can I talk to?
-      </h3>
-      <p>
-        If you have questions, concerns, complaints, or think the research has hurt you,
-        please contact Hooman Habibnia at <a href="mailto:hooman.habibnia@wu.ac.at">hooman.habibnia@wu.ac.at</a>.      </p>
+        <li>There are no negative consequences for you if you decide to stop participating.</li>
+        <li>To secure the transparency of scientific
+          findings, the completely anonymized data set will be published and made available to other researchers.
+          Please keep in mind that the potential purposes of future analyses of the data cannot be determined.</li>
+      </ul>  
+        <h3>
+          Who can I talk to?
+        </h3>
+        <p>
+          If you have questions, concerns, complaints, or think the research has hurt you,
+          please contact Rima-Maria Rahal via <a href="mailto:rahal@coll.mpg.de">rahal@coll.mpg.de</a>.   
+
     </div>
     <p style="text-align: center;"></p>
     <div style="text-align:right;">
         <input type="checkbox" class="checkmark">
-        I <b>AGREE</b> with the above consent.
+        I <b>AGREE</b> and want to participate.
         <br><br><br>
         <button class="goExp jspsych-btn" >
-            Continue
+            Click to continue!
         </button>
     </div>
 </div>
@@ -132,14 +146,14 @@
     });
 
     function ensureWebcam(callback) {
-        $('body').html('<p class="center", style="font-family:Arial, Helvetica, sans-serif">Checking webcam ...</p>');
+        $('body').html('<p class="center", style="font-family:Arial, Helvetica, sans-serif">Checking webcam ... give permission to start the experiment.</p>');
         window.navigator.mediaDevices.getUserMedia({ video: true })
         .then(function(stream) {
             stream.getTracks().forEach(track => track.stop());
             callback();
         })
         .catch(function() {
-            alert('Cannot open webcam.\nIs it blocked? This app requires webcam.');
+            alert('Cannot open webcam.\nIs it blocked? This study requires webcam.');
             location.reload();
         });
     }
