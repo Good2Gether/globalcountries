@@ -512,55 +512,103 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function() {
         if (globalgroup_text === "India" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
-          imgSrc = "../img/comp_checkG_YouTop_GroupTop0.png";
+          imgSrc = "../img/comp_checkI_YouTop_GroupTop0.png";
         } else if (globalgroup_text === "India" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
-          imgSrc = "../img/comp_checkG_YouBottom_GroupBottom0.png";
+          imgSrc = "../img/comp_checkI_YouBottom_GroupBottom0.png";
         } else if (globalgroup_text === "India" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
-          imgSrc = "../img/comp_checkG_YouTop_GroupBottom0.png";
+          imgSrc = "../img/comp_checkI_YouTop_GroupBottom0.png";
         } else if (globalgroup_text === "India" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
-          imgSrc = "../img/comp_checkG_YouBottom_GroupTop0.png";
+          imgSrc = "../img/comp_checkI_YouBottom_GroupTop0.png";
         } else if (globalgroup_text === "Mexico" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
-          imgSrc = "../img/comp_checkB_YouTop_GroupTop0.png";
+          imgSrc = "../img/comp_checkM_YouTop_GroupTop0.png";
         } else if (globalgroup_text === "Mexico" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
-          imgSrc = "../img/comp_checkB_YouBottom_GroupBottom0.png";
+          imgSrc = "../img/comp_checkM_YouBottom_GroupBottom0.png";
         } else if (globalgroup_text === "Mexico" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
-          imgSrc = "../img/comp_checkB_YouTop_GroupBottom0.png";
+          imgSrc = "../img/comp_checkM_YouTop_GroupBottom0.png";
         } else if (globalgroup_text === "Mexico" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
-          imgSrc = "../img/comp_checkB_YouBottom_GroupTop0.png";
+          imgSrc = "../img/comp_checkM_YouBottom_GroupTop0.png";
+        } else if (globalgroup_text === "USA" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
+          imgSrc = "../img/comp_checkU_YouTop_GroupTop0.png";
+        } else if (globalgroup_text === "USA" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
+          imgSrc = "../img/comp_checkU_YouBottom_GroupBottom0.png";
+        } else if (globalgroup_text === "USA" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
+          imgSrc = "../img/comp_checkU_YouTop_GroupBottom0.png";
+        } else if (globalgroup_text === "USA" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
+          imgSrc = "../img/comp_checkU_YouBottom_GroupTop0.png";
+        } else if (globalgroup_text === "South Africa" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
+          imgSrc = "../img/comp_checkS_YouTop_GroupTop0.png";
+        } else if (globalgroup_text === "South Africa" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
+          imgSrc = "../img/comp_checkS_YouBottom_GroupBottom0.png";
+        } else if (globalgroup_text === "South Africa" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "0") {
+          imgSrc = "../img/comp_checkS_YouTop_GroupBottom0.png";
+        } else if (globalgroup_text === "South Africa" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "0") {
+          imgSrc = "../img/comp_checkS_YouBottom_GroupTop0.png";
         } 
         else if (globalgroup_text === "India" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
-          imgSrc = "../img/comp_checkG_YouTop_GroupTop1.png";
+          imgSrc = "../img/comp_checkI_YouTop_GroupTop1.png";
         } else if (globalgroup_text === "India" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
-          imgSrc = "../img/comp_checkG_YouBottom_GroupBottom1.png";
+          imgSrc = "../img/comp_checkI_YouBottom_GroupBottom1.png";
         } else if (globalgroup_text === "India" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
-          imgSrc = "../img/comp_checkG_YouTop_GroupBottom1.png";
+          imgSrc = "../img/comp_checkI_YouTop_GroupBottom1.png";
         } else if (globalgroup_text === "India" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
-          imgSrc = "../img/comp_checkG_YouBottom_GroupTop1.png";
+          imgSrc = "../img/comp_checkI_YouBottom_GroupTop1.png";
         } else if (globalgroup_text === "Mexico" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
-          imgSrc = "../img/comp_checkB_YouTop_GroupTop1.png";
+          imgSrc = "../img/comp_checkM_YouTop_GroupTop1.png";
         } else if (globalgroup_text === "Mexico" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
-          imgSrc = "../img/comp_checkB_YouBottom_GroupBottom1.png";
+          imgSrc = "../img/comp_checkM_YouBottom_GroupBottom1.png";
         } else if (globalgroup_text === "Mexico" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
-          imgSrc = "../img/comp_checkB_YouTop_GroupBottom1.png";
+          imgSrc = "../img/comp_checkM_YouTop_GroupBottom1.png";
         } else if (globalgroup_text === "Mexico" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
-          imgSrc = "../img/comp_checkB_YouBottom_GroupTop1.png";
+          imgSrc = "../img/comp_checkM_YouBottom_GroupTop1.png";
+        } else if (globalgroup_text === "USA" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
+          imgSrc = "../img/comp_checkU_YouTop_GroupTop1.png";
+        } else if (globalgroup_text === "USA" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
+          imgSrc = "../img/comp_checkU_YouBottom_GroupBottom1.png";
+        } else if (globalgroup_text === "USA" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
+          imgSrc = "../img/comp_checkU_YouTop_GroupBottom1.png";
+        } else if (globalgroup_text === "USA" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
+          imgSrc = "../img/comp_checkU_YouBottom_GroupTop1.png";
+        } else if (globalgroup_text === "South Africa" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
+          imgSrc = "../img/comp_checkS_YouTop_GroupTop1.png";
+        } else if (globalgroup_text === "South Africa" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
+          imgSrc = "../img/comp_checkS_YouBottom_GroupBottom1.png";
+        } else if (globalgroup_text === "South Africa" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "1") {
+          imgSrc = "../img/comp_checkS_YouTop_GroupBottom1.png";
+        } else if (globalgroup_text === "South Africa" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "1") {
+          imgSrc = "../img/comp_checkS_YouBottom_GroupTop1.png";
         }  
         else if (globalgroup_text === "India" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
-          imgSrc = "../img/comp_checkG_YouTop_GroupTop2.png";
+          imgSrc = "../img/comp_checkI_YouTop_GroupTop2.png";
         } else if (globalgroup_text === "India" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
-          imgSrc = "../img/comp_checkG_YouBottom_GroupBottom2.png";
+          imgSrc = "../img/comp_checkI_YouBottom_GroupBottom2.png";
         } else if (globalgroup_text === "India" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
-          imgSrc = "../img/comp_checkG_YouTop_GroupBottom2.png";
+          imgSrc = "../img/comp_checkI_YouTop_GroupBottom2.png";
         } else if (globalgroup_text === "India" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
-          imgSrc = "../img/comp_checkG_YouBottom_GroupTop2.png";
+          imgSrc = "../img/comp_checkI_YouBottom_GroupTop2.png";
         } else if (globalgroup_text === "Mexico" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
-          imgSrc = "../img/comp_checkB_YouTop_GroupTop2.png";
+          imgSrc = "../img/comp_checkM_YouTop_GroupTop2.png";
         } else if (globalgroup_text === "Mexico" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
-          imgSrc = "../img/comp_checkB_YouBottom_GroupBottom2.png";
+          imgSrc = "../img/comp_checkM_YouBottom_GroupBottom2.png";
         } else if (globalgroup_text === "Mexico" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
-          imgSrc = "../img/comp_checkB_YouTop_GroupBottom2.png";
+          imgSrc = "../img/comp_checkM_YouTop_GroupBottom2.png";
         } else if (globalgroup_text === "Mexico" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
-          imgSrc = "../img/comp_checkB_YouBottom_GroupTop2.png";
+          imgSrc = "../img/comp_checkM_YouBottom_GroupTop2.png";
+        } else if (globalgroup_text === "USA" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
+          imgSrc = "../img/comp_checkU_YouTop_GroupTop2.png";
+        } else if (globalgroup_text === "USA" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
+          imgSrc = "../img/comp_checkU_YouBottom_GroupBottom2.png";
+        } else if (globalgroup_text === "USA" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
+          imgSrc = "../img/comp_checkU_YouTop_GroupBottom2.png";
+        } else if (globalgroup_text === "USA" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
+          imgSrc = "../img/comp_checkU_YouBottom_GroupTop2.png";
+        } else if (globalgroup_text === "South Africa" && participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
+          imgSrc = "../img/comp_checkS_YouTop_GroupTop2.png";
+        } else if (globalgroup_text === "South Africa" && !participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
+          imgSrc = "../img/comp_checkS_YouBottom_GroupBottom2.png";
+        } else if (globalgroup_text === "South Africa" && participant_payoff_order && !participant_otherinfo_order && participant_LMR_order === "2") {
+          imgSrc = "../img/comp_checkS_YouTop_GroupBottom2.png";
+        } else if (globalgroup_text === "South Africa" && !participant_payoff_order && participant_otherinfo_order && participant_LMR_order === "2") {
+          imgSrc = "../img/comp_checkS_YouBottom_GroupTop2.png";
         }  
         return `<div style="width: 80%; margin: auto; text-align: center;">
       <p>Here is an example of how the decision tasks will look. </br> </p>
