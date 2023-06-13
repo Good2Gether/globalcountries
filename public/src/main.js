@@ -255,7 +255,7 @@
         Press I for India. </br>  Press M for Mexico. </br>  Press U for USA. </br>  Press S for South Africa.
         `
     },
-      choices: ['g','s','i','m'],
+      choices: ['u','s','i','m'],
       on_finish: function(data){
         // score the resp onse by comparing the key that was pressed (data.response) against the 
         // correct response for this trial ('f'), and store reponse accuracy in the trial data
