@@ -12,7 +12,7 @@ var stimuli_data = [
       "o1": 51,
       "s2": 13,
       "o2": 67,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 4
   },
   {

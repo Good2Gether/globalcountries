@@ -179,7 +179,7 @@
       will be implemented OR if the choice of another participant will be implemented for you. 
       <br> 
       <br>
-      <b> 100 points are worth 0.30€.  </b>
+      <b> 100 points are worth 0.37$ (about 30 Rupee, 7 Rand, or 6.5 Peso).  </b>
 
       </p>
       <br>
@@ -252,7 +252,7 @@
       stimulus: function() {
         return `<p>In this study, you work together with other participants from your country. 
         There are also participants from other countries. </br> </br>  Which country are you from? </br> </br> 
-        Press I for India. </br>  Press M for Mexico. </br>  Press G for Germany. </br>  Press S for South Africa.
+        Press I for India. </br>  Press M for Mexico. </br>  Press U for USA. </br>  Press S for South Africa.
         `
     },
       choices: ['g','s','i','m'],
@@ -262,20 +262,20 @@
         if(jsPsych.pluginAPI.compareKeys(data.response, 's')){
           globalgroup_text = "South Africa";
           globalgroup_letter = "S";
-          globalothergroup_text = "Germany, Mexico, and India";
-          globalothergroup_letter1 = "G";
+          globalothergroup_text = "USA, Mexico, and India";
+          globalothergroup_letter1 = "U";
           globalothergroup_letter2 = "M";
           globalothergroup_letter3 = "I";
         } else if(jsPsych.pluginAPI.compareKeys(data.response, 'm')){
           globalgroup_text = "Mexico";
           globalgroup_letter = "M";
-          globalothergroup_text = "Germany, South Africa, and India";
-          globalothergroup_letter1 = "G";
+          globalothergroup_text = "USA, South Africa, and India";
+          globalothergroup_letter1 = "U";
           globalothergroup_letter2 = "S";
           globalothergroup_letter3 = "I";
         } else if(jsPsych.pluginAPI.compareKeys(data.response, 'g')){
-          globalgroup_text = "Germany";
-          globalgroup_letter = "G";
+          globalgroup_text = "USA";
+          globalgroup_letter = "U";
           globalothergroup_text = "South Africa, Mexico, and India";
           globalothergroup_letter1 = "S";
           globalothergroup_letter2 = "M";
@@ -283,8 +283,8 @@
         } else if(jsPsych.pluginAPI.compareKeys(data.response, 'i')){
           globalgroup_text = "India";
           globalgroup_letter = "I";
-          globalothergroup_text = "Germany, Mexico, and South Africa";
-          globalothergroup_letter1 = "G";
+          globalothergroup_text = "USA, Mexico, and South Africa";
+          globalothergroup_letter1 = "U";
           globalothergroup_letter2 = "M";
           globalothergroup_letter3 = "S";
         }
@@ -360,7 +360,7 @@
          <p>When you press the <strong>correct key</strong>, you win 10 points for your team, Team ${globalgroup_text}.</p>
          <p>But when you press the <strong>wrong key</strong>, your team looses 10 points.</p>
          <p>Bonus: If you're faster than a random person from all teams, you team wins 100 extra points.</p>
-         <p>Team ${globalgroup_text} wins if you gather more points than the other teams (teams from ${globalothergroup_text}). The winning team gets a bonus payment of 0.60€. </br> </br></p> 
+         <p>Team ${globalgroup_text} wins if you gather more points than the other teams (teams from ${globalothergroup_text}). The winning team gets a bonus payment of 0.75$ (about 60 Rupee, 14 Rand, or 13 Peso). </br> </br></p> 
          <p>Place your fingers on the keys to get ready. </p>
          <div style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
          <div style="display: flex; flex-direction: column; align-items: center;">
@@ -477,7 +477,7 @@
       one of your own decisions is randomly chosen to be paid out to you and the other player. </br>
       OR </br>
       someone else's decision is randomly chosen to be paid out, and you receive what they decided. </p></br>
-      <p> 100 points are worth 0.30€. Each decision you make has the same chance to be picked to be paid out.<p/> 
+      <p> 100 points are worth 0.37$ (about 30 Rupee, 7 Rand, or 6.5 Peso). Each decision you make has the same chance to be picked to be paid out.<p/> 
 
       <p>Press <b>SPACE</b> to continue!</p>
       </div>
@@ -974,7 +974,7 @@
       type: jsPsychHtmlButtonResponse,
       stimulus: function() {
         return `
-         <p>In this task, you have 100 points that are worth 0.30€.</p> 
+         <p>In this task, you have 100 points that are worth 0.37$ (about 30 Rupee, 7 Rand, or 6.5 Peso).</p> 
          <p>You can keep these points to yourself, or you can give some or all of the points to another participant in this study. </p>
          <p>This other participant is either a member of your team, ${globalgroup_text}, or a member of the other teams from ${globalothergroup_text}.</p>
          <p><strong>Would you like to know which team the other participant belongs to?</strong></p>`;
@@ -1010,7 +1010,7 @@
         {prompt: "How many points do you give to the other participant?", rows: 2, columns:50 , required:true, placeholder: 'Enter a number between 0 and 100', name:'lookcheck_other_B'}, 
         ], 
         preamble: `
-        <div style="color: magenta;">The other participant belongs to TEAM GERMANY.</div>
+        <div style="color: magenta;">The other participant belongs to TEAM USA.</div>
         <div>You have 100 points. Decide how much to give to the other participant. You will keep the rest for yourself. </div>`,
       };
 
@@ -1084,7 +1084,7 @@
     var teamcheck_trial = {
       type: jsPsychHtmlButtonResponse,
       stimulus: '<p>Which team do you belong to?  </br> </br> Click on the correct answer!</p>',
-      choices: ['TEAM INDIA', 'TEAM GERMANY', 'TEAM MEXICO', 'TEAM SOUTH AFRICA'],
+      choices: ['TEAM INDIA', 'TEAM USA', 'TEAM MEXICO', 'TEAM SOUTH AFRICA'],
       button_html: '<button class="jspsych-btn">%choice%</button>',
       required: true
     };
@@ -1133,8 +1133,8 @@
       "I like TEAM INDIA."];
 
     var group_statements_G = [  
-      "I see myself as a member of TEAM GERMANY.",  
-      "I like TEAM GERMANY."];
+      "I see myself as a member of TEAM USA.",  
+      "I like TEAM USA."];
 
       var group_statements_S = [  
         "I see myself as a member of TEAM SOUTH AFRICA.",  
@@ -1155,7 +1155,7 @@
    for (var i = 0; i < group_statements_G.length; i++) {
      var ident_G_trial = {
        type: jsPsychSurveyLikert,
-       preamble: "Please rate your agreement with the these statements about <span style='color: magenta;'>TEAM GERMANY:</span>",
+       preamble: "Please rate your agreement with the these statements about <span style='color: magenta;'>TEAM USA:</span>",
        questions: [{prompt: group_statements_G[i], labels: group_scale_labels, required: true, name: 'ident_g'+i}],
      };
      ident_G_trials.push(ident_G_trial); 
@@ -1231,6 +1231,14 @@
     var visioncheck_trial = {
       type: jsPsychHtmlButtonResponse,
       stimulus: '<p>Did you wear glasses during the study?  </br> </br> Click on your answer!</p>',
+      choices: ['YES', 'NO'],
+      button_html: '<button class="jspsych-btn">%choice%</button>',
+      required: true
+    };
+
+    var eslcheck_trial = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: '<p>Is English your native language?  </br> </br> Click on your answer!</p>',
       choices: ['YES', 'NO'],
       button_html: '<button class="jspsych-btn">%choice%</button>',
       required: true
@@ -1384,6 +1392,7 @@
 //
       timeline.push(indicol);
       timeline.push(visioncheck_trial);
+      timeline.push(eslcheck_trial);
       timeline.push(country_survey_trial);
         timeline.push(feedback);
         timeline.push(success_guard);

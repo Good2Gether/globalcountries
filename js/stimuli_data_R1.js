@@ -20,7 +20,7 @@ var stimuli_data_r1 = [
       "o1": 60,
       "s2": 95,
       "o2": 28,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 10
     },
     {
@@ -68,7 +68,7 @@ var stimuli_data_r1 = [
       "o1": 10,
       "s2": 39,
       "o2": 11,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 12
     },
     {
@@ -76,7 +76,7 @@ var stimuli_data_r1 = [
       "o1": 42,
       "s2": 91,
       "o2": 13,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 66
     },
     {
@@ -100,7 +100,7 @@ var stimuli_data_r1 = [
       "o1": 4,
       "s2": 85,
       "o2": 13,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 76
     },
     {
@@ -116,7 +116,7 @@ var stimuli_data_r1 = [
       "o1": 9,
       "s2": 77,
       "o2": 36,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 78
     },
     {
@@ -148,7 +148,7 @@ var stimuli_data_r1 = [
       "o1": 13,
       "s2": 62,
       "o2": 49,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 45
     },
     {
@@ -164,7 +164,7 @@ var stimuli_data_r1 = [
       "o1": 3,
       "s2": 58,
       "o2": 57,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 88
     },
     {
@@ -188,7 +188,7 @@ var stimuli_data_r1 = [
       "o1": 14,
       "s2": 26,
       "o2": 9,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 32
     },
     {
@@ -220,7 +220,7 @@ var stimuli_data_r1 = [
       "o1": 9,
       "s2": 50,
       "o2": 8,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 42
     },
     {
@@ -244,7 +244,7 @@ var stimuli_data_r1 = [
       "o1": 1,
       "s2": 22,
       "o2": 21,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 16
     },
     {
@@ -324,7 +324,7 @@ var stimuli_data_r1 = [
       "o1": 16,
       "s2": 78,
       "o2": 43,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 84
     },
     {
@@ -340,7 +340,7 @@ var stimuli_data_r1 = [
       "o1": 74,
       "s2": 92,
       "o2": 76,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 25
     },
     {
@@ -364,7 +364,7 @@ var stimuli_data_r1 = [
       "o1": 60,
       "s2": 88,
       "o2": 52,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 68
     },
     {
@@ -420,7 +420,7 @@ var stimuli_data_r1 = [
       "o1": 50,
       "s2": 88,
       "o2": 44,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 21
     },
     {
@@ -460,7 +460,7 @@ var stimuli_data_r1 = [
       "o1": 41,
       "s2": 95,
       "o2": 20,
-      "ingroup": "G",
+      "ingroup": "U",
       "random": 81
     },
     {
