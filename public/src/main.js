@@ -273,7 +273,7 @@
           globalothergroup_letter1 = "U";
           globalothergroup_letter2 = "S";
           globalothergroup_letter3 = "I";
-        } else if(jsPsych.pluginAPI.compareKeys(data.response, 'g')){
+        } else if(jsPsych.pluginAPI.compareKeys(data.response, 'u')){
           globalgroup_text = "USA";
           globalgroup_letter = "U";
           globalothergroup_text = "South Africa, Mexico, and India";
